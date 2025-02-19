@@ -11,6 +11,12 @@ import Excepciones.PersistenciaException;
  */
 public interface iPacienteDAO {
     
+    /**
+     * Método que registra un paciente
+     * @param paciente Objeto de tipo paciente
+     * @return True si se registró el paciente, false en caso contrario
+     * @throws PersistenciaException 
+     */
     public boolean registrarPaciente(Paciente paciente) throws PersistenciaException;
     
 }
