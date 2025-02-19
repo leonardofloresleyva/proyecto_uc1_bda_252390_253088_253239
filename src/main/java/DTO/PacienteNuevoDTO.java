@@ -5,7 +5,7 @@
 package DTO;
 
 /**
- *
+ * Clase DTO para paciente nuevo
  * @author Ximena
  */
 public class PacienteNuevoDTO {
