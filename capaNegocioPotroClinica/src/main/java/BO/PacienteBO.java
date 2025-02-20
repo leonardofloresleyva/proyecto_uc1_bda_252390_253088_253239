@@ -7,6 +7,7 @@ package BO;
 import DTO.PacienteNuevoDTO;
 import Excepciones.NegocioException;
 import Mapper.PacienteMapper;
+import java.time.LocalDate;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.regex.Pattern;
@@ -44,6 +45,9 @@ public class PacienteBO {
         }
         if (paciNuevo.getFechaNacimiento() == null) {
             throw new NegocioException("La fecha de nacimiento es obligatoria.");
+        }
+         if (paciNuevo.getFechaNacimiento().isAfter(LocalDate.now())) {
+            throw new NegocioException("La fecha de nacimiento no puede ser futura");
         }
         if (!Pattern.matches("^[a-zA-ZáéíóúÁÉÍÓÚñÑ ]+$", nombre)) {
             throw new NegocioException("No se admiten caracteres especiales en el nombre");

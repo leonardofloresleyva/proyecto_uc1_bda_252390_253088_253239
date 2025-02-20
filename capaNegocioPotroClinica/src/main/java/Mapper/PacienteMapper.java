@@ -1,6 +1,6 @@
 package Mapper;
 
-import DTO.PacienteNuevoDTO; 
+import DTO.PacienteNuevoDTO;
 
 /**
  * @author Leonardo Flores Leyva (252390)

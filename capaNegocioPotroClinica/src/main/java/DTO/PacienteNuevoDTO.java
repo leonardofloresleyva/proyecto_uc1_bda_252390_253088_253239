@@ -4,11 +4,11 @@
  */
 package DTO;
 
-import java.sql.Date;
+import java.time.LocalDate;
 
 /**
  *
- * @author multaslokas33
+ * @author luis
  */
 public class PacienteNuevoDTO {
 
@@ -16,13 +16,13 @@ public class PacienteNuevoDTO {
     private String apellidoPaterno;
     private String apellidoMaterno;
     private String telefono;
-    private Date fechaNacimiento;
+    private LocalDate fechaNacimiento;
     private String estado;
 
     public PacienteNuevoDTO() {
     }
 
-    public PacienteNuevoDTO(String nombres, String apellidoPaterno, String apellidoMaterno, String telefono, Date fechaNacimiento, String estado) {
+    public PacienteNuevoDTO(String nombres, String apellidoPaterno, String apellidoMaterno, String telefono, LocalDate fechaNacimiento, String estado) {
         this.nombres = nombres;
         this.apellidoPaterno = apellidoPaterno;
         this.apellidoMaterno = apellidoMaterno;
@@ -63,11 +63,11 @@ public class PacienteNuevoDTO {
         this.telefono = telefono;
     }
 
-    public Date getFechaNacimiento() {
+    public LocalDate getFechaNacimiento() {
         return fechaNacimiento;
     }
 
-    public void setFechaNacimiento(Date fechaNacimiento) {
+    public void setFechaNacimiento(LocalDate fechaNacimiento) {
         this.fechaNacimiento = fechaNacimiento;
     }
 
