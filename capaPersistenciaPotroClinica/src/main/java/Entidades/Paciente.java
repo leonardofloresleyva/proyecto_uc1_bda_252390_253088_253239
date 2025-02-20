@@ -15,11 +15,12 @@ public class Paciente {
     private String telefono;
     private String fechaNacimiento;
     private String estado;
+    private Usuario usuario;
 
     public Paciente() {
     }
 
-    public Paciente(int idPaciente, String nombres, String apellidoPaterno, String apellidoMaterno, String telefono, String fechaNacimiento, String estado) {
+    public Paciente(int idPaciente, String nombres, String apellidoPaterno, String apellidoMaterno, String telefono, String fechaNacimiento, String estado, Usuario usuario) {
         this.idPaciente = idPaciente;
         this.nombres = nombres;
         this.apellidoPaterno = apellidoPaterno;
@@ -27,15 +28,17 @@ public class Paciente {
         this.telefono = telefono;
         this.fechaNacimiento = fechaNacimiento;
         this.estado = estado;
+        this.usuario = usuario;
     }
 
-    public Paciente(String nombres, String apellidoPaterno, String apellidoMaterno, String telefono, String fechaNacimiento, String estado) {
+    public Paciente(String nombres, String apellidoPaterno, String apellidoMaterno, String telefono, String fechaNacimiento, String estado, Usuario usuario) {
         this.nombres = nombres;
         this.apellidoPaterno = apellidoPaterno;
         this.apellidoMaterno = apellidoMaterno;
         this.telefono = telefono;
         this.fechaNacimiento = fechaNacimiento;
         this.estado = estado;
+        this.usuario = usuario;
     }
 
     public int getIdPaciente() {
@@ -94,9 +97,18 @@ public class Paciente {
         this.estado = estado;
     }
 
+    public Usuario getUsuario() {
+        return usuario;
+    }
+
+    public void setUsuario(Usuario usuario) {
+        this.usuario = usuario;
+    }
+
     @Override
     public String toString() {
-        return "Paciente{" + "idPaciente=" + idPaciente + ", nombres=" + nombres + ", apellidoPaterno=" + apellidoPaterno + ", apellidoMaterno=" + apellidoMaterno + ", telefono=" + telefono + ", fechaNacimiento=" + fechaNacimiento + ", estado=" + estado + '}';
+        return "Paciente{" + "idPaciente=" + idPaciente + ", nombres=" + nombres + ", apellidoPaterno=" + apellidoPaterno + ", apellidoMaterno=" + apellidoMaterno + ", telefono=" + telefono + ", fechaNacimiento=" + fechaNacimiento + ", estado=" + estado + ", usuario=" + usuario + '}';
     }
+    
     
 }
