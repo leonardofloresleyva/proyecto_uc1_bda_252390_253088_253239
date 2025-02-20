@@ -25,35 +25,28 @@ public class PacienteDAO implements iPacienteDAO {
     @Override
     public boolean registrarPaciente(Paciente paciente) throws PersistenciaException {
         // Comando SQL para insertar un paciente
-        String comandoSQL = "INSERT INTO pacientes (NOMBRES, APELLIDO_PATERNO, APELLIDO_MATERNO, TELEFONO, FECHA_NACIMIENTO, ESTADO) VALUES (?, ?, ?, ?, ?, ?)";
-        String comandoPro = "CALL REGISTRAR_PACIENTE(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+        String comandoSQL = "CALL REGISTRAR_PACIENTE(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
         
         try (Connection con = conexion.crearConexion()) {
             con.setAutoCommit(false);
             
-            try (PreparedStatement ps = con.prepareStatement(comandoSQL, Statement.RETURN_GENERATED_KEYS);
-                    PreparedStatement psp = con.prepareStatement(comandoPro)) {
-                // Agregar datos del paciente
-                ps.setString(1, paciente.getNombres());
-                ps.setString(2, paciente.getApellidoPaterno());
-                ps.setString(3, paciente.getApellidoMaterno());
-                ps.setString(4, paciente.getTelefono());
-                ps.setObject(5, paciente.getFechaNacimiento());
-                ps.setString(6, paciente.getEstado());
+            try (PreparedStatement ps = con.prepareStatement(comandoSQL, Statement.RETURN_GENERATED_KEYS)) {
                 
                 // Agregar valores a tabla de usuarios y direcciones
-                psp.setString(1, paciente.getUsuario());
-                psp.setString(2, paciente.getContrasenia());
-                psp.setString(3, paciente.getRol());
-                psp.setString(4, paciente.getNombres());
-                psp.setString(5, paciente.getApellidoPaterno());
-                psp.setString(6, paciente.getApellidoMaterno());
-                psp.setString(7, paciente.getTelefono());
-                psp.setObject(8, paciente.getFechaNacimiento());
-                psp.setString(9, paciente.getEstado());
-                psp.setString(10, paciente.getColonia());
-                psp.setString(11, paciente.getCalle());
-                psp.setString(12, paciente.getNumero());
+                ps.setString(1, paciente.getUsuario());
+                ps.setString(2, paciente.getContrasenia());
+                ps.setString(3, paciente.getRol());
+                ps.setString(4, paciente.getNombres());
+                ps.setString(5, paciente.getApellidoPaterno());
+                ps.setString(6, paciente.getApellidoMaterno());
+                ps.setString(7, paciente.getTelefono());
+                ps.setObject(8, paciente.getFechaNacimiento());
+                ps.setString(9, paciente.getEstado());
+                ps.setString(10, paciente.getColonia());
+                ps.setString(11, paciente.getCalle());
+                ps.setString(12, paciente.getNumero());
+                
+                ps.executeQuery();
                 
                 int filasAfectadas = ps.executeUpdate();
                 if (filasAfectadas == 0) {
