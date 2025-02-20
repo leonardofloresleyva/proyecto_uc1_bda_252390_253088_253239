@@ -7,7 +7,7 @@ package BO;
 import DTO.PacienteNuevoDTO;
 import Excepciones.NegocioException;
 import Mapper.PacienteMapper;
-import java.lang.System.Logger.Level;
+import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.regex.Pattern;
 
@@ -22,16 +22,7 @@ public class PacienteBO {
         this.pacienteDAO = new PacienteBO(conexion);
     }
     
-    private PacienteMapper mapper = new PacienteMapper();
-
-    public Paciente guardarPaciente(PacienteNuevoDTO paciNuevo) throws NegocioException {
-        validarDatos(paciNuevo);  
-        Paciente paciente = mapper.toEntity(paciNuevo);
-        return paciente;
-    }
-
-    
-    private void validarDatos(PacienteNuevoDTO paciNuevo) throws NegocioException {
+     public boolean registrarPaciente(PacienteNuevoDTO paciNuevo) throws NegocioException {
         
         String nombre = paciNuevo.getNombres();
         String telefono = paciNuevo.getTelefono();
@@ -57,8 +48,20 @@ public class PacienteBO {
         if (!Pattern.matches("^[a-zA-ZáéíóúÁÉÍÓÚñÑ ]+$", nombre)) {
             throw new NegocioException("No se admiten caracteres especiales en el nombre");
         }
+        /**
         if (paciNuevo.getContrasenia().length() > 20) {
             throw new NegocioException("No se pueden más de 20 caracteres en la contraseña");
+        }*/
+        
+        PacienteMapper convertidor = new PacienteMapper();
+        Paciente paciente = convertidor.toEntity(paciNuevo);
+
+        try {
+            pacienteDAO.registrarPaciente(paciente);
+            return true;
+        } catch (PersistenciaException ex) {
+            Logger.getLogger(PacienteBO.class.getName()).log(Level.SEVERE, null, ex);
+            throw new NegocioException("Hubo un error al guardar en la base de datos", ex);
         }
     }
 }
