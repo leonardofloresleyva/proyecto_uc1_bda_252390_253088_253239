@@ -15,17 +15,19 @@ import java.sql.Statement;
  */
 public class PacienteDAO implements iPacienteDAO {
     iConexion conexion;
+    iUsuarioDAO usuarioDAO;
 
-    public PacienteDAO(iConexion conexion) {
-        this.conexion = conexion;
+    public PacienteDAO(iUsuarioDAO usuarioDAO) {
+        this.usuarioDAO = usuarioDAO;
     }
     
     @Override
     public boolean registrarPaciente(Paciente paciente) throws PersistenciaException {
         String comandoSQL = "INSERT INTO pacientes (NOMBRES, APELLIDO_PATERNO, APELLIDO_MATERNO, TELEFONO, FECHA_NACIMIENTO, ESTADO) VALUES (?, ?, ?, ?, ?, ?)";
         
-        try (Connection con = conexion.crearConexion();
-                PreparedStatement ps = con.prepareStatement(comandoSQL, Statement.RETURN_GENERATED_KEYS)) {
+        try (Connection con = conexion.crearConexion()) {
+            con.setAutoCommit(false);
+            
             
         } catch (Exception e) {
             
