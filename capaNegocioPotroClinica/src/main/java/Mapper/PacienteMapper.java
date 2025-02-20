@@ -10,12 +10,12 @@ import DTO.PacienteNuevoDTO;
 public class PacienteMapper {
     
     public Paciente toEntity (PacienteNuevoDTO paciNuevo){
-        Paciente paciente = new Paciente(paciNuevo.getNombres(), paciNuevo.getApellidoPaterno(), paciNuevo.getApellidoMaterno(), paciNuevo.getTelefono(), paciNuevo.getFechaNacimiento(), paciNuevo.getEstado());
+        Paciente paciente = new Paciente(paciNuevo.getNombres(), paciNuevo.getApellidoPaterno(), paciNuevo.getApellidoMaterno(), paciNuevo.getTelefono(), paciNuevo.getFechaNacimiento(), paciNuevo.getEstado(), paciNuevo.getColonia(), paciNuevo.getCalle(), paciNuevo.getNumero());
         return paciente;
     }
     
     public PacienteNuevoDTO toDTO(Paciente paciente){
-        PacienteNuevoDTO pacienteDTO = new PacienteNuevoDTO(paciente.getNombres(), paciente.getApellidoPaterno(), paciente.getApellidoMaterno(), paciente.getTelefono(), paciente.getFechaNacimiento(), paciente.getEstado());
+        PacienteNuevoDTO pacienteDTO = new PacienteNuevoDTO(paciente.getNombres(), paciente.getApellidoPaterno(), paciente.getApellidoMaterno(), paciente.getTelefono(), paciente.getFechaNacimiento(), paciente.getEstado(), paciente.getColonia(), paciente.getCalle(), paciente.getNumero());
         return pacienteDTO;
     }
 }
