@@ -1,6 +1,6 @@
 package Entidades;
 
-import java.sql.Date;
+import java.util.Date;
 
 /**
  * Clase constructora de un Paciente
@@ -8,7 +8,7 @@ import java.sql.Date;
  * @author Ximena Rosales Panduro (253088)
  * @author Luis Uribe (253239)
  */
-public class Paciente {
+public class Paciente extends Usuario {
     
     private int idPaciente;
     private String nombres;
@@ -17,30 +17,38 @@ public class Paciente {
     private String telefono;
     private Date fechaNacimiento;
     private String estado;
-    private Usuario usuario;
+    // Agregar atributos de dirección que se pasarán a tabla Dirección con un procedimiento almacenado
+    private String colonia;
+    private String calle;
+    private String numero;
 
     public Paciente() {
     }
 
-    public Paciente(int idPaciente, String nombres, String apellidoPaterno, String apellidoMaterno, String telefono, Date fechaNacimiento, String estado, Usuario usuario) {
-        this.idPaciente = idPaciente;
+    public Paciente(int id, String usuario, String contrasenia, String rol, String nombres, String apellidoPaterno, String apellidoMaterno, String telefono, Date fechaNacimiento, String estado, String colonia, String calle, String numero) {
+        super(id, usuario, contrasenia, rol);
         this.nombres = nombres;
         this.apellidoPaterno = apellidoPaterno;
         this.apellidoMaterno = apellidoMaterno;
         this.telefono = telefono;
         this.fechaNacimiento = fechaNacimiento;
         this.estado = estado;
-        this.usuario = usuario;
+        this.colonia = colonia;
+        this.calle = calle;
+        this.numero = numero;
     }
 
-    public Paciente(String nombres, String apellidoPaterno, String apellidoMaterno, String telefono, Date fechaNacimiento, String estado, Usuario usuario) {
+    public Paciente(String usuario, String contrasenia, String rol, String nombres, String apellidoPaterno, String apellidoMaterno, String telefono, Date fechaNacimiento, String estado, String colonia, String calle, String numero) {
+        super(usuario, contrasenia, rol);
         this.nombres = nombres;
         this.apellidoPaterno = apellidoPaterno;
         this.apellidoMaterno = apellidoMaterno;
         this.telefono = telefono;
         this.fechaNacimiento = fechaNacimiento;
         this.estado = estado;
-        this.usuario = usuario;
+        this.colonia = colonia;
+        this.calle = calle;
+        this.numero = numero;
     }
 
     public int getIdPaciente() {
@@ -99,18 +107,37 @@ public class Paciente {
         this.estado = estado;
     }
 
-    public Usuario getUsuario() {
-        return usuario;
+    public String getColonia() {
+        return colonia;
     }
 
-    public void setUsuario(Usuario usuario) {
-        this.usuario = usuario;
+    public void setColonia(String colonia) {
+        this.colonia = colonia;
+    }
+
+    public String getCalle() {
+        return calle;
+    }
+
+    public void setCalle(String calle) {
+        this.calle = calle;
+    }
+
+    public String getNumero() {
+        return numero;
+    }
+
+    public void setNumero(String numero) {
+        this.numero = numero;
     }
 
     @Override
     public String toString() {
-        return "Paciente{" + "idPaciente=" + idPaciente + ", nombres=" + nombres + ", apellidoPaterno=" + apellidoPaterno + ", apellidoMaterno=" + apellidoMaterno + ", telefono=" + telefono + ", fechaNacimiento=" + fechaNacimiento + ", estado=" + estado + ", usuario=" + usuario + '}';
+        return "Paciente{" + "idPaciente=" + idPaciente + ", nombres=" + nombres
+                + ", apellidoPaterno=" + apellidoPaterno + ", apellidoMaterno="
+                + apellidoMaterno + ", telefono=" + telefono + ", fechaNacimiento="
+                + fechaNacimiento + ", estado=" + estado + ", colonia=" + colonia
+                + ", calle=" + calle + ", numero=" + numero + '}';
     }
-    
-    
+   
 }

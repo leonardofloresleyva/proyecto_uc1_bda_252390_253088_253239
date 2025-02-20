@@ -6,7 +6,7 @@
 package Entidades;
 
 /**
- *
+ * Clase que contiene los atributos del usuario
  * @author Ximena
  */
 public class Usuario {

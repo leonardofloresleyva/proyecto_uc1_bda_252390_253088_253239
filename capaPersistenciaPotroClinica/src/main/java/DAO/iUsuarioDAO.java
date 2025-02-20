@@ -8,11 +8,17 @@ import Entidades.Usuario;
 import Excepciones.PersistenciaException;
 
 /**
- *
+ * Interfaz del usuario
  * @author Ximena
  */
 public interface iUsuarioDAO {
     
+    /**
+     * Método que registra un usuario nuevo
+     * @param usuario Objeto usuario
+     * @return ID del usuario
+     * @throws PersistenciaException Si no se pudo crear el usuario
+     */
     public int registrarUsuario(Usuario usuario) throws PersistenciaException;
     
 }
