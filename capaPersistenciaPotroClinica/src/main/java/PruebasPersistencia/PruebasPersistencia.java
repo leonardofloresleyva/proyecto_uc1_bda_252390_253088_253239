@@ -6,7 +6,6 @@ import DAO.PacienteDAO;
 import Entidades.Paciente;
 import Excepciones.PersistenciaException;
 import java.sql.Connection;
-import java.util.Date;
 import java.sql.SQLException;
 import java.time.LocalDate;
 
@@ -36,7 +35,7 @@ public class PruebasPersistencia {
         }
         
         // Crear paciente con el ID de usuario
-        Paciente paciente = new Paciente("usuario12@gmail.com", "12344", "Paciente", "Juan", "Pérez", "Gómez", "555-1234", LocalDate.of(2005, 2, 12), "Alta", "Urbi Villa", "De las Espadas", "3322");
+        Paciente paciente = new Paciente("usuario@gmail.com", "876589", "Paciente", "Pepe", "Pecas", "Mendez", "55598888", LocalDate.of(2002, 5, 11), "Alta", "Ciudad Gótica", "Calle Pio", "9944");
         boolean registrado = pacienteDAO.registrarPaciente(paciente);
         
         if (registrado) {
