@@ -59,7 +59,7 @@ BEGIN
             NUMERO_PACIENTE,
             @ID_USUARIO
 		);
-	ROLLBACK;
+	COMMIT;
 END $$
 DELIMITER ;
 
