@@ -1,6 +1,7 @@
 package Mapper;
 
 import DTO.PacienteNuevoDTO;
+import Entidades.Paciente;
 
 /**
  * @author Leonardo Flores Leyva (252390)
@@ -9,7 +10,8 @@ import DTO.PacienteNuevoDTO;
  */
 public class PacienteMapper {
     
-    public Paciente toEntity (PacienteNuevoDTO paciNuevo){
+    //aggregar usuario() y quitar super
+    public Paciente ToEntity (PacienteNuevoDTO paciNuevo){
         Paciente paciente = new Paciente(paciNuevo.getNombres(), paciNuevo.getApellidoPaterno(), paciNuevo.getApellidoMaterno(), paciNuevo.getTelefono(), paciNuevo.getFechaNacimiento(), paciNuevo.getEstado(), paciNuevo.getColonia(), paciNuevo.getCalle(), paciNuevo.getNumero());
         return paciente;
     }

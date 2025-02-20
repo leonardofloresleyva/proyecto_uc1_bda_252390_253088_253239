@@ -4,8 +4,13 @@
  */
 package BO;
 
+import Conexion.iConexion;
+import DAO.PacienteDAO;
+import DAO.iPacienteDAO;
 import DTO.PacienteNuevoDTO;
+import Entidades.Paciente;
 import Excepciones.NegocioException;
+import Excepciones.PersistenciaException;
 import Mapper.PacienteMapper;
 import java.time.LocalDate;
 import java.util.logging.Level;
@@ -20,13 +25,14 @@ public class PacienteBO {
     iPacienteDAO pacienteDAO;
     
     public PacienteBO (iConexion conexion) {
-        this.pacienteDAO = new PacienteBO(conexion);
+        this.pacienteDAO = new PacienteDAO(conexion);
     }
     
      public boolean registrarPaciente(PacienteNuevoDTO paciNuevo) throws NegocioException {
         
         String nombre = paciNuevo.getNombres();
         String telefono = paciNuevo.getTelefono();
+        String apellidoPaterno = paciNuevo.getApellidoPaterno();
         
         if (paciNuevo == null) {
             throw new NegocioException("El paciente no puede ser nulo.");
@@ -34,7 +40,7 @@ public class PacienteBO {
         if (nombre == null || nombre.trim().isEmpty()) {
             throw new NegocioException("El nombre no puede estar vacío.");
         }
-        if (paciNuevo.getApellidoPaterno() == null || paciNuevo.getApellidoPaterno().trim().isEmpty()) {
+        if (apellidoPaterno == null || apellidoPaterno.trim().isEmpty()) {
             throw new NegocioException("El apellido paterno no puede estar vacío.");
         }
         if (telefono == null || telefono.trim().isEmpty()) {
@@ -58,7 +64,7 @@ public class PacienteBO {
         }*/
         
         PacienteMapper convertidor = new PacienteMapper();
-        Paciente paciente = convertidor.toEntity(paciNuevo);
+        Paciente paciente = convertidor.ToEntity(paciNuevo);
 
         try {
             pacienteDAO.registrarPaciente(paciente);
