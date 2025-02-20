@@ -1,5 +1,7 @@
 package PruebasPersistencia;
 
+import Excepciones.PersistenciaException;
+
 /**
  * Pruebas de capa Persistencia.
  * @author Leonardo Flores Leyva (252390)
@@ -8,7 +10,10 @@ package PruebasPersistencia;
  */
 public class PruebasPersistencia {
 
-    public static void main(String[] args) {
-        System.out.println("Hello World!");
+    public static void main(String[] args) throws PersistenciaException {
+        // Intento de registrar un paciente
+        
+        
+
     }
 }

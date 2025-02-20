@@ -1,5 +1,7 @@
 package Entidades;
 
+import java.sql.Date;
+
 /**
  * Clase constructora de un Paciente
  * @author Leonardo Flores Leyva (252390)
@@ -13,14 +15,14 @@ public class Paciente {
     private String apellidoPaterno;
     private String apellidoMaterno;
     private String telefono;
-    private String fechaNacimiento;
+    private Date fechaNacimiento;
     private String estado;
     private Usuario usuario;
 
     public Paciente() {
     }
 
-    public Paciente(int idPaciente, String nombres, String apellidoPaterno, String apellidoMaterno, String telefono, String fechaNacimiento, String estado, Usuario usuario) {
+    public Paciente(int idPaciente, String nombres, String apellidoPaterno, String apellidoMaterno, String telefono, Date fechaNacimiento, String estado, Usuario usuario) {
         this.idPaciente = idPaciente;
         this.nombres = nombres;
         this.apellidoPaterno = apellidoPaterno;
@@ -31,7 +33,7 @@ public class Paciente {
         this.usuario = usuario;
     }
 
-    public Paciente(String nombres, String apellidoPaterno, String apellidoMaterno, String telefono, String fechaNacimiento, String estado, Usuario usuario) {
+    public Paciente(String nombres, String apellidoPaterno, String apellidoMaterno, String telefono, Date fechaNacimiento, String estado, Usuario usuario) {
         this.nombres = nombres;
         this.apellidoPaterno = apellidoPaterno;
         this.apellidoMaterno = apellidoMaterno;
@@ -81,11 +83,11 @@ public class Paciente {
         this.telefono = telefono;
     }
 
-    public String getFechaNacimiento() {
+    public Date getFechaNacimiento() {
         return fechaNacimiento;
     }
 
-    public void setFechaNacimiento(String fechaNacimiento) {
+    public void setFechaNacimiento(Date fechaNacimiento) {
         this.fechaNacimiento = fechaNacimiento;
     }
 
