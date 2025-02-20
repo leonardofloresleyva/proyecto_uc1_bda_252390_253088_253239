@@ -1,6 +1,6 @@
 package Entidades;
 
-import java.util.Date;
+import java.time.LocalDate;
 
 /**
  * Clase constructora de un Paciente
@@ -15,7 +15,7 @@ public class Paciente extends Usuario {
     private String apellidoPaterno;
     private String apellidoMaterno;
     private String telefono;
-    private Date fechaNacimiento;
+    private LocalDate fechaNacimiento;
     private String estado;
     // Agregar atributos de dirección que se pasarán a tabla Dirección con un procedimiento almacenado
     private String colonia;
@@ -25,7 +25,7 @@ public class Paciente extends Usuario {
     public Paciente() {
     }
 
-    public Paciente(int id, String usuario, String contrasenia, String rol, String nombres, String apellidoPaterno, String apellidoMaterno, String telefono, Date fechaNacimiento, String estado, String colonia, String calle, String numero) {
+    public Paciente(int id, String usuario, String contrasenia, String rol, String nombres, String apellidoPaterno, String apellidoMaterno, String telefono, LocalDate fechaNacimiento, String estado, String colonia, String calle, String numero) {
         super(id, usuario, contrasenia, rol);
         this.nombres = nombres;
         this.apellidoPaterno = apellidoPaterno;
@@ -38,7 +38,7 @@ public class Paciente extends Usuario {
         this.numero = numero;
     }
 
-    public Paciente(String usuario, String contrasenia, String rol, String nombres, String apellidoPaterno, String apellidoMaterno, String telefono, Date fechaNacimiento, String estado, String colonia, String calle, String numero) {
+    public Paciente(String usuario, String contrasenia, String rol, String nombres, String apellidoPaterno, String apellidoMaterno, String telefono, LocalDate fechaNacimiento, String estado, String colonia, String calle, String numero) {
         super(usuario, contrasenia, rol);
         this.nombres = nombres;
         this.apellidoPaterno = apellidoPaterno;
@@ -91,11 +91,11 @@ public class Paciente extends Usuario {
         this.telefono = telefono;
     }
 
-    public Date getFechaNacimiento() {
+    public LocalDate getFechaNacimiento() {
         return fechaNacimiento;
     }
 
-    public void setFechaNacimiento(Date fechaNacimiento) {
+    public void setFechaNacimiento(LocalDate fechaNacimiento) {
         this.fechaNacimiento = fechaNacimiento;
     }
 

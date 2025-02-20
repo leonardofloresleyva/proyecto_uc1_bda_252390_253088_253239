@@ -9,7 +9,7 @@ package Entidades;
  * Clase que contiene los atributos del usuario
  * @author Ximena
  */
-public class Usuario {
+public abstract class Usuario {
     private int id;
     private String usuario;
     private String contrasenia;

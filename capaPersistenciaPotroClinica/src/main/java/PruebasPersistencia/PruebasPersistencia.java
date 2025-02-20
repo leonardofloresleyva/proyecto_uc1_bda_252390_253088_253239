@@ -3,13 +3,12 @@ package PruebasPersistencia;
 import Conexion.Conexion;
 import Conexion.iConexion;
 import DAO.PacienteDAO;
-import DAO.UsuarioDAO;
 import Entidades.Paciente;
-import Entidades.Usuario;
 import Excepciones.PersistenciaException;
 import java.sql.Connection;
 import java.util.Date;
 import java.sql.SQLException;
+import java.time.LocalDate;
 
 /**
  * Pruebas de capa Persistencia.
@@ -37,13 +36,9 @@ public class PruebasPersistencia {
             e.printStackTrace();
         }
         
-        // Prueba agregar al paciente
-        // 1. Crear un usuario
-        Usuario usuario = new Usuario("alexis.maldonado@gmail.com", "12345", "Paciente");
-        // int idUsuario = usuarioDAO.registrarUsuario(usuario);
         
         // Crear paciente con el ID de usuario
-        Paciente paciente = new Paciente(usuario.getUsuario(), usuario.getContrasenia(), usuario.getRol(), "Juan", "Pérez", "Gómez", "555-1234", new Date(), "Activo", "Urbi Villa", "De las Espadas", "3322");
+        Paciente paciente = new Paciente("usuario12@gmail.com", "12344", "Paciente", "Juan", "Pérez", "Gómez", "555-1234", LocalDate.of(2005, 2, 12), "Activo", "Urbi Villa", "De las Espadas", "3322");
         boolean registrado = pacienteDAO.registrarPaciente(paciente);
         
         if (registrado) {
