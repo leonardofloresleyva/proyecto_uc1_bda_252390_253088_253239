@@ -22,7 +22,6 @@ public class PruebasPersistencia {
         // Establecer la conexión
         iConexion conexion = new Conexion();
         PacienteDAO pacienteDAO = new PacienteDAO(conexion);
-        // Usuario usuarioDAO = new UsuarioDAO(conexion);
         
         // Probar la conexion
         try(Connection con = conexion.crearConexion()) {
@@ -36,9 +35,8 @@ public class PruebasPersistencia {
             e.printStackTrace();
         }
         
-        
         // Crear paciente con el ID de usuario
-        Paciente paciente = new Paciente("usuario12@gmail.com", "12344", "Paciente", "Juan", "Pérez", "Gómez", "555-1234", LocalDate.of(2005, 2, 12), "Activo", "Urbi Villa", "De las Espadas", "3322");
+        Paciente paciente = new Paciente("usuario12@gmail.com", "12344", "Paciente", "Juan", "Pérez", "Gómez", "555-1234", LocalDate.of(2005, 2, 12), "Alta", "Urbi Villa", "De las Espadas", "3322");
         boolean registrado = pacienteDAO.registrarPaciente(paciente);
         
         if (registrado) {
