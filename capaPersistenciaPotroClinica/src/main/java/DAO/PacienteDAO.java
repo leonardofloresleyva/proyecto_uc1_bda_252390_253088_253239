@@ -25,30 +25,30 @@ public class PacienteDAO implements iPacienteDAO {
     @Override
     public boolean registrarPaciente(Paciente paciente) throws PersistenciaException {
         // Comando SQL para insertar un paciente
-        String comandoSQL = "CALL REGISTRAR_PACIENTE2(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+        String comandoSQL = "CALL REGISTRAR_PACIENTE(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
         try (Connection con = conexion.crearConexion()) {
-            try (CallableStatement ps = con.prepareCall(comandoSQL)) {
+            try (CallableStatement cs = con.prepareCall(comandoSQL)) {
 
                 // Agregar valores a tabla de usuarios y direcciones
                 // Datos de tabla usuarios
-                ps.setString(1, paciente.getUsuario());
-                ps.setString(2, paciente.getContrasenia());
-                ps.setString(3, paciente.getRol());
+                cs.setString(1, paciente.getUsuario());
+                cs.setString(2, paciente.getContrasenia());
+                cs.setString(3, paciente.getRol());
                 // Datos de tabla pacientes
-                ps.setString(4, paciente.getNombres());
-                ps.setString(5, paciente.getApellidoPaterno());
-                ps.setString(6, paciente.getApellidoMaterno());
-                ps.setString(7, paciente.getTelefono());
-                ps.setObject(8, paciente.getFechaNacimiento());
-                ps.setString(9, paciente.getEstado());
+                cs.setString(4, paciente.getNombres());
+                cs.setString(5, paciente.getApellidoPaterno());
+                cs.setString(6, paciente.getApellidoMaterno());
+                cs.setString(7, paciente.getTelefono());
+                cs.setObject(8, paciente.getFechaNacimiento());
+                cs.setString(9, paciente.getEstado());
                 // Datos de tabla direcciones
-                ps.setString(10, paciente.getColonia());
-                ps.setString(11, paciente.getCalle());
-                ps.setString(12, paciente.getNumero());
+                cs.setString(10, paciente.getColonia());
+                cs.setString(11, paciente.getCalle());
+                cs.setString(12, paciente.getNumero());
 
                 // Ejecutar y regresar verdadero
-                ps.execute();   
+                cs.execute();   
                 return true;
             }
 
