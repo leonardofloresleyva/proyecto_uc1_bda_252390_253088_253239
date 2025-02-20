@@ -4,7 +4,7 @@ import DTO.PacienteNuevoDTO;
 
 /**
  *
- * @author multaslokas33
+ * @author luis
  */
 public class PacienteMapper {
     
