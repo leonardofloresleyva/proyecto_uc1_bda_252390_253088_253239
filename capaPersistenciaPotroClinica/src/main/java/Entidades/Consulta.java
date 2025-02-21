@@ -1,22 +1,17 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package Entidades;
 
 /**
  *
- * @author Ximena
+ * @author Leonardo Flores Leyva (252390)
+ * @author Ximena Rosales Panduro (253088)
+ * @author Luis Eduardo Uribe Vega (253239)
  */
 public class Consulta {
     private int idConsulta;
-    private String motivo;
-    private String diagnostico;
-    private String tratamiento;
+    private String motivo, diagnostico, tratamiento;
     private int idCita;
 
-    public Consulta() {
-    }
+    public Consulta() {}
 
     public Consulta(int idConsulta, String motivo, String diagnostico, String tratamiento, int idCita) {
         this.idConsulta = idConsulta;
@@ -33,49 +28,48 @@ public class Consulta {
         this.idCita = idCita;
     }
 
-    public int getIdConsulta() {
-        return idConsulta;
-    }
-
     public void setIdConsulta(int idConsulta) {
         this.idConsulta = idConsulta;
-    }
-
-    public String getMotivo() {
-        return motivo;
     }
 
     public void setMotivo(String motivo) {
         this.motivo = motivo;
     }
 
-    public String getDiagnostico() {
-        return diagnostico;
-    }
-
     public void setDiagnostico(String diagnostico) {
         this.diagnostico = diagnostico;
-    }
-
-    public String getTratamiento() {
-        return tratamiento;
     }
 
     public void setTratamiento(String tratamiento) {
         this.tratamiento = tratamiento;
     }
 
-    public int getIdCita() {
-        return idCita;
-    }
-
     public void setIdCita(int idCita) {
         this.idCita = idCita;
     }
+
+    public int getIdConsulta() {
+        return idConsulta;
+    }
+
+    public String getMotivo() {
+        return motivo;
+    }
+
+    public String getDiagnostico() {
+        return diagnostico;
+    }
+
+    public String getTratamiento() {
+        return tratamiento;
+    }
+
+    public int getIdCita() {
+        return idCita;
+    }    
 
     @Override
     public String toString() {
         return "Consulta{" + "idConsulta=" + idConsulta + ", motivo=" + motivo + ", diagnostico=" + diagnostico + ", tratamiento=" + tratamiento + ", idCita=" + idCita + '}';
     }
-    
 }

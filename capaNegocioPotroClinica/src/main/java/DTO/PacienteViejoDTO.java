@@ -1,34 +1,34 @@
-package Entidades;
+package DTO;
 
 import java.time.LocalDate;
 
 /**
- * Clase constructora de un Paciente
+ *
  * @author Leonardo Flores Leyva (252390)
  * @author Ximena Rosales Panduro (253088)
- * @author Luis Uribe (253239)
+ * @author Luis Eduardo Uribe Vega (253239)
  */
-public class Paciente extends Usuario {
-    // Atributos de un Paciente.
-    private int idPaciente;
+public class PacienteViejoDTO extends UsuarioViejoDTO{
+    // Atributos del Paciente.
     private String nombres, apellidoPaterno, apellidoMaterno, telefono, estado;
     private LocalDate fechaNacimiento;
-    // Atributos de la dirección que se pasan a tabla Dirección a través de un procedimiento almacenado.
+    // Atributos de la direccion del paciente.
     private String colonia, calle, numero;
 
-    public Paciente() {}
+    public PacienteViejoDTO() {
+    }
 
-    public Paciente(
+    public PacienteViejoDTO(
             int id, 
             String usuario, 
             String contrasenia, 
-            String rol, 
+            String rol,
             String nombres, 
             String apellidoPaterno, 
             String apellidoMaterno, 
             String telefono, 
-            LocalDate fechaNacimiento, 
-            String estado, 
+            LocalDate fechaNacimiento,
+            String estado,
             String colonia, 
             String calle, 
             String numero
@@ -38,17 +38,17 @@ public class Paciente extends Usuario {
         this.apellidoPaterno = apellidoPaterno;
         this.apellidoMaterno = apellidoMaterno;
         this.telefono = telefono;
-        this.fechaNacimiento = fechaNacimiento;
         this.estado = estado;
+        this.fechaNacimiento = fechaNacimiento;
         this.colonia = colonia;
         this.calle = calle;
         this.numero = numero;
     }
 
-    public Paciente(
+    public PacienteViejoDTO(
             String usuario, 
             String contrasenia, 
-            String rol, 
+            String rol,
             String nombres, 
             String apellidoPaterno, 
             String apellidoMaterno, 
@@ -64,14 +64,12 @@ public class Paciente extends Usuario {
         this.apellidoPaterno = apellidoPaterno;
         this.apellidoMaterno = apellidoMaterno;
         this.telefono = telefono;
-        this.fechaNacimiento = fechaNacimiento;
         this.estado = estado;
+        this.fechaNacimiento = fechaNacimiento;
         this.colonia = colonia;
         this.calle = calle;
         this.numero = numero;
     }
-
-    public void setIdPaciente(int idPaciente) {this.idPaciente = idPaciente;}
 
     public void setNombres(String nombres) {this.nombres = nombres;}
 
@@ -90,8 +88,6 @@ public class Paciente extends Usuario {
     public void setCalle(String calle) {this.calle = calle;}
 
     public void setNumero(String numero) {this.numero = numero;}
-
-    public int getIdPaciente() {return idPaciente;}
 
     public String getNombres() {return nombres;}
 
@@ -113,10 +109,15 @@ public class Paciente extends Usuario {
 
     @Override
     public String toString() {
-        return "Paciente{" + "idPaciente=" + idPaciente + ", nombres=" + nombres
-                + ", apellidoPaterno=" + apellidoPaterno + ", apellidoMaterno="
-                + apellidoMaterno + ", telefono=" + telefono + ", fechaNacimiento="
-                + fechaNacimiento + ", estado=" + estado + ", colonia=" + colonia
-                + ", calle=" + calle + ", numero=" + numero + '}';
-    }  
+        return "PacienteViejoDTO{" + 
+                "nombres=" + nombres + 
+                ", apellidoPaterno=" + apellidoPaterno + 
+                ", apellidoMaterno=" + apellidoMaterno + 
+                ", telefono=" + telefono + 
+                ", estado=" + estado + 
+                ", fechaNacimiento=" + fechaNacimiento + 
+                ", colonia=" + colonia + 
+                ", calle=" + calle + 
+                ", numero=" + numero + '}';
+    }
 }
