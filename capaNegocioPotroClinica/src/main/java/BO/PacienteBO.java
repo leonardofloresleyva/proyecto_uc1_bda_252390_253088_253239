@@ -42,6 +42,7 @@ public class PacienteBO {
         String apellidoP = paciNuevo.getApellidoPaterno();
         String apellidoM = paciNuevo.getApellidoMaterno();
         String telefono = paciNuevo.getTelefono();
+        String estado = paciNuevo.getEstado();
         LocalDate fechaN = paciNuevo.getFechaNacimiento();
         
         if (correo == null || correo.trim().isEmpty())
@@ -82,6 +83,9 @@ public class PacienteBO {
         
         if (!"Paciente".equals(rol))
             throw new NegocioException("El rol debe ser igual a \"Paciente\".");
+        
+        if (!"Alta".equals(estado)) 
+            throw new NegocioException("El estado del paciente debe ser 'Alta'.");
         
         if (nombre == null || nombre.trim().isEmpty()) 
             throw new NegocioException("El nombre no puede estar vacio.");
