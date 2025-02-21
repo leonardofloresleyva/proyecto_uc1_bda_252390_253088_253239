@@ -42,6 +42,7 @@ public class PacienteBO {
         String apellidoP = paciNuevo.getApellidoPaterno();
         String apellidoM = paciNuevo.getApellidoMaterno();
         String telefono = paciNuevo.getTelefono();
+        String estado = paciNuevo.getEstado();
         LocalDate fechaN = paciNuevo.getFechaNacimiento();
         
         if (correo == null || correo.trim().isEmpty())
@@ -83,6 +84,9 @@ public class PacienteBO {
         if (!"Paciente".equals(rol))
             throw new NegocioException("El rol debe ser igual a \"Paciente\".");
         
+        if (!"Alta".equals(estado)) 
+            throw new NegocioException("El estado del paciente debe ser 'Alta'.");
+        
         if (nombre == null || nombre.trim().isEmpty()) 
             throw new NegocioException("El nombre no puede estar vacio.");
         
@@ -120,7 +124,7 @@ public class PacienteBO {
             throw new NegocioException("La fecha de nacimiento no puede estar vacia.");
         
         if (fechaN.isAfter(LocalDate.now())) 
-            throw new NegocioException("La fecha de nacimiento no puede estar después de la fecha actual.");
+            throw new NegocioException("La fecha de nacimiento no puede ser futura a la fecha actual.");
         
         int edad = LocalDate.now().getYear() - fechaN.getYear();
         if (edad < 0 || edad > 120) 
@@ -129,12 +133,12 @@ public class PacienteBO {
         if (!paciNuevo.getCalle().matches("^[a-zA-Z0-9áéíóúÁÉÍÓÚñÑ #,-.]+$")) 
             throw new NegocioException("La dirección contiene caracteres inválidos");
         
-        if (nombre.length() < 2 || nombre.length() > 50) 
-            throw new NegocioException("El nombre debe tener entre 2 y 50 caracteres");
+        if (nombre.length() < 2 || nombre.length() > 100) 
+            throw new NegocioException("El nombre debe tener entre 2 y 100 caracteres");
         
         if (!nombre.trim().equals(nombre)) 
             throw new NegocioException("El nombre no debe contener espacios al inicio o al final");
-        
+       
         String contraseniaEncriptada = encriptarContrasenia(password);
         System.out.println("Contraseña encriptada: " + contraseniaEncriptada);
         paciNuevo.setContrasenia(contraseniaEncriptada);
