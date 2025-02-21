@@ -77,10 +77,6 @@ public class PacienteBO {
         if (password.equalsIgnoreCase(correo) || password.equalsIgnoreCase(nombre)) 
             throw new NegocioException("La contraseña no puede ser igual al correo o al nombre");
         
-        String contraseniaEncriptada = encriptarContrasenia(password);
-        System.out.println("Contraseña encriptada: " + contraseniaEncriptada);
-        paciNuevo.setContrasenia(contraseniaEncriptada);
-        
         if (rol == null || rol.trim().isEmpty())
             throw new NegocioException("El rol no puede estar vacío.");
         
@@ -138,6 +134,10 @@ public class PacienteBO {
         
         if (!nombre.trim().equals(nombre)) 
             throw new NegocioException("El nombre no debe contener espacios al inicio o al final");
+        
+        String contraseniaEncriptada = encriptarContrasenia(password);
+        System.out.println("Contraseña encriptada: " + contraseniaEncriptada);
+        paciNuevo.setContrasenia(contraseniaEncriptada);
         
         Paciente paciente = pacienteMapper.toEntityNuevo(paciNuevo);
         

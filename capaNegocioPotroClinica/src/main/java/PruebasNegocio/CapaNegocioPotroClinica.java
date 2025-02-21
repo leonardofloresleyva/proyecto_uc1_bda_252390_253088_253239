@@ -15,22 +15,24 @@ import java.time.LocalDate;
  */
 public class CapaNegocioPotroClinica {
 
-    public static void main(String[] args) {
-        PacienteBO pacienteBO = new PacienteBO(null);
-
-        probarRegistro(null, "Paciente nulo", pacienteBO);
-        probarRegistro(new PacienteNuevoDTO("", "password", "Paciente", "Juan", "Perez", "Lopez", "1234567890", LocalDate.of(2000, 1, 1), "Estado", "Colonia", "Calle", "123"), "Correo vacío", pacienteBO);
-        probarRegistro(new PacienteNuevoDTO("correo_demasiado_largo@ejemplo.commmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmm.com", "password", "Paciente", "Juan", "Perez", "Lopez", "1234567890", LocalDate.of(2000, 1, 1), "Estado", "Colonia", "Calle", "123"), "Correo demasiado largo", pacienteBO);
-        probarRegistro(new PacienteNuevoDTO("correo_invalido", "password", "Paciente", "Juan", "Perez", "Lopez", "1234567890", LocalDate.of(2000, 1, 1), "Estado", "Colonia", "Calle", "123"), "Formato de correo inválido", pacienteBO);
-        probarRegistro(new PacienteNuevoDTO("correo@ejemplo.com", "", "Paciente", "Juan", "Perez", "Lopez", "1234567890", LocalDate.of(2000, 1, 1), "Estado", "Colonia", "Calle", "123"), "Contraseña vacía", pacienteBO);
-        probarRegistro(new PacienteNuevoDTO("correo@ejemplo.com", "password_demasiado_larga12345678901234567890", "Paciente", "Juan", "Perez", "Lopez", "1234567890", LocalDate.of(2000, 1, 1), "Estado", "Colonia", "Calle", "123"), "Contraseña demasiado larga", pacienteBO);
-        probarRegistro(new PacienteNuevoDTO("correo@ejemplo.com", "password", "", "Juan", "Perez", "Lopez", "1234567890", LocalDate.of(2000, 1, 1), "Estado", "Colonia", "Calle", "123"), "Rol vacío", pacienteBO);
-        probarRegistro(new PacienteNuevoDTO("correo@ejemplo.com", "password", "Admin", "Juan", "Perez", "Lopez", "1234567890", LocalDate.of(2000, 1, 1), "Estado", "Colonia", "Calle", "123"), "Rol incorrecto", pacienteBO);
-        probarRegistro(new PacienteNuevoDTO("correo@ejemplo.com", "password", "Paciente", "", "Perez", "Lopez", "1234567890", LocalDate.of(2000, 1, 1), "Estado", "Colonia", "Calle", "123"), "Nombre vacío", pacienteBO);
-        probarRegistro(new PacienteNuevoDTO("correo@ejemplo.com", "password", "Paciente", "Juan@123", "Perez", "Lopez", "1234567890", LocalDate.of(2000, 1, 1), "Estado", "Colonia", "Calle", "123"), "Nombre con caracteres especiales", pacienteBO);
-        probarRegistro(new PacienteNuevoDTO("correo@ejemplo.com", "password", "Paciente", "Juan", "Perez", "Lopez", "1234567890", null, "Estado", "Colonia", "Calle", "123"), "Fecha de nacimiento vacía", pacienteBO);
-        probarRegistro(new PacienteNuevoDTO("correo@ejemplo.com", "password", "Paciente", "Juan", "Perez", "Lopez", "1234567890", LocalDate.of(2100, 1, 1), "Estado", "Colonia", "Calle", "123"), "Fecha de nacimiento futura", pacienteBO);
-        probarRegistro(new PacienteNuevoDTO("correo@ejemplo.com", "Password12", "Paciente", "Juan", "Perez", "Lopez", "1234567890", LocalDate.of(2005, 1, 14), "Alta", "Sueño", "Potros", "123"), "Paciente Valido", pacienteBO);
+    public static void main(String[] args) throws NegocioException {
+        iConexion conexion = new Conexion();
+        PacienteBO pacienteBO = new PacienteBO(conexion);
+        pacienteBO.registrarPaciente(new PacienteNuevoDTO(
+                "josehernandez@gmail.com",
+                "1234Jose",
+                "Paciente",
+                "Jose",
+                "Hernandez",
+                "Casarez",
+                "6441352678",
+                LocalDate.of(2005, 2, 15),
+                "Alta",
+                "Jecopaco",
+                "5 de mayo",
+                "32"
+        ));
+        
     }
   
     private static void probarRegistro(PacienteNuevoDTO paciente, String caso, PacienteBO pacienteBO) {

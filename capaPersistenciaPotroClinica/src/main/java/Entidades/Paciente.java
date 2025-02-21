@@ -10,7 +10,6 @@ import java.time.LocalDate;
  */
 public class Paciente extends Usuario {
     // Atributos de un Paciente.
-    private int idPaciente;
     private String nombres, apellidoPaterno, apellidoMaterno, telefono, estado;
     private LocalDate fechaNacimiento;
     // Atributos de la dirección que se pasan a tabla Dirección a través de un procedimiento almacenado.
@@ -71,8 +70,6 @@ public class Paciente extends Usuario {
         this.numero = numero;
     }
 
-    public void setIdPaciente(int idPaciente) {this.idPaciente = idPaciente;}
-
     public void setNombres(String nombres) {this.nombres = nombres;}
 
     public void setApellidoPaterno(String apellidoPaterno) {this.apellidoPaterno = apellidoPaterno;}
@@ -90,8 +87,6 @@ public class Paciente extends Usuario {
     public void setCalle(String calle) {this.calle = calle;}
 
     public void setNumero(String numero) {this.numero = numero;}
-
-    public int getIdPaciente() {return idPaciente;}
 
     public String getNombres() {return nombres;}
 
@@ -113,7 +108,7 @@ public class Paciente extends Usuario {
 
     @Override
     public String toString() {
-        return "Paciente{" + "idPaciente=" + idPaciente + ", nombres=" + nombres
+        return "Paciente{" + "nombres=" + nombres
                 + ", apellidoPaterno=" + apellidoPaterno + ", apellidoMaterno="
                 + apellidoMaterno + ", telefono=" + telefono + ", fechaNacimiento="
                 + fechaNacimiento + ", estado=" + estado + ", colonia=" + colonia

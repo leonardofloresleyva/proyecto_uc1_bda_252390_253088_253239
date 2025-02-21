@@ -15,7 +15,7 @@ public class PacienteMapper {
         Paciente paciente = new Paciente(
                 paciNuevo.getUsuario(),
                 paciNuevo.getContrasenia(),
-                paciNuevo.getNumero(),
+                paciNuevo.getRol(),
                 paciNuevo.getNombres(), 
                 paciNuevo.getApellidoPaterno(), 
                 paciNuevo.getApellidoMaterno(), 
@@ -33,7 +33,7 @@ public class PacienteMapper {
         PacienteNuevoDTO pacienteDTO = new PacienteNuevoDTO(
                 paciViejo.getUsuario(),
                 paciViejo.getContrasenia(),
-                paciViejo.getNumero(),
+                paciViejo.getRol(),
                 paciViejo.getNombres(), 
                 paciViejo.getApellidoPaterno(), 
                 paciViejo.getApellidoMaterno(), 
