@@ -21,9 +21,11 @@ import java.util.regex.Pattern;
  */
 public class PacienteBO {
     private final iPacienteDAO pacienteDAO;
+    private final PacienteMapper pacienteMapper;
     
     public PacienteBO (iConexion conexion) {
         this.pacienteDAO = new PacienteDAO(conexion);
+        this.pacienteMapper = new PacienteMapper();
     }
     
      public boolean registrarPaciente(PacienteNuevoDTO paciNuevo) throws NegocioException {
@@ -100,10 +102,8 @@ public class PacienteBO {
         if (fechaN.isAfter(LocalDate.now())) 
             throw new NegocioException("La fecha de nacimiento no puede estar después de la fecha actual.");
         
+        Paciente paciente = pacienteMapper.toEntityNuevo(paciNuevo);
         
-        PacienteMapper convertidor = new PacienteMapper();
-        Paciente paciente = convertidor.toEntityNuevo(paciNuevo);
-
         try {
             pacienteDAO.registrarPaciente(paciente);
             return true;
