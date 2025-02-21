@@ -42,10 +42,10 @@ public class PacienteBO {
         String telefono = paciNuevo.getTelefono();
         LocalDate fechaN = paciNuevo.getFechaNacimiento();
         
-        if(correo == null || correo.trim().isEmpty())
+        if (correo == null || correo.trim().isEmpty())
             throw new NegocioException("El correo no puede estar vacio.");
         
-        if(correo.length() > 150)
+        if (correo.length() > 150)
             throw new NegocioException("No se permiten correos con mas de 150 caracteres.");
         
         if (!Pattern.matches("^[^@\\s]+@[^@\\s]+\\.com$", correo)) 
@@ -54,13 +54,13 @@ public class PacienteBO {
         if (password == null || password.trim().isEmpty()) 
             throw new NegocioException("La contrasenia no puede estar vacia.");
         
-        if(password.length() > 20)
+        if (password.length() > 20)
             throw new NegocioException("No se permiten contrasenias con mas de 20 caracteres.");
         
-        if(rol == null || rol.trim().isEmpty())
+        if (rol == null || rol.trim().isEmpty())
             throw new NegocioException("El rol no puede estar vacío.");
         
-        if(!"Paciente".equals(rol))
+        if (!"Paciente".equals(rol))
             throw new NegocioException("El rol debe ser igual a \"Paciente\".");
         
         if (nombre == null || nombre.trim().isEmpty()) 
@@ -69,7 +69,7 @@ public class PacienteBO {
         if (!Pattern.matches("^[a-zA-ZáéíóúÁÉÍÓÚñÑ ]+$", nombre)) 
             throw new NegocioException("No se admiten caracteres especiales en el nombre.");
         
-        if(nombre.length() > 100)
+        if (nombre.length() > 100)
             throw new NegocioException("No se permiten nombres con mas de 100 caracteres.");
         
         if (apellidoP == null || apellidoP.trim().isEmpty()) 
@@ -78,7 +78,7 @@ public class PacienteBO {
         if (!Pattern.matches("^[a-zA-ZáéíóúÁÉÍÓÚñÑ ]+$", apellidoP)) 
             throw new NegocioException("No se admiten caracteres especiales en el apellido paterno");
         
-        if(apellidoP.length() > 100)
+        if (apellidoP.length() > 100)
             throw new NegocioException("No se permiten apellidos paternos con mas de 100 caracteres.");
         
         if (apellidoM == null || apellidoM.trim().isEmpty()) 
@@ -87,7 +87,7 @@ public class PacienteBO {
         if (!Pattern.matches("^[a-zA-ZáéíóúÁÉÍÓÚñÑ ]+$", apellidoM)) 
             throw new NegocioException("No se admiten caracteres especiales en el apellido materno");
         
-        if(apellidoM.length() > 100)
+        if (apellidoM.length() > 100)
             throw new NegocioException("No se permiten apellidos maternos con mas de 100 caracteres.");
         
         if (telefono == null || telefono.trim().isEmpty()) 
@@ -101,6 +101,36 @@ public class PacienteBO {
         
         if (fechaN.isAfter(LocalDate.now())) 
             throw new NegocioException("La fecha de nacimiento no puede estar después de la fecha actual.");
+        
+        if (!password.matches("^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d).+$")) 
+            throw new NegocioException("La contraseña debe contener al menos una mayúscula, una minúscula y un número");
+        
+        int edad = LocalDate.now().getYear() - fechaN.getYear();
+        if (edad < 0 || edad > 120) 
+            throw new NegocioException("La edad debe estar entre 0 y 120 años");
+        
+        if (!paciNuevo.getCalle().matches("^[a-zA-Z0-9áéíóúÁÉÍÓÚñÑ #,-.]+$")) 
+            throw new NegocioException("La dirección contiene caracteres inválidos");
+        
+        if (nombre.length() < 2 || nombre.length() > 50) 
+            throw new NegocioException("El nombre debe tener entre 2 y 50 caracteres");
+        
+        if (password.matches(".*(.)\\1{2,}.*")) 
+            throw new NegocioException("La contraseña no puede contener secuencias repetitivas");
+        
+        if (!nombre.trim().equals(nombre)) 
+            throw new NegocioException("El nombre no debe contener espacios al inicio o al final");
+        
+        if (password.contains(" ")) 
+            throw new NegocioException("La contraseña no debe contener espacios en ninguna parte");
+        
+        if (password.equalsIgnoreCase(correo) || password.equalsIgnoreCase(nombre)) 
+            throw new NegocioException("La contraseña no puede ser igual al correo o al nombre");
+        
+        if (correo.split("@")[0].length() < 2) 
+            throw new NegocioException("El correo debe tener al menos dos caracteres antes del '@'");
+        
+        //Falto agregar la incriptacion de contraseña 
         
         Paciente paciente = pacienteMapper.toEntityNuevo(paciNuevo);
         
