@@ -30,6 +30,9 @@ public class PacienteBO {
     
      public boolean registrarPaciente(PacienteNuevoDTO paciNuevo) throws NegocioException {
         
+         if (paciNuevo == null) 
+            throw new NegocioException("El paciente no puede ser nulo.");
+         
         String correo = paciNuevo.getUsuario();
         String password = paciNuevo.getContrasenia();
         String rol = paciNuevo.getRol();
@@ -38,9 +41,6 @@ public class PacienteBO {
         String apellidoM = paciNuevo.getApellidoMaterno();
         String telefono = paciNuevo.getTelefono();
         LocalDate fechaN = paciNuevo.getFechaNacimiento();
-        
-        if (paciNuevo == null) 
-            throw new NegocioException("El paciente no puede ser nulo.");
         
         if(correo == null || correo.trim().isEmpty())
             throw new NegocioException("El correo no puede estar vacio.");
