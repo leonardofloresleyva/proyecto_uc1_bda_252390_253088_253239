@@ -1,7 +1,6 @@
 package Mapper;
 
 import DTO.PacienteNuevoDTO;
-import DTO.PacienteViejoDTO;
 import Entidades.Paciente;
 
 /**
@@ -11,78 +10,14 @@ import Entidades.Paciente;
  */
 public class PacienteMapper {
     
-    public Paciente toEntityNuevo (PacienteNuevoDTO paciNuevo){
-        Paciente paciente = new Paciente(
-                paciNuevo.getUsuario(),
-                paciNuevo.getContrasenia(),
-                paciNuevo.getNumero(),
-                paciNuevo.getNombres(), 
-                paciNuevo.getApellidoPaterno(), 
-                paciNuevo.getApellidoMaterno(), 
-                paciNuevo.getTelefono(), 
-                paciNuevo.getFechaNacimiento(), 
-                paciNuevo.getEstado(), 
-                paciNuevo.getColonia(), 
-                paciNuevo.getCalle(), 
-                paciNuevo.getNumero()
-        );
+    //aggregar usuario() y quitar super
+    public Paciente ToEntity (PacienteNuevoDTO paciNuevo){
+        Paciente paciente = new Paciente(paciNuevo.getNombres(), paciNuevo.getApellidoPaterno(), paciNuevo.getApellidoMaterno(), paciNuevo.getTelefono(), paciNuevo.getFechaNacimiento(), paciNuevo.getEstado(), paciNuevo.getColonia(), paciNuevo.getCalle(), paciNuevo.getNumero());
         return paciente;
     }
     
-    public PacienteNuevoDTO toDTONuevo(Paciente paciViejo){
-        PacienteNuevoDTO pacienteDTO = new PacienteNuevoDTO(
-                paciViejo.getUsuario(),
-                paciViejo.getContrasenia(),
-                paciViejo.getNumero(),
-                paciViejo.getNombres(), 
-                paciViejo.getApellidoPaterno(), 
-                paciViejo.getApellidoMaterno(), 
-                paciViejo.getTelefono(), 
-                paciViejo.getFechaNacimiento(), 
-                paciViejo.getEstado(), 
-                paciViejo.getColonia(), 
-                paciViejo.getCalle(), 
-                paciViejo.getNumero()
-        );
+    public PacienteNuevoDTO toDTO(Paciente paciente){
+        PacienteNuevoDTO pacienteDTO = new PacienteNuevoDTO(paciente.getNombres(), paciente.getApellidoPaterno(), paciente.getApellidoMaterno(), paciente.getTelefono(), paciente.getFechaNacimiento(), paciente.getEstado(), paciente.getColonia(), paciente.getCalle(), paciente.getNumero());
         return pacienteDTO;
     }
-    
-    public Paciente toEntityViejo(PacienteViejoDTO paciViejo){
-        Paciente paciente = new Paciente(
-                paciViejo.getId(),
-                paciViejo.getUsuario(),
-                paciViejo.getContrasenia(),
-                paciViejo.getRol(),
-                paciViejo.getNombres(), 
-                paciViejo.getApellidoPaterno(), 
-                paciViejo.getApellidoMaterno(), 
-                paciViejo.getTelefono(), 
-                paciViejo.getFechaNacimiento(), 
-                paciViejo.getEstado(), 
-                paciViejo.getColonia(), 
-                paciViejo.getCalle(), 
-                paciViejo.getNumero()
-        );
-        return paciente;
-    }
-    
-    public PacienteViejoDTO toDTOViejo(Paciente paciNuevo){
-        PacienteViejoDTO pacienteDTO = new PacienteViejoDTO(
-                paciNuevo.getId(),
-                paciNuevo.getUsuario(),
-                paciNuevo.getContrasenia(),
-                paciNuevo.getRol(),
-                paciNuevo.getNombres(), 
-                paciNuevo.getApellidoPaterno(), 
-                paciNuevo.getApellidoMaterno(), 
-                paciNuevo.getTelefono(), 
-                paciNuevo.getFechaNacimiento(),  
-                paciNuevo.getEstado(),
-                paciNuevo.getColonia(), 
-                paciNuevo.getCalle(), 
-                paciNuevo.getNumero()
-        );
-        return pacienteDTO;
-    }
-    
 }
