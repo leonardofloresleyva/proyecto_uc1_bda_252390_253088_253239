@@ -3,8 +3,10 @@ package PruebasPersistencia;
 import Conexion.Conexion;
 import Conexion.iConexion;
 import DAO.CitaDAO;
+import DAO.ConsultaDAO;
 import DAO.PacienteDAO;
 import Entidades.Cita;
+import Entidades.Consulta;
 import Entidades.Paciente;
 import Excepciones.PersistenciaException;
 import java.sql.Connection;
@@ -24,6 +26,7 @@ public class PruebasPersistencia {
         iConexion conexion = new Conexion();
         // PacienteDAO pacienteDAO = new PacienteDAO(conexion);
         //CitaDAO citaDAO = new CitaDAO(conexion);
+        ConsultaDAO consultaDAO = new ConsultaDAO(conexion);
         
         PacienteDAO paciente = new PacienteDAO(conexion);
         
@@ -40,8 +43,8 @@ public class PruebasPersistencia {
 //        }
         
         // Crear paciente
-        Paciente paciente2 = new Paciente("usuario@gmail.com", "876589", "Paciente", "Pepe", "Pecas", "Mendez", "55598888", LocalDate.of(2002, 5, 11), "Alta", "Ciudad Gótica", "Calle Pio", "9944");
-        paciente.registrarPaciente(paciente2);
+        // Paciente paciente2 = new Paciente("usuario@gmail.com", "876589", "Paciente", "Pepe", "Pecas", "Mendez", "55598888", LocalDate.of(2002, 5, 11), "Alta", "Ciudad Gótica", "Calle Pio", "9944");
+        // paciente.registrarPaciente(paciente2);
         
 //        if (registrado) {
 //                System.out.println("Paciente registrado con éxito.");
@@ -58,6 +61,17 @@ public class PruebasPersistencia {
 //        } else {
 //            System.out.println("Error al registrar la cita");
 //        }
+
+        // Registrar una nueva consulta
+        Consulta consulta = new Consulta("Migraña", "Dolor de cabeza fuerte. Náuseas o vómito. Sensibilidad a la luz y al sonido", "Analgésicos comunes: Ibuprofeno o paracetamol.", 20);
+        boolean consultado = consultaDAO.registrarConsulta(consulta);
+        
+
+        if (consultado) {
+            System.out.println("Consulta registrada con exito");
+        } else {
+            System.out.println("Error al registrar la consulta");
+        }
 
     }
 }

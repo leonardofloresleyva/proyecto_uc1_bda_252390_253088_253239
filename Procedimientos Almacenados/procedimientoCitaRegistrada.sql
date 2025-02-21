@@ -18,20 +18,33 @@ CREATE PROCEDURE REGISTRAR_CITA (
 BEGIN
 	-- Comenzar la transacción
     START TRANSACTION;
-		-- Insertar la cita
-        INSERT INTO CITAS (FECHA_HORA, ID_MEDICO, ID_PACIENTE) VALUES (FECHAHORA, IDMEDICO, IDPACIENTE);
-        -- Obtener id generado por la tabla de citas
-		SET @CITA_ID = LAST_INSERT_ID();
-        
-        -- Validar si es cita previa o cita de emergencia
-        IF TIPO_CITA = "Previa" THEN
-			INSERT INTO CITAS_MEDICAS (ID_CITA_PREVIA, ESTADO, ID_CITA) VALUES (@CITA_ID, ESTADO_CITA, @CITA_ID);
-		ELSEIF TIPO_CITA = "Emergencia" THEN
-			-- Generar un folio automático
-            SET @FOLIO_EMERGENCIA = ROUND(RAND()*100000000); -- Crea una cadena de números aleatorios de 8 dígitos para guardar en el folio
-			INSERT INTO CITAS_EMERGENCIA (ID_CITA_EMERGENCIA, ESTADO, FOLIO, ID_CITA) VALUES (@CITA_ID, ESTADO_CITA, @FOLIO_EMERGENCIA, @CITA_ID);
+		-- Verificar si la cita que se quiere ingresar ya está asociada a una misma fecha y un mismo médico
+		IF EXISTS (
+			SELECT 1
+			FROM CITAS
+			WHERE ID_PACIENTE = IDPACIENTE
+			AND ID_MEDICO = IDMEDICO
+			AND DATE(FECHA_HORA) = DATE(FECHAHORA) -- Solo compara la fecha
+		) THEN
+			-- Si ya existe una cita, lanzar un error y deshacer la transacción
+			SIGNAL SQLSTATE '45000'
+			SET MESSAGE_TEXT = 'El paciente ya tiene una cita programada con este médico para esta fecha.';
+			ROLLBACK;
+		ELSE
+			-- Insertar la cita
+			INSERT INTO CITAS (FECHA_HORA, ID_MEDICO, ID_PACIENTE) VALUES (FECHAHORA, IDMEDICO, IDPACIENTE);
+			-- Obtener id generado por la tabla de citas
+			SET @CITA_ID = LAST_INSERT_ID();
+			-- Validar si es cita previa o cita de emergencia
+			IF TIPO_CITA = "Previa" THEN
+				INSERT INTO CITAS_MEDICAS (ID_CITA_PREVIA, ESTADO, ID_CITA) VALUES (@CITA_ID, ESTADO_CITA, @CITA_ID);
+			ELSEIF TIPO_CITA = "Emergencia" THEN
+				-- Generar un folio automático
+				SET @FOLIO_EMERGENCIA = ROUND(RAND()*100000000); -- Crea una cadena de números aleatorios de 8 dígitos para guardar en el folio
+				INSERT INTO CITAS_EMERGENCIA (ID_CITA_EMERGENCIA, ESTADO, FOLIO, ID_CITA) VALUES (@CITA_ID, ESTADO_CITA, @FOLIO_EMERGENCIA, @CITA_ID);
+			END IF;
+			COMMIT;
 		END IF;
-	COMMIT;
 END //
 DELIMITER ;
 
