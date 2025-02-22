@@ -1,0 +1,17 @@
+/*
+	Vista que muestra los datos del médico, incluida sus datos
+    de usuario.
+*/
+CREATE VIEW DATOS_MEDICO AS
+SELECT
+	M.ID_MEDICO AS ID,
+    CONCAT(M.NOMBRES, " ", M.APELLIDO_PATERNO, " ", M.APELLIDO_MATERNO) AS NOMBRE_COMPLETO,
+    M.ESPECIALIDAD,
+    M.ESTADO,
+    U.USUARIO AS CEDULA,
+    U.CONTRASENIA
+FROM MEDICOS AS M
+INNER JOIN USUARIOS AS U
+ON M.ID_MEDICO = U.ID;
+
+SELECT * FROM datos_medico;
