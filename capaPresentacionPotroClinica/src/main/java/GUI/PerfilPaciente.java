@@ -37,9 +37,9 @@ public class PerfilPaciente extends javax.swing.JFrame {
         jLabel8 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         jButton1 = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
+        ActualizarDatos = new javax.swing.JButton();
         jButton3 = new javax.swing.JButton();
-        jButton4 = new javax.swing.JButton();
+        CancelarCitas = new javax.swing.JButton();
         jSeparator1 = new javax.swing.JSeparator();
         jLabel5 = new javax.swing.JLabel();
 
@@ -115,10 +115,10 @@ public class PerfilPaciente extends javax.swing.JFrame {
             }
         });
 
-        jButton2.setText("Actualizar Datos Personales");
-        jButton2.addActionListener(new java.awt.event.ActionListener() {
+        ActualizarDatos.setText("Actualizar Datos Personales");
+        ActualizarDatos.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton2ActionPerformed(evt);
+                ActualizarDatosActionPerformed(evt);
             }
         });
 
@@ -129,10 +129,10 @@ public class PerfilPaciente extends javax.swing.JFrame {
             }
         });
 
-        jButton4.setText("Cancelar Cita");
-        jButton4.addActionListener(new java.awt.event.ActionListener() {
+        CancelarCitas.setText("Cancelar Cita");
+        CancelarCitas.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton4ActionPerformed(evt);
+                CancelarCitasActionPerformed(evt);
             }
         });
 
@@ -149,9 +149,9 @@ public class PerfilPaciente extends javax.swing.JFrame {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGap(38, 38, 38)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jButton4, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(CancelarCitas, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(ActualizarDatos, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(11, 11, 11)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -196,11 +196,11 @@ public class PerfilPaciente extends javax.swing.JFrame {
                 .addGap(18, 18, 18)
                 .addComponent(jButton1)
                 .addGap(18, 18, 18)
-                .addComponent(jButton2)
+                .addComponent(ActualizarDatos)
                 .addGap(18, 18, 18)
                 .addComponent(jButton3)
                 .addGap(18, 18, 18)
-                .addComponent(jButton4)
+                .addComponent(CancelarCitas)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 19, Short.MAX_VALUE)
                 .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
@@ -225,17 +225,21 @@ public class PerfilPaciente extends javax.swing.JFrame {
         this.dispose();
     }//GEN-LAST:event_VolverActionPerformed
 
-    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jButton2ActionPerformed
+    private void ActualizarDatosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ActualizarDatosActionPerformed
+        ActualizarDatosPaciente nuevaVentana = new ActualizarDatosPaciente();
+        nuevaVentana.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_ActualizarDatosActionPerformed
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jButton3ActionPerformed
 
-    private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jButton4ActionPerformed
+    private void CancelarCitasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CancelarCitasActionPerformed
+        CancelarCitas nuevaVentana = new CancelarCitas();
+        nuevaVentana.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_CancelarCitasActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         RegistrarCita nuevaVentana = new RegistrarCita();
@@ -248,11 +252,11 @@ public class PerfilPaciente extends javax.swing.JFrame {
      */
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton ActualizarDatos;
+    private javax.swing.JButton CancelarCitas;
     private javax.swing.JButton Volver;
     private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
-    private javax.swing.JButton jButton4;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;

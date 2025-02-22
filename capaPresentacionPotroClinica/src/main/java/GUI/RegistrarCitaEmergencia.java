@@ -8,12 +8,12 @@ package GUI;
  *
  * @author multaslokas33
  */
-public class RegistrarCitaPrevia extends javax.swing.JFrame {
+public class RegistrarCitaEmergencia extends javax.swing.JFrame {
 
     /**
      * Creates new form InicioSecion
      */
-    public RegistrarCitaPrevia() {
+    public RegistrarCitaEmergencia() {
         initComponents();
     }
 
@@ -76,7 +76,7 @@ public class RegistrarCitaPrevia extends javax.swing.JFrame {
         jPanel4.setBackground(new java.awt.Color(153, 204, 255));
 
         jLabel1.setFont(new java.awt.Font("Times New Roman", 0, 36)); // NOI18N
-        jLabel1.setText("    Clinica Privada - Cita Previa");
+        jLabel1.setText("    Clinica Privada - Cita Emergencia");
 
         javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
         jPanel4.setLayout(jPanel4Layout);
@@ -207,7 +207,7 @@ public class RegistrarCitaPrevia extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void ConfirmarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ConfirmarActionPerformed
-        PerfilPaciente nuevaVentana = new PerfilPaciente();
+        CitaEmergencia nuevaVentana = new CitaEmergencia();
         nuevaVentana.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_ConfirmarActionPerformed

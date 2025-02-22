@@ -36,9 +36,9 @@ public class PerfilMedico extends javax.swing.JFrame {
         jLabel7 = new javax.swing.JLabel();
         jLabel8 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
-        jButton2 = new javax.swing.JButton();
-        jButton3 = new javax.swing.JButton();
-        jButton4 = new javax.swing.JButton();
+        histroial = new javax.swing.JButton();
+        Baja = new javax.swing.JButton();
+        alta = new javax.swing.JButton();
         jSeparator1 = new javax.swing.JSeparator();
         jLabel5 = new javax.swing.JLabel();
         ConsultarAgenda = new javax.swing.JButton();
@@ -108,24 +108,24 @@ public class PerfilMedico extends javax.swing.JFrame {
         jLabel3.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
         jLabel3.setText("¡Bienvenido, \"Medico\"!");
 
-        jButton2.setText("Consultar historial de consultas de un paciente");
-        jButton2.addActionListener(new java.awt.event.ActionListener() {
+        histroial.setText("Consultar historial de consultas de un paciente");
+        histroial.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton2ActionPerformed(evt);
+                histroialActionPerformed(evt);
             }
         });
 
-        jButton3.setText("Darse de baja");
-        jButton3.addActionListener(new java.awt.event.ActionListener() {
+        Baja.setText("Darse de baja");
+        Baja.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton3ActionPerformed(evt);
+                BajaActionPerformed(evt);
             }
         });
 
-        jButton4.setText("Darse de alta");
-        jButton4.addActionListener(new java.awt.event.ActionListener() {
+        alta.setText("Darse de alta");
+        alta.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton4ActionPerformed(evt);
+                altaActionPerformed(evt);
             }
         });
 
@@ -168,9 +168,9 @@ public class PerfilMedico extends javax.swing.JFrame {
                                                 .addComponent(jLabel8)))
                                         .addComponent(jLabel3)))
                                 .addComponent(jLabel2)
-                                .addComponent(jButton2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(jButton3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(jButton4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                                .addComponent(histroial, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(Baja, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(alta, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                         .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
         );
@@ -199,11 +199,11 @@ public class PerfilMedico extends javax.swing.JFrame {
                 .addGap(18, 18, 18)
                 .addComponent(ConsultarAgenda)
                 .addGap(18, 18, 18)
-                .addComponent(jButton2)
+                .addComponent(histroial)
                 .addGap(18, 18, 18)
-                .addComponent(jButton3)
+                .addComponent(Baja)
                 .addGap(18, 18, 18)
-                .addComponent(jButton4)
+                .addComponent(alta)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 25, Short.MAX_VALUE)
                 .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
@@ -228,17 +228,23 @@ public class PerfilMedico extends javax.swing.JFrame {
         this.dispose();
     }//GEN-LAST:event_VolverActionPerformed
 
-    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jButton2ActionPerformed
+    private void histroialActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_histroialActionPerformed
+        HistorialConsultas nuevaVentana = new HistorialConsultas();
+        nuevaVentana.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_histroialActionPerformed
 
-    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jButton3ActionPerformed
+    private void BajaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BajaActionPerformed
+        DarBajaMedico nuevaVentana = new DarBajaMedico();
+        nuevaVentana.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_BajaActionPerformed
 
-    private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jButton4ActionPerformed
+    private void altaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_altaActionPerformed
+        DarAltaMedico nuevaVentana = new DarAltaMedico();
+        nuevaVentana.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_altaActionPerformed
 
     private void ConsultarAgendaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ConsultarAgendaActionPerformed
         ConsultaAgendaMedico nuevaVentana = new ConsultaAgendaMedico();
@@ -251,11 +257,11 @@ public class PerfilMedico extends javax.swing.JFrame {
      */
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton Baja;
     private javax.swing.JButton ConsultarAgenda;
     private javax.swing.JButton Volver;
-    private javax.swing.JButton jButton2;
-    private javax.swing.JButton jButton3;
-    private javax.swing.JButton jButton4;
+    private javax.swing.JButton alta;
+    private javax.swing.JButton histroial;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;

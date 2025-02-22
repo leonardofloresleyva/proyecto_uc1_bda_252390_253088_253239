@@ -73,7 +73,7 @@ public class RegistrarCita extends javax.swing.JFrame {
             .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, 70, Short.MAX_VALUE)
         );
 
-        Agendar.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Previa", "Emergencia", " " }));
+        Agendar.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Previa", "Emergencia" }));
         Agendar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 AgendarActionPerformed(evt);
@@ -157,7 +157,7 @@ public class RegistrarCita extends javax.swing.JFrame {
         if ("Previa".equals(seleccion)) {
             new RegistrarCitaPrevia().setVisible(true); // Abre la ventana de Médico
         } else if ("Emergencia".equals(seleccion)) {
-            new InicioPaciente().setVisible(true); // Abre la ventana de Paciente
+            new RegistrarCitaEmergencia().setVisible(true); // Abre la ventana de Paciente
         }
 
         this.dispose();

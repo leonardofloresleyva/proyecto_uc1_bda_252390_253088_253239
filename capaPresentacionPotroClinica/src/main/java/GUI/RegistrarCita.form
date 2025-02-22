@@ -153,10 +153,9 @@
         <Component class="javax.swing.JComboBox" name="Agendar">
           <Properties>
             <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
-              <StringArray count="3">
+              <StringArray count="2">
                 <StringItem index="0" value="Previa"/>
                 <StringItem index="1" value="Emergencia"/>
-                <StringItem index="2" value=" "/>
               </StringArray>
             </Property>
           </Properties>
