@@ -55,7 +55,7 @@ public class RegistrarCitaPrevia extends javax.swing.JFrame {
         );
 
         jLabel2.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
-        jLabel2.setText("Fecha (dd/mm/yyyy)");
+        jLabel2.setText("Fecha (yyyy/mm/dd)");
 
         Fecha.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {

@@ -148,7 +148,7 @@ public class InicioSecion extends javax.swing.JFrame {
         if ("Paciente".equals(seleccion)) {
             new InicioPaciente().setVisible(true); // Abre la ventana de Médico
         } else if ("Medico".equals(seleccion)) {
-            new InicioPaciente().setVisible(true); // Abre la ventana de Paciente
+            new InicioMedico().setVisible(true); // Abre la ventana de Paciente
         }
 
         this.dispose();
