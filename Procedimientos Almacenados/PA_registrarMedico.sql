@@ -1,11 +1,11 @@
 DELIMITER $$
 CREATE PROCEDURE REGISTRAR_MEDICO(
+	IN CEDULA VARCHAR(150),
     IN PASSW VARCHAR(128),
     IN ROL_MEDICO ENUM("Medico"),
     IN NOMBRE_MEDICO VARCHAR(100),
     IN APELLIDO_P VARCHAR(100),
     IN APELLIDO_M VARCHAR(100),
-    IN CEDULA_MEDICO VARCHAR(20),
     IN ESPECIALIDAD_MEDICO VARCHAR(50),
     IN ESTADO_MEDICO ENUM("Alta")
 )
@@ -25,7 +25,7 @@ BEGIN
             ROL
 		)
         VALUES(
-			CEDULA_MEDICO, PASSW, ROL_MEDICO
+			CEDULA, PASSW, ROL_MEDICO
 		);
 		-- 2.- Se obtiene el ID generado por la tabla USUARIOS y se almacena en una variable.
         SET @ID_USUARIO = LAST_INSERT_ID();
@@ -35,7 +35,6 @@ BEGIN
 			NOMBRES, 
             APELLIDO_PATERNO, 
             APELLIDO_MATERNO, 
-            CEDULA, 
             ESPECIALIDAD, 
             ESTADO
 		)
@@ -43,8 +42,7 @@ BEGIN
 			@ID_USUARIO, 
             NOMBRE_MEDICO, 
             APELLIDO_P, 
-            APELLIDO_M, 
-            CEDULA_MEDICO, 
+            APELLIDO_M,
             ESPECIALIDAD_MEDICO, 
             ESTADO_MEDICO
 		);
