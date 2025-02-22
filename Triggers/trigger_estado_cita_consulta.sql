@@ -5,7 +5,7 @@
     no se guarda la consulta.
 */
 DELIMITER //
-CREATE TRIGGER ESTADO_CITAPREVIA_CONSULTA
+CREATE TRIGGER ESTADO_CITA_CONSULTA
 BEFORE INSERT ON CONSULTAS
 FOR EACH ROW
 BEGIN
@@ -20,17 +20,17 @@ BEGIN
     
 	IF @CITA_TIPO = "Emergencia" -- Si se trata de una cita de emergencia.
 	THEN
-		-- Obtener estado de la cita 
+        -- Obtener estado de la cita 
 		SELECT ESTADO
 		INTO ESTADO_CITA
-		FROM CITAS_PREVIAS
-		WHERE ID_CITA = NEW.ID_CITA;
+		FROM CITAS_EMERGENCIA
+		WHERE ID_CITA_EMERGENCIA = NEW.ID_CITA;
 	ELSE -- Si se trata de una cita previa.
 		-- Obtener estado de la cita 
 		SELECT ESTADO
 		INTO ESTADO_CITA
-		FROM CITAS_EMERGENCIA
-		WHERE ID_CITA = NEW.ID_CITA;
+		FROM CITAS_PREVIAS
+		WHERE ID_CITA_PREVIA = NEW.ID_CITA;
 	END IF;
     
 	-- Validar que el estado de la cita sea atendida

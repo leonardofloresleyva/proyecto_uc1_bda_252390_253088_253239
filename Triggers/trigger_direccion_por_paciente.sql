@@ -23,11 +23,3 @@ BEGIN
 	END IF;
 END $$
 DELIMITER ;
-
--- Primera inserción: exitosa.
-INSERT INTO DIRECCIONES(ID_DIRECCION, COLONIA, CALLE, NUMERO, ID_PACIENTE)
-VALUES(1, "Jecopaco", "Galeana", "54", 3);
-
--- Segundo intento de inserción: fracaso; dispara el trigger
-INSERT INTO DIRECCIONES(ID_DIRECCION, COLONIA, CALLE, NUMERO, ID_PACIENTE)
-VALUES(2, "Esperanza", "Jalisco", "40", 3);

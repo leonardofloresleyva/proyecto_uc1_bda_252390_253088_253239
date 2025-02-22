@@ -1,3 +1,7 @@
+/*
+	Procedimiento almacenado que registra a un
+    médico en la clínica.
+*/
 DELIMITER $$
 CREATE PROCEDURE REGISTRAR_MEDICO(
 	IN CEDULA VARCHAR(150),

@@ -1,5 +1,5 @@
 /*
-	Procedimiento almacenado para registrar un nuevo cita en la clínica.
+	Procedimiento almacenado para registrar una nueva cita en la clínica.
     Recibe todos los datos relacionados a la cita sin el id de la cita,
     recibiendo también tanto el estado como el tipo de cita.
     Inserta los datos correspondientes a la tabla CITAS y, dependiendo
@@ -12,7 +12,7 @@ CREATE PROCEDURE REGISTRAR_CITA (
 	IN FECHAHORA DATETIME,
     IN IDMEDICO INT,
     IN IDPACIENTE INT,
-    IN TIPO_CITA ENUM("Previa", "Emergencia")
+    IN CITA_TIPO ENUM("Previa", "Emergencia")
 )
 BEGIN
 	-- Comenzar la transacción
@@ -23,7 +23,7 @@ BEGIN
 			FROM CITAS
 			WHERE ID_PACIENTE = IDPACIENTE
 			AND ID_MEDICO = IDMEDICO
-			AND DATE(FECHA_HORA) = DATE(FECHAHORA) -- Solo compara la fecha
+			AND FECHA_HORA = FECHAHORA
 		) THEN
 			-- Si ya existe una cita, lanzar un error y deshacer la transacción
 			SIGNAL SQLSTATE '45000'
@@ -31,16 +31,16 @@ BEGIN
 			ROLLBACK;
 		ELSE
 			-- Insertar la cita
-			INSERT INTO CITAS (FECHA_HORA, ID_MEDICO, ID_PACIENTE) VALUES (FECHAHORA, IDMEDICO, IDPACIENTE);
+			INSERT INTO CITAS (FECHA_HORA, TIPO_CITA, ID_MEDICO, ID_PACIENTE) VALUES (FECHAHORA, CITA_TIPO, IDMEDICO, IDPACIENTE);
 			-- Obtener id generado por la tabla de citas
 			SET @CITA_ID = LAST_INSERT_ID();
 			-- Validar si es cita previa o cita de emergencia
-			IF TIPO_CITA = "Previa" THEN
-				INSERT INTO CITAS_MEDICAS (ID_CITA_PREVIA, ID_CITA) VALUES (@CITA_ID, @CITA_ID);
-			ELSEIF TIPO_CITA = "Emergencia" THEN
+			IF CITA_TIPO = "Previa" THEN
+				INSERT INTO CITAS_PREVIAS (ID_CITA_PREVIA) VALUES (@CITA_ID);
+			ELSEIF CITA_TIPO = "Emergencia" THEN
 				-- Generar un folio automático
 				SET @FOLIO_EMERGENCIA = ROUND(RAND()*100000000); -- Crea una cadena de números aleatorios de 8 dígitos para guardar en el folio
-				INSERT INTO CITAS_EMERGENCIA (ID_CITA_EMERGENCIA, FOLIO, ID_CITA) VALUES (@CITA_ID, @FOLIO_EMERGENCIA, @CITA_ID);
+				INSERT INTO CITAS_EMERGENCIA (ID_CITA_EMERGENCIA, FOLIO) VALUES (@CITA_ID, @FOLIO_EMERGENCIA);
 			END IF;
 			COMMIT;
 		END IF;
