@@ -11,20 +11,19 @@ import java.time.LocalDate;
  * @author Ximena
  */
 public class CitaEmergencia extends Cita {
-    
     private int idCitaEmergencia;
     private int folio;
 
     public CitaEmergencia() {
     }
 
-    public CitaEmergencia(int idCita, LocalDate fechaHora, int idMedico, int idPaciente, String estado, String tipoCita, int folio) {
-        super(idCita, fechaHora, idMedico, idPaciente, estado, tipoCita);
+    public CitaEmergencia(int idCita, LocalDate fechaHora, String tipoCita, int idMedico, int idPaciente, int folio) {
+        super(idCita, fechaHora, tipoCita, idMedico, idPaciente);
         this.folio = folio;
     }
     
-    public CitaEmergencia(LocalDate fechaHora, int idMedico, int idPaciente, String estado, String tipoCita, int folio) {
-        super(fechaHora, idMedico, idPaciente, estado, tipoCita);
+    public CitaEmergencia(LocalDate fechaHora, String tipoCita, int idMedico, int idPaciente, int folio) {
+        super(fechaHora, tipoCita, idMedico, idPaciente);
         this.folio = folio;
     }
 
@@ -47,6 +46,7 @@ public class CitaEmergencia extends Cita {
     @Override
     public String toString() {
         return "CitaEmergencia{" + "idCitaEmergencia=" + idCitaEmergencia + ", folio=" + folio + '}';
-    } 
-        
+    }
+    
+    
 }

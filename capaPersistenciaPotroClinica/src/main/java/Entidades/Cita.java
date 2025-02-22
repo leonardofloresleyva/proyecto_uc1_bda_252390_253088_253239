@@ -13,29 +13,26 @@ import java.time.LocalDate;
 public class Cita {
     private int idCita;
     private LocalDate fechaHora;
+    private String tipoCita;
     private int idMedico;
     private int idPaciente;
-    private String estado;
-    private String tipoCita;
 
     public Cita() {
     }
 
-    public Cita(int idCita, LocalDate fechaHora, int idMedico, int idPaciente, String estado, String tipoCita) {
+    public Cita(int idCita, LocalDate fechaHora, String tipoCita, int idMedico, int idPaciente) {
         this.idCita = idCita;
         this.fechaHora = fechaHora;
+        this.tipoCita = tipoCita;
         this.idMedico = idMedico;
         this.idPaciente = idPaciente;
-        this.estado = estado;
-        this.tipoCita = tipoCita;
     }
 
-    public Cita(LocalDate fechaHora, int idMedico, int idPaciente, String estado, String tipoCita) {
+    public Cita(LocalDate fechaHora, String tipoCita, int idMedico, int idPaciente) {
         this.fechaHora = fechaHora;
+        this.tipoCita = tipoCita;
         this.idMedico = idMedico;
         this.idPaciente = idPaciente;
-        this.estado = estado;
-        this.tipoCita = tipoCita;
     }
 
     public int getIdCita() {
@@ -54,7 +51,15 @@ public class Cita {
         this.fechaHora = fechaHora;
     }
 
-    public int getIdMedico() {
+    public String getTipoCita() {
+        return tipoCita;
+    }
+
+    public void setTipoCita(String tipoCita) {
+        this.tipoCita = tipoCita;
+    }
+
+        public int getIdMedico() {
         return idMedico;
     }
 
@@ -70,25 +75,9 @@ public class Cita {
         this.idPaciente = idPaciente;
     }
 
-    public String getEstado() {
-        return estado;
-    }
-
-    public void setEstado(String estado) {
-        this.estado = estado;
-    }
-
-    public String getTipoCita() {
-        return tipoCita;
-    }
-
-    public void setTipoCita(String tipoCita) {
-        this.tipoCita = tipoCita;
-    }
-
     @Override
     public String toString() {
-        return "Cita{" + "idCita=" + idCita + ", fechaHora=" + fechaHora + ", idMedico=" + idMedico + ", idPaciente=" + idPaciente + ", estado=" + estado + ", tipoCita=" + tipoCita + '}';
+        return "Cita{" + "idCita=" + idCita + ", fechaHora=" + fechaHora + ", tipoCita=" + tipoCita + ", idMedico=" + idMedico + ", idPaciente=" + idPaciente + '}';
     }
     
     
