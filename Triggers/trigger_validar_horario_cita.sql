@@ -9,7 +9,7 @@ FOR EACH ROW
 BEGIN
 	IF NOT EXISTS (
 		SELECT 1
-        FROM HOARIOS_MEDICOS
+        FROM HORARIOS_MEDICOS
         WHERE ID_MEDICO = NEW.ID_MEDICO
         AND DIA_SEMANA = DAYNAME(NEW.FECHA_HORA) -- Toma el día de la semana de la fecha
         AND TIME(NEW.FECHA_HORA) BETWEEN HORA_ENTRADA AND HORA_SALIDA -- Compara que la hora esté dentro de las del horario del médico

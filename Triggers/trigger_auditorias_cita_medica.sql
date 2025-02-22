@@ -1,7 +1,7 @@
 # Trigger que añade los cambios de las citas_medicas en la tabla de auditoria_citas
 DELIMITER //
 CREATE TRIGGER HISTORIAL_ESTADO_CITA_PREVIA
-AFTER UPDATE ON CITAS_MEDICAS
+AFTER UPDATE ON CITAS_PREVIAS
 FOR EACH ROW
 BEGIN
 	-- Insertar la actualización del estado en la tabla de auditoria_citas solo si hay algún cambio
