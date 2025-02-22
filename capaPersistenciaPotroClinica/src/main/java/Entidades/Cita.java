@@ -4,7 +4,7 @@
  */
 package Entidades;
 
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 /**
  *
@@ -12,27 +12,27 @@ import java.time.LocalDate;
  */
 public class Cita {
     private int idCita;
-    private LocalDate fechaHora;
-    private String tipoCita;
+    private LocalDateTime fechaHora;
     private int idMedico;
     private int idPaciente;
+    private String tipoCita;
 
     public Cita() {
     }
 
-    public Cita(int idCita, LocalDate fechaHora, String tipoCita, int idMedico, int idPaciente) {
+    public Cita(int idCita, LocalDateTime fechaHora, int idMedico, int idPaciente, String tipoCita) {
         this.idCita = idCita;
         this.fechaHora = fechaHora;
-        this.tipoCita = tipoCita;
         this.idMedico = idMedico;
         this.idPaciente = idPaciente;
+        this.tipoCita = tipoCita;
     }
 
-    public Cita(LocalDate fechaHora, String tipoCita, int idMedico, int idPaciente) {
+    public Cita(LocalDateTime fechaHora, int idMedico, int idPaciente, String tipoCita) {
         this.fechaHora = fechaHora;
-        this.tipoCita = tipoCita;
         this.idMedico = idMedico;
         this.idPaciente = idPaciente;
+        this.tipoCita = tipoCita;
     }
 
     public int getIdCita() {
@@ -43,11 +43,11 @@ public class Cita {
         this.idCita = idCita;
     }
 
-    public LocalDate getFechaHora() {
+    public LocalDateTime getFechaHora() {
         return fechaHora;
     }
 
-    public void setFechaHora(LocalDate fechaHora) {
+    public void setFechaHora(LocalDateTime fechaHora) {
         this.fechaHora = fechaHora;
     }
 

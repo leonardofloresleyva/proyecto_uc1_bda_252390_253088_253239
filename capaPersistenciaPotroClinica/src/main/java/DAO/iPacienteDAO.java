@@ -22,4 +22,5 @@ public interface iPacienteDAO {
     public boolean cambiarContrasenia(Paciente paciente) throws PersistenciaException;
     
     public boolean actualizarPaciente(Paciente paciente) throws PersistenciaException;
+    
 }

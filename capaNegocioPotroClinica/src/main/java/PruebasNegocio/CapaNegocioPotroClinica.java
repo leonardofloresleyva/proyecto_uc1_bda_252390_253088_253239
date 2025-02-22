@@ -29,7 +29,7 @@ public class CapaNegocioPotroClinica {
                 LocalDate.of(2005, 2, 15),
                 "Alta",
                 "Jecopaco",
-                "5 de mayo",
+                "Cinco de mayo",
                 "32"
         ));
         
