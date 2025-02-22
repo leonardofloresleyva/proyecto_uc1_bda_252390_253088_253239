@@ -12,7 +12,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
@@ -51,14 +51,14 @@ public class CitaDAO implements iCitaDAO {
             }
             
         } catch (SQLException ex) {
-            Logger.getLogger(CitaDAO.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(CitaDAO.class.getName()).log(Level.SEVERE, "Error al registrar cita.", ex);
             throw new PersistenciaException("Error al registrar cita.", ex);
         } 
     }
 
     @Override
     public List<Cita> consultarCitasPorEspecialidad(String especialidad) throws PersistenciaException {
-       String comandoSQL = "SELECT * FROM VISTA_HISTORIAL_CITAS WHERE ESPECIALIDAD = ?";
+       String comandoSQL = "SELECT * FROM HISTORIAL_CITAS_PACIENTES WHERE ESPECIALIDAD = ?";
        List<Cita> citasEspecialidad = new ArrayList<>();
 
        try (Connection con = conexion.crearConexion();
@@ -69,10 +69,10 @@ public class CitaDAO implements iCitaDAO {
                while (rs.next()) {
                    Cita cita = new Cita(
                            rs.getInt("ID_CITA"),
-                           rs.getDate("FECHA_HORA").toLocalDate(),
-                           rs.getString("TIPO_CITA"),
-                           rs.getInt("NOMBRE_MEDICO"),
-                           rs.getInt("NOMBRE_PACIENTE")
+                           rs.getTimestamp("FECHA_HORA").toLocalDateTime(),
+                           rs.getInt("ID_MEDICO"),
+                           rs.getInt("ID_PACIENTE"),
+                           rs.getString("TIPO_CITA")
                    );
                    // Añadir cada cita obtenida a la lista
                    citasEspecialidad.add(cita);
@@ -87,8 +87,8 @@ public class CitaDAO implements iCitaDAO {
     }
 
     @Override
-    public List<Cita> consultarCitasRangoDeFechas(LocalDate fechaInicio, LocalDate fechaFin) throws PersistenciaException {
-        String comandoSQL = "SELECT * FROM VISTA_HISTORIAL_CITAS WHERE FECHA_HORA BETWEEN ? AND ?";
+    public List<Cita> consultarCitasRangoDeFechas(LocalDateTime fechaInicio, LocalDateTime fechaFin) throws PersistenciaException {
+        String comandoSQL = "SELECT * FROM HISTORIAL_CITAS_PACIENTES WHERE FECHA_HORA BETWEEN ? AND ?";
         List<Cita> citasRangoFechas = new ArrayList<>();
         
         try (Connection con = conexion.crearConexion();
@@ -100,10 +100,10 @@ public class CitaDAO implements iCitaDAO {
                 while (rs.next()) {
                     Cita cita = new Cita(
                            rs.getInt("ID_CITA"),
-                           rs.getDate("FECHA_HORA").toLocalDate(),
-                           rs.getString("TIPO_CITA"),
-                           rs.getInt("NOMBRE_MEDICO"),
-                           rs.getInt("NOMBRE_PACIENTE")
+                           rs.getTimestamp("FECHA_HORA").toLocalDateTime(),
+                           rs.getInt("ID_MEDICO"),
+                           rs.getInt("ID_PACIENTE"),
+                           rs.getString("TIPO_CITA")
                     );
                     // Añadir cita obtenida a la lista
                     citasRangoFechas.add(cita);
@@ -119,7 +119,22 @@ public class CitaDAO implements iCitaDAO {
 
     @Override
     public boolean cancelarCita(int idCita) throws PersistenciaException {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        String consultaSQL = "CALL CANCELAR_CITA(?)";
+        
+        try (Connection con = conexion.crearConexion()) {
+            try (CallableStatement cs = con.prepareCall(consultaSQL)) {
+                // Agregar parámetro a la llamada
+                cs.setInt(1, idCita);
+                
+                // Ejecutar y regresar verdadero
+                cs.execute();
+                return true;
+            }
+            
+        } catch (SQLException ex) {
+            Logger.getLogger(CitaDAO.class.getName()).log(Level.SEVERE, "Error al cancelar cita.", ex);
+            throw new PersistenciaException("Error al cancelar cita.", ex);
+        }
     }
     
 }

@@ -6,7 +6,7 @@ package DAO;
 
 import Entidades.Cita;
 import Excepciones.PersistenciaException;
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 
 /**
@@ -21,5 +21,5 @@ public interface iCitaDAO {
     
     public List<Cita> consultarCitasPorEspecialidad(String especialidad) throws PersistenciaException;
     
-    public List<Cita> consultarCitasRangoDeFechas(LocalDate fechaInicio, LocalDate fechaFin) throws PersistenciaException;
+    public List<Cita> consultarCitasRangoDeFechas(LocalDateTime fechaInicio, LocalDateTime fechaFin) throws PersistenciaException;
 }

@@ -4,7 +4,7 @@
  */
 package Entidades;
 
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 /**
  *
@@ -17,13 +17,13 @@ public class CitaEmergencia extends Cita {
     public CitaEmergencia() {
     }
 
-    public CitaEmergencia(int idCita, LocalDate fechaHora, String tipoCita, int idMedico, int idPaciente, int folio) {
-        super(idCita, fechaHora, tipoCita, idMedico, idPaciente);
+    public CitaEmergencia(int idCita, LocalDateTime fechaHora, int idMedico, int idPaciente, String tipoCita, int folio) {
+        super(idCita, fechaHora, idMedico, idPaciente, tipoCita);
         this.folio = folio;
     }
     
-    public CitaEmergencia(LocalDate fechaHora, String tipoCita, int idMedico, int idPaciente, int folio) {
-        super(fechaHora, tipoCita, idMedico, idPaciente);
+    public CitaEmergencia(LocalDateTime fechaHora, int idMedico, int idPaciente, String tipoCita, int folio) {
+        super(fechaHora, idMedico, idPaciente, tipoCita);
         this.folio = folio;
     }
 

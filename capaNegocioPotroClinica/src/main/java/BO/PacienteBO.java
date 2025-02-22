@@ -239,7 +239,7 @@ public class PacienteBO {
             throw new NegocioException("La colonia no puede tener mas de 100 caracteres.");
         }
         
-        if (colonia.matches("^[a-zA-Z0-9áéíóúÁÉÍÓÚñÑ #,-.]+$")) 
+        if (!colonia.matches("^[a-zA-Z0-9áéíóúÁÉÍÓÚñÑ #,-.]+$")) 
             throw new NegocioException("La colonia contiene caracteres inválidos.");
         
         if (calle == null) 
@@ -249,7 +249,7 @@ public class PacienteBO {
             throw new NegocioException("La calle no puede tener mas de 100 caracteres.");
         }
         
-        if (calle.matches("^[a-zA-Z0-9áéíóúÁÉÍÓÚñÑ #,-.]+$")) 
+        if (!calle.matches("^[a-zA-Z0-9áéíóúÁÉÍÓÚñÑ #,-.]+$")) 
             throw new NegocioException("La calle contiene caracteres inválidos.");
         
         if (numero == null) 
@@ -259,7 +259,7 @@ public class PacienteBO {
             throw new NegocioException("El numero no puede tener mas de 20 caracteres.");
         }
         
-        if (numero.matches("^[a-zA-Z0-9áéíóúÁÉÍÓÚñÑ #,-.]+$")) 
+        if (!numero.matches("^[a-zA-Z0-9áéíóúÁÉÍÓÚñÑ #,-.]+$")) 
             throw new NegocioException("El numero contiene caracteres inválidos.");
     }
 }
