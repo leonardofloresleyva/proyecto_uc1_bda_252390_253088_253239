@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package DAO;
 
 import Conexion.iConexion;
@@ -16,12 +12,15 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 /**
- * Clase que contiene las operaciones del usuario
- * @author Ximena
+ * Clase que contiene las operaciones de un Usuario.
+ * @author Leonardo Flores Leyva (252390)
+ * @author Ximena Rosales Panduro (253088)
+ * @author Luis Uribe (253239)
  */
 public class UsuarioDAO implements iUsuarioDAO {
     // Crear conexión
     iConexion conexion;
+    private static final Logger logger = Logger.getLogger(PacienteDAO.class.getName());
     
     @Override
     public int registrarUsuario(Usuario usuario) throws PersistenciaException {
@@ -52,11 +51,13 @@ public class UsuarioDAO implements iUsuarioDAO {
             }
             
         } catch (SQLException ex) {
-            Logger.getLogger(UsuarioDAO.class.getName()).log(Level.SEVERE, null, ex);
+            logger.log(Level.SEVERE, null, ex);
             throw new PersistenciaException("Error al guardar el usuario");
         }
         
         return id; // Regresar id generado
     }
+    
+    
     
 }

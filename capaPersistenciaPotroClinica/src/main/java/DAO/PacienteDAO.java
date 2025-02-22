@@ -5,6 +5,9 @@ import Entidades.Paciente;
 import Excepciones.PersistenciaException;
 import java.sql.CallableStatement;
 import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -17,7 +20,9 @@ import java.util.logging.Logger;
 public class PacienteDAO implements iPacienteDAO {
 
     iConexion conexion;
-
+    // Logger para el registro de información importante.
+    private static final Logger logger = Logger.getLogger(PacienteDAO.class.getName());
+    
     public PacienteDAO(iConexion conexion) {
         this.conexion = conexion;
     }
@@ -53,9 +58,74 @@ public class PacienteDAO implements iPacienteDAO {
             }
 
         } catch (Exception e) {
-            Logger.getLogger(PacienteDAO.class.getName()).log(Level.SEVERE, null, e);
+            logger.log(Level.SEVERE, null, e);
             throw new PersistenciaException("Error al registrar el paciente.", e);
         }
-
+    }
+    
+    @Override
+    public boolean actualizarPaciente(Paciente paciente) throws PersistenciaException{
+        String sentenciaSQL = "";
+        try(
+                Connection con = conexion.crearConexion();
+                PreparedStatement ps = con.prepareStatement(sentenciaSQL);
+            ){
+            if(verificarPaciente(paciente.getId())){
+                ps.setString(1, paciente.getUsuario());
+                ps.setString(2, paciente.getNombres());
+                ps.setString(3, paciente.getApellidoPaterno());
+                ps.setString(4, paciente.getApellidoMaterno());
+                ps.setString(5, paciente.getTelefono());
+                ps.setObject(6, paciente.getFechaNacimiento());
+                ps.setString(7, paciente.getColonia());
+                ps.setString(8, paciente.getCalle());
+                ps.setString(9, paciente.getNumero());
+                ps.executeUpdate();
+                logger.log(Level.INFO, "Datos personales del paciente actualizados con exito en la base de datos.");
+                return true;
+            } else
+                throw new PersistenciaException("El paciente no esta registrado en la potro clinica");
+            
+        } catch(SQLException ex){
+            logger.log(Level.SEVERE, "Error al actualizar los datos del paciente en la base de datos.", ex);
+            throw new PersistenciaException("Ha ocurrido un error al intentar actualizar los datos del paciente");
+        }
+    }
+    
+    @Override
+    public boolean cambiarContrasenia(Paciente paciente) throws PersistenciaException{
+        String sentenciaSQL = "";
+        try(
+                Connection con = conexion.crearConexion();
+                PreparedStatement ps = con.prepareStatement(sentenciaSQL);
+            )
+        {
+            ps.setString(1, paciente.getUsuario());
+            ps.setString(2, paciente.getContrasenia());
+            ps.executeUpdate();
+            logger.log(Level.INFO, "Contrasenia actualizada con éxito en la base de datos.");
+            return true;
+            
+        } catch(SQLException ex){
+            logger.log(Level.SEVERE, "Error al cambiar la contrasenia.", ex);
+            throw new PersistenciaException(ex.getMessage());
+        }
+        
+    }
+    
+    private boolean verificarPaciente(int id) throws PersistenciaException{
+        String SentenciaSQL = "SELECT * FROM PACIENTES WHERE ID_PACIENTE = ?";
+        try(
+                Connection con = conexion.crearConexion();
+                PreparedStatement ps = con.prepareStatement(SentenciaSQL);
+        ){
+            ps.setInt(1, id);
+            ResultSet resultado = ps.executeQuery();
+            return resultado.next();
+            
+        } catch(SQLException ex){
+            logger.log(Level.SEVERE, "Error al verificar el paciente en la base de datos.", ex);
+            throw new PersistenciaException("Error al verificar el paciente. Inténtelo de nuevo mas tarde.");
+        }
     }
 }
