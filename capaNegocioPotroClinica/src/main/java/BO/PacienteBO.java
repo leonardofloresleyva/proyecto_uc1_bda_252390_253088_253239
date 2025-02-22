@@ -4,6 +4,7 @@ import Conexion.iConexion;
 import DAO.PacienteDAO;
 import DAO.iPacienteDAO;
 import DTO.PacienteNuevoDTO;
+import DTO.PacienteViejoDTO;
 import Entidades.Paciente;
 import Excepciones.NegocioException;
 import Excepciones.PersistenciaException;
@@ -35,16 +36,110 @@ public class PacienteBO {
         if (paciNuevo == null) 
             throw new NegocioException("El paciente no puede ser nulo.");
          
-        String correo = paciNuevo.getUsuario();
-        String password = paciNuevo.getContrasenia();
-        String rol = paciNuevo.getRol();
-        String nombre = paciNuevo.getNombres();
-        String apellidoP = paciNuevo.getApellidoPaterno();
-        String apellidoM = paciNuevo.getApellidoMaterno();
-        String telefono = paciNuevo.getTelefono();
-        String estado = paciNuevo.getEstado();
+        String 
+            correo = paciNuevo.getUsuario(),
+            password = paciNuevo.getContrasenia(),
+            rol = paciNuevo.getRol(),
+            nombre = paciNuevo.getNombres(),
+            apellidoP = paciNuevo.getApellidoPaterno(),
+            apellidoM = paciNuevo.getApellidoMaterno(),
+            telefono = paciNuevo.getTelefono(),
+            estado = paciNuevo.getEstado();
+        
         LocalDate fechaN = paciNuevo.getFechaNacimiento();
         
+        String 
+            colonia = paciNuevo.getColonia(),
+            calle = paciNuevo.getCalle(),
+            numero = paciNuevo.getNumero();
+        
+        validarUsuario(correo, password);
+        
+        validarDatosPaciente(
+                nombre,
+                apellidoP,
+                apellidoM,
+                telefono,
+                fechaN,
+                colonia,
+                calle,
+                numero
+        );
+        
+        if (password.equalsIgnoreCase(correo) || password.equalsIgnoreCase(nombre)) 
+            throw new NegocioException("La contraseña no puede ser igual al correo o al nombre");
+        
+        if (rol == null || rol.trim().isEmpty())
+            throw new NegocioException("El rol no puede estar vacío.");
+        
+        if (!"Paciente".equals(rol))
+            throw new NegocioException("El rol debe ser igual a \"Paciente\".");
+        
+        if (!"Alta".equals(estado)) 
+            throw new NegocioException("El estado del paciente debe ser 'Alta'.");
+        
+        String contraseniaEncriptada = encriptarContrasenia(password);
+        paciNuevo.setContrasenia(contraseniaEncriptada);
+        
+        Paciente paciente = pacienteMapper.toEntityNuevo(paciNuevo);
+        
+        try {
+            pacienteDAO.registrarPaciente(paciente);
+            return true;
+        } catch (PersistenciaException ex) {
+            Logger.getLogger(PacienteBO.class.getName()).log(Level.SEVERE, null, ex);
+            throw new NegocioException("Hubo un error al guardar en la base de datos", ex);
+        }
+    }
+    
+    public boolean actualizarDatosPaciente(PacienteViejoDTO paciViejo) throws NegocioException{
+        validarDatosPaciente(
+                paciViejo.getNombres(),
+                paciViejo.getApellidoPaterno(),
+                paciViejo.getApellidoMaterno(),
+                paciViejo.getTelefono(),
+                paciViejo.getFechaNacimiento(),
+                paciViejo.getColonia(),
+                paciViejo.getCalle(),
+                paciViejo.getNumero()
+        );
+        Paciente paciente = pacienteMapper.toEntityViejo(paciViejo);
+        try{
+            return pacienteDAO.actualizarPaciente(paciente);
+        }catch(PersistenciaException ex){
+            Logger.getLogger(PacienteBO.class.getName()).log(Level.SEVERE, null, ex);
+            throw new NegocioException("Error: " + ex.getMessage());
+        }
+    }
+    
+    public boolean cambiarContrasenia(PacienteViejoDTO paciViejo) throws NegocioException{
+        String 
+            correo = paciViejo.getUsuario(),
+            contraseniaNueva = paciViejo.getContrasenia();
+        validarUsuario(correo, contraseniaNueva);
+        paciViejo.setContrasenia(encriptarContrasenia(contraseniaNueva));
+        Paciente paciente = pacienteMapper.toEntityViejo(paciViejo);
+        try{
+            return pacienteDAO.cambiarContrasenia(paciente);
+        } catch (PersistenciaException ex) {
+            Logger.getLogger(PacienteBO.class.getName()).log(Level.SEVERE, null, ex);
+            throw new NegocioException("Error: " + ex.getMessage());
+        }
+    }
+    
+    private String encriptarContrasenia(String contrasenia) throws NegocioException {
+        try {
+            return BCrypt.withDefaults().hashToString(12, contrasenia.toCharArray());
+        } catch (Exception e) {
+            throw new NegocioException("Error al encriptar contraseña: " + e.getMessage());
+        }
+    }
+    
+    public boolean verificarContrasenia(String contraseniaIngresada, String contraseniaEncriptada) { 
+        return BCrypt.verifyer().verify(contraseniaIngresada.toCharArray(), contraseniaEncriptada).verified;
+    }
+    
+    private void validarUsuario(String correo, String password) throws NegocioException{
         if (correo == null || correo.trim().isEmpty())
             throw new NegocioException("El correo no puede estar vacio.");
         
@@ -60,7 +155,7 @@ public class PacienteBO {
         if (!Pattern.matches("^[^@\\s]+@[^@\\s]+\\.com$", correo)) 
              throw new NegocioException("La cadena ingresada no es un correo electronico.");
         
-        if (password == null || password.trim().isEmpty()) 
+        if (password == null || password.trim().isEmpty())
             throw new NegocioException("La contrasenia no puede estar vacia.");
         
         if (password.length() > 20)
@@ -75,17 +170,18 @@ public class PacienteBO {
         if (password.contains(" ")) 
             throw new NegocioException("La contraseña no debe contener espacios en ninguna parte");
         
-        if (password.equalsIgnoreCase(correo) || password.equalsIgnoreCase(nombre)) 
-            throw new NegocioException("La contraseña no puede ser igual al correo o al nombre");
-        
-        if (rol == null || rol.trim().isEmpty())
-            throw new NegocioException("El rol no puede estar vacío.");
-        
-        if (!"Paciente".equals(rol))
-            throw new NegocioException("El rol debe ser igual a \"Paciente\".");
-        
-        if (!"Alta".equals(estado)) 
-            throw new NegocioException("El estado del paciente debe ser 'Alta'.");
+    }
+    
+    private void validarDatosPaciente (
+            String nombre,
+            String apellidoP,
+            String apellidoM,
+            String telefono,
+            LocalDate fechaN,
+            String colonia,
+            String calle,
+            String numero
+    ) throws NegocioException {
         
         if (nombre == null || nombre.trim().isEmpty()) 
             throw new NegocioException("El nombre no puede estar vacio.");
@@ -95,6 +191,12 @@ public class PacienteBO {
         
         if (nombre.length() > 100)
             throw new NegocioException("No se permiten nombres con mas de 100 caracteres.");
+        
+        if (nombre.length() < 2 || nombre.length() > 50) 
+            throw new NegocioException("El nombre debe tener entre 2 y 50 caracteres");
+        
+        if (!nombre.trim().equals(nombre)) 
+            throw new NegocioException("El nombre no debe contener espacios al inicio o al final");
         
         if (apellidoP == null || apellidoP.trim().isEmpty()) 
             throw new NegocioException("El apellido paterno no puede estar vacío.");
@@ -125,44 +227,39 @@ public class PacienteBO {
         
         if (fechaN.isAfter(LocalDate.now())) 
             throw new NegocioException("La fecha de nacimiento no puede estar después de la fecha actual.");
-        
+       
         int edad = LocalDate.now().getYear() - fechaN.getYear();
         if (edad < 0 || edad > 120) 
-            throw new NegocioException("La edad debe estar entre 0 y 120 años");
+            throw new NegocioException("La edad debe estar entre 0 y 120 años.");
         
-        if (!paciNuevo.getCalle().matches("^[a-zA-Z0-9áéíóúÁÉÍÓÚñÑ #,-.]+$")) 
-            throw new NegocioException("La dirección contiene caracteres inválidos");
+        if (colonia == null) 
+            throw new NegocioException("La colonia no puede estar vacía.");
         
-        if (nombre.length() < 2 || nombre.length() > 50) 
-            throw new NegocioException("El nombre debe tener entre 2 y 50 caracteres");
-        
-        if (!nombre.trim().equals(nombre)) 
-            throw new NegocioException("El nombre no debe contener espacios al inicio o al final");
-        
-        String contraseniaEncriptada = encriptarContrasenia(password);
-        System.out.println("Contraseña encriptada: " + contraseniaEncriptada);
-        paciNuevo.setContrasenia(contraseniaEncriptada);
-        
-        Paciente paciente = pacienteMapper.toEntityNuevo(paciNuevo);
-        
-        try {
-            pacienteDAO.registrarPaciente(paciente);
-            return true;
-        } catch (PersistenciaException ex) {
-            Logger.getLogger(PacienteBO.class.getName()).log(Level.SEVERE, null, ex);
-            throw new NegocioException("Hubo un error al guardar en la base de datos", ex);
+        if (colonia.length() > 100) {
+            throw new NegocioException("La colonia no puede tener mas de 100 caracteres.");
         }
-    }
-     
-    private String encriptarContrasenia(String contrasenia) throws NegocioException {
-        try {
-            return BCrypt.withDefaults().hashToString(12, contrasenia.toCharArray());
-        } catch (Exception e) {
-            throw new NegocioException("Error al encriptar contraseña: " + e.getMessage());
+        
+        if (colonia.matches("^[a-zA-Z0-9áéíóúÁÉÍÓÚñÑ #,-.]+$")) 
+            throw new NegocioException("La colonia contiene caracteres inválidos.");
+        
+        if (calle == null) 
+            throw new NegocioException("La calle no puede estar vacía.");
+        
+        if (calle.length() > 100) {
+            throw new NegocioException("La calle no puede tener mas de 100 caracteres.");
         }
+        
+        if (calle.matches("^[a-zA-Z0-9áéíóúÁÉÍÓÚñÑ #,-.]+$")) 
+            throw new NegocioException("La calle contiene caracteres inválidos.");
+        
+        if (numero == null) 
+            throw new NegocioException("El numero no puede estar vacío.");
+        
+        if (numero.length() > 20) {
+            throw new NegocioException("El numero no puede tener mas de 20 caracteres.");
+        }
+        
+        if (numero.matches("^[a-zA-Z0-9áéíóúÁÉÍÓÚñÑ #,-.]+$")) 
+            throw new NegocioException("El numero contiene caracteres inválidos.");
     }
-    
-    public boolean verificarContrasenia(String contraseniaIngresada, String contraseniaEncriptada) { 
-        return BCrypt.verifyer().verify(contraseniaIngresada.toCharArray(), contraseniaEncriptada).verified;
-    }   
 }

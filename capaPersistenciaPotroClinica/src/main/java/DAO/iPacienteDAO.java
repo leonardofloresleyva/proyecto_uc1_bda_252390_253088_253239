@@ -19,4 +19,7 @@ public interface iPacienteDAO {
      */
     public boolean registrarPaciente(Paciente paciente) throws PersistenciaException;
     
+    public boolean cambiarContrasenia(Paciente paciente) throws PersistenciaException;
+    
+    public boolean actualizarPaciente(Paciente paciente) throws PersistenciaException;
 }
