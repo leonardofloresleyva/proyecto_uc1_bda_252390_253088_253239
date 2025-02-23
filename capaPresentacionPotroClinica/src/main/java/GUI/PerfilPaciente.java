@@ -38,11 +38,11 @@ public class PerfilPaciente extends javax.swing.JFrame {
         jLabel3 = new javax.swing.JLabel();
         jButton1 = new javax.swing.JButton();
         ActualizarDatos = new javax.swing.JButton();
-        jButton3 = new javax.swing.JButton();
+        HistorialRangoFechas = new javax.swing.JButton();
         CancelarCitas = new javax.swing.JButton();
         jSeparator1 = new javax.swing.JSeparator();
         jLabel5 = new javax.swing.JLabel();
-        jButton4 = new javax.swing.JButton();
+        HitorialEspecialidad = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -123,10 +123,10 @@ public class PerfilPaciente extends javax.swing.JFrame {
             }
         });
 
-        jButton3.setText("Historial de citas por Rango de Fechas");
-        jButton3.addActionListener(new java.awt.event.ActionListener() {
+        HistorialRangoFechas.setText("Historial de citas por Rango de Fechas");
+        HistorialRangoFechas.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton3ActionPerformed(evt);
+                HistorialRangoFechasActionPerformed(evt);
             }
         });
 
@@ -141,10 +141,10 @@ public class PerfilPaciente extends javax.swing.JFrame {
 
         jLabel5.setIcon(new javax.swing.ImageIcon("C:\\Users\\multaslokas33\\OneDrive\\Documentos\\GitHub\\proyecto_uc1_bda_252390_253088_253239\\capaPresentacionPotroClinica\\src\\foto3.jpg")); // NOI18N
 
-        jButton4.setText("Historial de citas por Rango de Fechas");
-        jButton4.addActionListener(new java.awt.event.ActionListener() {
+        HitorialEspecialidad.setText("Historial de citas por Especialidad");
+        HitorialEspecialidad.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton4ActionPerformed(evt);
+                HitorialEspecialidadActionPerformed(evt);
             }
         });
 
@@ -161,9 +161,9 @@ public class PerfilPaciente extends javax.swing.JFrame {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGap(38, 38, 38)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jButton4, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(HitorialEspecialidad, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(CancelarCitas, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(HistorialRangoFechas, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(ActualizarDatos, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(11, 11, 11)
@@ -207,9 +207,9 @@ public class PerfilPaciente extends javax.swing.JFrame {
                 .addGap(18, 18, 18)
                 .addComponent(ActualizarDatos)
                 .addGap(18, 18, 18)
-                .addComponent(jButton3)
+                .addComponent(HistorialRangoFechas)
                 .addGap(18, 18, 18)
-                .addComponent(jButton4)
+                .addComponent(HitorialEspecialidad)
                 .addGap(18, 18, 18)
                 .addComponent(CancelarCitas)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 24, Short.MAX_VALUE)
@@ -242,9 +242,11 @@ public class PerfilPaciente extends javax.swing.JFrame {
         this.dispose();
     }//GEN-LAST:event_ActualizarDatosActionPerformed
 
-    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jButton3ActionPerformed
+    private void HistorialRangoFechasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_HistorialRangoFechasActionPerformed
+        HistorialRangoFechas nuevaVentana = new HistorialRangoFechas();
+        nuevaVentana.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_HistorialRangoFechasActionPerformed
 
     private void CancelarCitasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CancelarCitasActionPerformed
         CancelarCitas nuevaVentana = new CancelarCitas();
@@ -258,9 +260,11 @@ public class PerfilPaciente extends javax.swing.JFrame {
         this.dispose();
     }//GEN-LAST:event_jButton1ActionPerformed
 
-    private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jButton4ActionPerformed
+    private void HitorialEspecialidadActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_HitorialEspecialidadActionPerformed
+        HistorialPorEspecialidad nuevaVentana = new HistorialPorEspecialidad();
+        nuevaVentana.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_HitorialEspecialidadActionPerformed
 
     /**
      * @param args the command line arguments
@@ -269,10 +273,10 @@ public class PerfilPaciente extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton ActualizarDatos;
     private javax.swing.JButton CancelarCitas;
+    private javax.swing.JButton HistorialRangoFechas;
+    private javax.swing.JButton HitorialEspecialidad;
     private javax.swing.JButton Volver;
     private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton3;
-    private javax.swing.JButton jButton4;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;

@@ -187,7 +187,7 @@ public class InicioPaciente extends javax.swing.JFrame {
     }//GEN-LAST:event_VolverActionPerformed
 
     private void RegistrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_RegistrarActionPerformed
-        RegistrarPaciente nuevaVentana = new RegistrarPaciente();
+        RegistarPacientee nuevaVentana = new RegistarPacientee();
         nuevaVentana.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_RegistrarActionPerformed

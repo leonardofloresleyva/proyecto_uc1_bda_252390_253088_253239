@@ -32,8 +32,8 @@ public class RegistrarCita extends javax.swing.JFrame {
         jPanel4 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         Agendar = new javax.swing.JComboBox<>();
-        Siguiente = new javax.swing.JButton();
-        Siguiente1 = new javax.swing.JButton();
+        Confirmar = new javax.swing.JButton();
+        Volver = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -80,21 +80,21 @@ public class RegistrarCita extends javax.swing.JFrame {
             }
         });
 
-        Siguiente.setBackground(new java.awt.Color(0, 0, 0));
-        Siguiente.setForeground(new java.awt.Color(255, 255, 255));
-        Siguiente.setText("Siguiente");
-        Siguiente.addActionListener(new java.awt.event.ActionListener() {
+        Confirmar.setBackground(new java.awt.Color(0, 0, 0));
+        Confirmar.setForeground(new java.awt.Color(255, 255, 255));
+        Confirmar.setText("Confirmar");
+        Confirmar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                SiguienteActionPerformed(evt);
+                ConfirmarActionPerformed(evt);
             }
         });
 
-        Siguiente1.setBackground(new java.awt.Color(0, 0, 0));
-        Siguiente1.setForeground(new java.awt.Color(255, 255, 255));
-        Siguiente1.setText("Volver");
-        Siguiente1.addActionListener(new java.awt.event.ActionListener() {
+        Volver.setBackground(new java.awt.Color(0, 0, 0));
+        Volver.setForeground(new java.awt.Color(255, 255, 255));
+        Volver.setText("Volver");
+        Volver.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                Siguiente1ActionPerformed(evt);
+                VolverActionPerformed(evt);
             }
         });
 
@@ -106,9 +106,9 @@ public class RegistrarCita extends javax.swing.JFrame {
             .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                 .addGap(50, 50, 50)
-                .addComponent(Siguiente1, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(Volver, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(Siguiente, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(Confirmar, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(49, 49, 49))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -132,8 +132,8 @@ public class RegistrarCita extends javax.swing.JFrame {
                     .addComponent(jPanel3, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(Siguiente1)
-                            .addComponent(Siguiente))
+                            .addComponent(Volver)
+                            .addComponent(Confirmar))
                         .addGap(102, 102, 102))))
         );
 
@@ -151,7 +151,7 @@ public class RegistrarCita extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void SiguienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_SiguienteActionPerformed
+    private void ConfirmarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ConfirmarActionPerformed
         String seleccion =  Agendar.getSelectedItem().toString(); // Obtener la selección del ComboBox
 
         if ("Previa".equals(seleccion)) {
@@ -161,11 +161,13 @@ public class RegistrarCita extends javax.swing.JFrame {
         }
 
         this.dispose();
-    }//GEN-LAST:event_SiguienteActionPerformed
+    }//GEN-LAST:event_ConfirmarActionPerformed
 
-    private void Siguiente1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Siguiente1ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_Siguiente1ActionPerformed
+    private void VolverActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_VolverActionPerformed
+        PerfilPaciente nuevaVentana = new PerfilPaciente();
+        nuevaVentana.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_VolverActionPerformed
 
     private void AgendarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_AgendarActionPerformed
         
@@ -177,8 +179,8 @@ public class RegistrarCita extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JComboBox<String> Agendar;
-    private javax.swing.JButton Siguiente;
-    private javax.swing.JButton Siguiente1;
+    private javax.swing.JButton Confirmar;
+    private javax.swing.JButton Volver;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JPanel jPanel1;
