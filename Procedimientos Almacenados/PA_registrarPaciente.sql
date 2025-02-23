@@ -9,13 +9,11 @@ DELIMITER $$
 CREATE PROCEDURE REGISTRAR_PACIENTE(
     IN CORREO VARCHAR(150),
     IN PASSW VARCHAR(128),
-    IN ROL_PACIENTE ENUM("Paciente"),
     IN NOMBRE_PACIENTE VARCHAR(100),
     IN APELLIDO_P VARCHAR(100),
     IN APELLIDO_M VARCHAR(100),
     IN TELEFONO_PACIENTE VARCHAR(20),
     IN FECHA_N DATE,
-    IN ESTADO_PACIENTE ENUM("Alta"),
     IN COLONIA_PACIENTE VARCHAR(100),
     IN CALLE_PACIENTE VARCHAR(100),
     IN NUMERO_PACIENTE VARCHAR(100)
@@ -32,11 +30,10 @@ BEGIN
 		-- 1.- Se inserta el usuario.
         INSERT INTO USUARIOS(
 			USUARIO, 
-            CONTRASENIA, 
-            ROL
+            CONTRASENIA
 		)
         VALUES(
-			CORREO, PASSW, ROL_PACIENTE
+			CORREO, PASSW
 		);
 		-- 2.- Se obtiene el ID generado por la tabla USUARIOS y se almacena en una variable.
         SET @ID_USUARIO = LAST_INSERT_ID();
@@ -47,8 +44,7 @@ BEGIN
             APELLIDO_PATERNO, 
             APELLIDO_MATERNO, 
             TELEFONO, 
-            FECHA_NACIMIENTO, 
-            ESTADO
+            FECHA_NACIMIENTO
 		)
         VALUES(
 			@ID_USUARIO, 
@@ -56,8 +52,7 @@ BEGIN
             APELLIDO_P, 
             APELLIDO_M, 
             TELEFONO_PACIENTE, 
-            FECHA_N, 
-            ESTADO_PACIENTE
+            FECHA_N
 		);
         -- 4.- Se inserta la direccion del paciente.
         INSERT INTO DIRECCIONES(
@@ -80,13 +75,11 @@ DELIMITER ;
 CALL REGISTRAR_PACIENTE(
 	"johnwick@outlook.com",
     "askldaskjdsajdasdjlasj",
-    "Paciente",
     "John",
     "Wick",
     "Wick",
     "733737373",
     "1970-09-18",
-    "Alta",
     "Nueva York",
     "Cum",
     "100");
