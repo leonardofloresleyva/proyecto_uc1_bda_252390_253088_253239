@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package DAO;
 
 import Conexion.iConexion;
@@ -12,7 +8,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
@@ -20,7 +16,9 @@ import java.util.logging.Logger;
 
 /**
  *
- * @author Ximena
+ * @author Leonardo Flores Leyva (252390)
+ * @author Ximena Rosales Panduro (253088)
+ * @author Luis Eduardo Uribe Vega (253239)
  */
 public class CitaDAO implements iCitaDAO {
 
@@ -87,8 +85,8 @@ public class CitaDAO implements iCitaDAO {
     }
 
     @Override
-    public List<Cita> consultarCitasRangoDeFechas(LocalDateTime fechaInicio, LocalDateTime fechaFin) throws PersistenciaException {
-        String comandoSQL = "SELECT * FROM HISTORIAL_CITAS_PACIENTES WHERE FECHA_HORA BETWEEN ? AND ?";
+    public List<Cita> consultarCitasRangoDeFechas(LocalDate fechaInicio, LocalDate fechaFin) throws PersistenciaException {
+        String comandoSQL = "SELECT * FROM HISTORIAL_CITAS_PACIENTES WHERE DATE(FECHA_HORA) BETWEEN ? AND ?;";
         List<Cita> citasRangoFechas = new ArrayList<>();
         
         try (Connection con = conexion.crearConexion();

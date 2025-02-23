@@ -15,7 +15,7 @@ BEGIN
 	-- Se obtiene el tipo de cita.
 	SET @CITA_TIPO = (
 		SELECT TIPO_CITA FROM CITAS
-		WHERE ID_CITA = CITA_ID
+		WHERE ID_CITA = NEW.ID_CITA
 	);
     
 	IF @CITA_TIPO = "Emergencia" -- Si se trata de una cita de emergencia.
