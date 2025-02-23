@@ -15,14 +15,14 @@ public class CitaEmergencia extends Cita {
     public CitaEmergencia() {
     }
 
-    public CitaEmergencia(int idCita, LocalDateTime fechaHora, int idMedico, int idPaciente, String estado, int folio) {
-        super(idCita, fechaHora, idMedico, idPaciente, "Emergencia");
+    public CitaEmergencia(int idCita, LocalDateTime fechaHora, Medico medico, Paciente paciente, String estado, int folio) {
+        super(idCita, fechaHora, medico, paciente, "Emergencia");
         this.estado = estado;
         this.folio = folio;
     }
     
-    public CitaEmergencia(LocalDateTime fechaHora, int idMedico, int idPaciente, String estado, int folio) {
-        super(fechaHora, idMedico, idPaciente, "Emergencia");
+    public CitaEmergencia(LocalDateTime fechaHora, Medico medico, Paciente paciente, String estado, int folio) {
+        super(fechaHora, medico, paciente, "Emergencia");
         this.estado = estado;
         this.folio = folio;
     }

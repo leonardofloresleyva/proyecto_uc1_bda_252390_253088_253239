@@ -6,6 +6,8 @@ package DAO;
 
 import Entidades.Consulta;
 import Excepciones.PersistenciaException;
+import java.time.LocalDate;
+import java.util.List;
 
 /**
  *
@@ -14,5 +16,9 @@ import Excepciones.PersistenciaException;
 public interface iConsultaDAO {
     
     public boolean registrarConsulta(Consulta consulta) throws PersistenciaException;
+    
+    public List<Consulta> consultasPorEspecialidad(String especialidad) throws PersistenciaException;
+    
+    public List<Consulta> consultasRangoDeFechas(LocalDate fechaInicio, LocalDate fechaFin) throws PersistenciaException;
     
 }

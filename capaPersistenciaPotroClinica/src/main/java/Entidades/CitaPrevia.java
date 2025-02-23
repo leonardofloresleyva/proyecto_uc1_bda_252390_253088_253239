@@ -14,13 +14,13 @@ public class CitaPrevia extends Cita {
     public CitaPrevia() {
     }
 
-    public CitaPrevia(int idCita, LocalDateTime fechaHora, int idMedico, int idPaciente, String estado) {
-        super(idCita, fechaHora, idMedico, idPaciente, "Previa");
+    public CitaPrevia(int idCita, LocalDateTime fechaHora, Medico medico, Paciente paciente, String estado) {
+        super(idCita, fechaHora, medico, paciente, "Previa");
         this.estado = estado;
     }
 
-    public CitaPrevia(LocalDateTime fechaHora, int idMedico, int idPaciente, String estado) {
-        super(fechaHora, idMedico, idPaciente, "Previa");
+    public CitaPrevia(LocalDateTime fechaHora, Medico medico, Paciente paciente, String estado) {
+        super(fechaHora, medico, paciente, "Previa");
         this.estado = estado;
     }
     

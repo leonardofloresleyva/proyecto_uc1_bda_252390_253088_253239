@@ -4,6 +4,7 @@ import Conexion.Conexion;
 import Conexion.iConexion;
 import DAO.CitaDAO;
 import DAO.ConsultaDAO;
+import DAO.MedicoDAO;
 import Entidades.Cita;
 import Entidades.CitaEmergencia;
 import Entidades.Consulta;
@@ -26,20 +27,49 @@ public class PruebasPersistencia {
         // Establecer la conexión
         iConexion conexion = new Conexion();
         // PacienteDAO pacienteDAO = new PacienteDAO(conexion);
-        CitaDAO citaDAO = new CitaDAO(conexion);
+        //CitaDAO citaDAO = new CitaDAO(conexion);
+        MedicoDAO medicoDAO = new MedicoDAO(conexion);
+        
+        // Mostrar la agenda del médico
+        List<Cita> agenda = medicoDAO.mostrarAgendaMedico(1);
+        if (agenda.isEmpty()) {
+            System.out.println("No hay citas por el momento.");
+        } else {
+            System.out.println("Citas registradas:");
+            for (Cita c: agenda) {
+                System.out.println(c); // imprime todas las citas encontradas
+            }
+        }
+        
+        // Dar de baja un médico
+//        boolean bajaExitosa = medicoDAO.darDeBajaMedico(5);
+//        if (bajaExitosa) {
+//            System.out.println("Medico dado de baja");
+//        } else {
+//            System.out.println("Medico no dado de baja");
+//        }
+        
+        // Dar de alta un médico
+        boolean altaExitosa = medicoDAO.darDeAltaMedico(1);
+        if (altaExitosa) {
+            System.out.println("Medico dado de alta");
+        } else {
+            System.out.println("Medico no dado de alta");
+        }
+        
         // ConsultaDAO consultaDAO = new ConsultaDAO(conexion);
 //        CitaDAO citas = new CitaDAO(conexion);
 //        List<Cita> citasPaciente = citas.consultarCitasRangoDeFechas(LocalDate.of(2024, 10, 7), LocalDate.of(2024, 12, 10));
 //        for(Cita cita : citasPaciente){
 //            System.out.println(cita.getFechaHora().toString());
 //        }
-        ConsultaDAO consultas = new ConsultaDAO(conexion);
-        Cita cita = new CitaEmergencia(1, LocalDateTime.of(2025, 2, 22, 0, 34, 02), 9, 1, "No atendida", 12345678);
-        Consulta consulta = new Consulta("Cancer", "El paciente tiene cancer", "100 quimioterapias al anio", cita);
-        if(consultas.registrarConsulta(consulta))
-            System.out.println("Registro exitoso.");
-        else
-            System.out.println("Error en registro de consulta");
+//        ConsultaDAO consultas = new ConsultaDAO(conexion);
+//        Cita cita = new CitaEmergencia(1, LocalDateTime.of(2025, 2, 22, 0, 34, 02), 9, 1, "No atendida", 12345678);
+//        Consulta consulta = new Consulta("Cancer", "El paciente tiene cancer", "100 quimioterapias al anio", cita);
+//        if(consultas.registrarConsulta(consulta))
+//            System.out.println("Registro exitoso.");
+//        else
+//            System.out.println("Error en registro de consulta");
         
 
         // PacienteDAO paciente = new PacienteDAO(conexion);
