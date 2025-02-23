@@ -47,6 +47,30 @@ public class PacienteNuevoDTO {
         this.calle = calle;
         this.numero = numero;
     }
+    
+    public PacienteNuevoDTO(
+            String usuario,
+            String contrasenia,
+            String nombres, 
+            String apellidoPaterno, 
+            String apellidoMaterno, 
+            String telefono, 
+            LocalDate fechaNacimiento,  
+            String colonia, 
+            String calle, 
+            String numero)
+    {
+        this.usuario = usuario;
+        this.contrasenia = contrasenia;
+        this.nombres = nombres;
+        this.apellidoPaterno = apellidoPaterno;
+        this.apellidoMaterno = apellidoMaterno;
+        this.telefono = telefono;
+        this.fechaNacimiento = fechaNacimiento;
+        this.colonia = colonia;
+        this.calle = calle;
+        this.numero = numero;
+    }
 
     public void setUsuario(String usuario) {this.usuario = usuario;}
 
@@ -93,7 +117,7 @@ public class PacienteNuevoDTO {
     public String getColonia() {return colonia;}
 
     public String getCalle() {return calle;}
-
+    
     public String getNumero() {return numero;}
     
     @Override
