@@ -1,7 +1,10 @@
 package DAO;
 
+import Entidades.Consulta;
 import Entidades.Paciente;
 import Excepciones.PersistenciaException;
+import java.time.LocalDate;
+import java.util.List;
 
 /**
  * Interfaz del paciente
@@ -22,5 +25,9 @@ public interface iPacienteDAO {
     public boolean cambiarContrasenia(Paciente paciente) throws PersistenciaException;
     
     public boolean actualizarPaciente(Paciente paciente) throws PersistenciaException;
+    
+    public List<Consulta> consultarConsultasPorEspecialidad(String correo, String especialidad) throws PersistenciaException;
+    
+    public List<Consulta> consultarConsultasRangoDeFechas(String correo, LocalDate fechaInicio, LocalDate fechaFin) throws PersistenciaException;
     
 }

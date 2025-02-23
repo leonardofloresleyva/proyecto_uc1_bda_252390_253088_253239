@@ -1,6 +1,9 @@
 package DAO;
 
 import Conexion.iConexion;
+import Entidades.Cita;
+import Entidades.Consulta;
+import Entidades.Medico;
 import Entidades.Paciente;
 import Excepciones.PersistenciaException;
 import java.sql.CallableStatement;
@@ -8,6 +11,9 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -65,7 +71,7 @@ public class PacienteDAO implements iPacienteDAO {
     
     @Override
     public boolean actualizarPaciente(Paciente paciente) throws PersistenciaException{
-        String sentenciaSQL = "";
+        String sentenciaSQL = "CALL ACTUALIZAR_PACIENTE(?, ?, ?, ?, ?, ?, ?, ?, ?);";
         try(
                 Connection con = conexion.crearConexion();
                 PreparedStatement ps = con.prepareStatement(sentenciaSQL);
@@ -111,6 +117,108 @@ public class PacienteDAO implements iPacienteDAO {
             throw new PersistenciaException(ex.getMessage());
         }
         
+    }
+    
+    @Override
+    public List<Consulta> consultarConsultasPorEspecialidad(String correo, String especialidad) throws PersistenciaException {
+       String comandoSQL = """
+                           SELECT * FROM HISTORIAL_CONSULTAS_PACIENTES 
+                           WHERE ESPECIALIDAD = ?
+                           AND USUARIO = ?;""";
+       List<Consulta> citasEspecialidad = new ArrayList<>();
+
+       try (
+               Connection con = conexion.crearConexion();
+                PreparedStatement ps = con.prepareStatement(comandoSQL)
+               ) {
+
+                ps.setString(1, especialidad);
+                ps.setString(2, correo);
+                
+                try (ResultSet rs = ps.executeQuery()) { // Ejecutamos la consulta y obtenemos los resultados.
+                    while (rs.next()) {
+                        // Se obtienen los datos relevantes del medico en una entidad.
+                        Medico medico = new Medico(
+                                "",
+                                "",
+                                "Medico",
+                                rs.getString("NOMBRE_MEDICO"),
+                                rs.getString("APELLIDO_PATERNO_MEDICO"),
+                                rs.getString("APELLIDO_MATERNO_MEDICO"),
+                                rs.getString("ESPECIALIDAD"),
+                                rs.getString("ESTADO_MEDICO")
+                        );
+                        // Se crea una entidad paciente null, ya que no es relevante para la consulta.
+                        Paciente paciente = new Paciente();
+                        // Se almacenan los datos relevantes de la cita en una entidad cita.
+                        Cita cita = new Cita(
+                                rs.getTimestamp("FECHA_HORA").toLocalDateTime(),
+                                medico,
+                                paciente,
+                                rs.getString("TIPO_CITA")
+                        );
+                        // Se almacenan los datos relevantes de la consulta en una entidad consulta.
+                        Consulta consulta = new Consulta(rs.getString("MOTIVO"), rs.getString("DIAGNOSTICO"), rs.getString("TRATAMIENTO"), cita);
+
+                        // Añadir cada consulta obtenida a la lista.
+                        citasEspecialidad.add(consulta);
+                    }
+           }
+        } catch (SQLException ex) {
+            Logger.getLogger(CitaDAO.class.getName()).log(Level.SEVERE, "Error al consultar citas por especialidad", ex);
+            throw new PersistenciaException("Error al consultar citas por especialidad.", ex);
+        }
+       // Regresar la lista de consultas obtenidas.
+        return citasEspecialidad; 
+    }
+
+    @Override
+    public List<Consulta> consultarConsultasRangoDeFechas(String correo, LocalDate fechaInicio, LocalDate fechaFin) throws PersistenciaException {
+        String comandoSQL = """
+                            SELECT * FROM HISTORIAL_CONSULTAS_PACIENTES
+                            WHERE DATE(FECHA_HORA) BETWEEN ? AND ? AND USUARIO = ? 
+                            ORDER BY FECHA_HORA DESC;""";
+        List<Consulta> citasRangoFechas = new ArrayList<>();
+        
+        try (Connection con = conexion.crearConexion();
+                PreparedStatement ps = con.prepareStatement(comandoSQL)) {
+            
+            ps.setObject(1, fechaInicio);
+            ps.setObject(2, fechaFin);
+            ps.setString(3, correo);
+            try (ResultSet rs = ps.executeQuery()) {
+                while (rs.next()) {
+                    // Se obtienen los datos relevantes del medico en una entidad.
+                        Medico medico = new Medico(
+                                "",
+                                "",
+                                "Medico",
+                                rs.getString("NOMBRE_MEDICO"),
+                                rs.getString("APELLIDO_PATERNO_MEDICO"),
+                                rs.getString("APELLIDO_MATERNO_MEDICO"),
+                                rs.getString("ESPECIALIDAD"),
+                                rs.getString("ESTADO_MEDICO")
+                        );
+                        // Se crea una entidad paciente null, ya que no es relevante para la consulta.
+                        Paciente paciente = new Paciente();
+                        // Se almacenan los datos relevantes de la cita en una entidad cita.
+                        Cita cita = new Cita(
+                                rs.getTimestamp("FECHA_HORA").toLocalDateTime(),
+                                medico,
+                                paciente,
+                                rs.getString("TIPO_CITA")
+                        );
+                        // Se almacenan los datos relevantes de la consulta en una entidad consulta.
+                        Consulta consulta = new Consulta(rs.getString("MOTIVO"), rs.getString("DIAGNOSTICO"), rs.getString("TRATAMIENTO"), cita);
+                    citasRangoFechas.add(consulta);
+                }
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(CitaDAO.class.getName()).log(Level.SEVERE, "Error al consultar citas por rango de fechas.", ex);
+            throw new PersistenciaException("Error al consultar citas por rango de fechas entre: " + fechaInicio + " y " + fechaFin, ex);
+        }
+        // Regresar la lista generada.
+        return citasRangoFechas;
     }
     
     private boolean verificarPaciente(int id) throws PersistenciaException{

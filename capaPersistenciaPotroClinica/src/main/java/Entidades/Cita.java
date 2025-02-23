@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package Entidades;
 
 import java.time.LocalDateTime;
@@ -13,25 +9,45 @@ import java.time.LocalDateTime;
 public class Cita {
     private int idCita;
     private LocalDateTime fechaHora;
-    private int idMedico;
-    private int idPaciente;
+    private Medico medico;
+    private Paciente paciente;
     private String tipoCita;
 
     public Cita() {
     }
 
-    public Cita(int idCita, LocalDateTime fechaHora, int idMedico, int idPaciente, String tipoCita) {
+    public Cita(int idCita, LocalDateTime fechaHora, Medico medico, Paciente paciente, String tipoCita) {
         this.idCita = idCita;
         this.fechaHora = fechaHora;
-        this.idMedico = idMedico;
-        this.idPaciente = idPaciente;
+        this.medico = medico;
+        this.paciente = paciente;
         this.tipoCita = tipoCita;
     }
 
-    public Cita(LocalDateTime fechaHora, int idMedico, int idPaciente, String tipoCita) {
+    public Cita(LocalDateTime fechaHora, Medico medico, Paciente paciente, String tipoCita) {
         this.fechaHora = fechaHora;
-        this.idMedico = idMedico;
-        this.idPaciente = idPaciente;
+        this.medico = medico;
+        this.paciente = paciente;
+        this.tipoCita = tipoCita;
+    }
+
+    public void setIdCita(int idCita) {
+        this.idCita = idCita;
+    }
+
+    public void setFechaHora(LocalDateTime fechaHora) {
+        this.fechaHora = fechaHora;
+    }
+
+    public void setMedico(Medico medico) {
+        this.medico = medico;
+    }
+
+    public void setPaciente(Paciente paciente) {
+        this.paciente = paciente;
+    }
+
+    public void setTipoCita(String tipoCita) {
         this.tipoCita = tipoCita;
     }
 
@@ -39,46 +55,24 @@ public class Cita {
         return idCita;
     }
 
-    public void setIdCita(int idCita) {
-        this.idCita = idCita;
-    }
-
     public LocalDateTime getFechaHora() {
         return fechaHora;
     }
 
-    public void setFechaHora(LocalDateTime fechaHora) {
-        this.fechaHora = fechaHora;
+    public Medico getMedico() {
+        return medico;
+    }
+
+    public Paciente getPaciente() {
+        return paciente;
     }
 
     public String getTipoCita() {
         return tipoCita;
     }
 
-    public void setTipoCita(String tipoCita) {
-        this.tipoCita = tipoCita;
-    }
-
-        public int getIdMedico() {
-        return idMedico;
-    }
-
-    public void setIdMedico(int idMedico) {
-        this.idMedico = idMedico;
-    }
-
-    public int getIdPaciente() {
-        return idPaciente;
-    }
-
-    public void setIdPaciente(int idPaciente) {
-        this.idPaciente = idPaciente;
-    }
-
     @Override
     public String toString() {
-        return "Cita{" + "idCita=" + idCita + ", fechaHora=" + fechaHora + ", tipoCita=" + tipoCita + ", idMedico=" + idMedico + ", idPaciente=" + idPaciente + '}';
+        return "Cita{" + "idCita=" + idCita + ", fechaHora=" + fechaHora + ", tipoCita=" + tipoCita + ", idMedico=" + medico.getId() + ", idPaciente=" + paciente.getId() + '}';
     }
-    
-    
 }

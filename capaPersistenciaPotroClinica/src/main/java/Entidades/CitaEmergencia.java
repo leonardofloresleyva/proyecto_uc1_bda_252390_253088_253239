@@ -9,42 +9,41 @@ import java.time.LocalDateTime;
  * @author Luis Eduardo Uribe Vega (253239)
  */
 public class CitaEmergencia extends Cita {
-    private int idCitaEmergencia;
     private int folio;
+    private String estado;
 
     public CitaEmergencia() {
     }
 
-    public CitaEmergencia(int idCita, LocalDateTime fechaHora, int idMedico, int idPaciente, String tipoCita, int folio) {
-        super(idCita, fechaHora, idMedico, idPaciente, tipoCita);
+    public CitaEmergencia(int idCita, LocalDateTime fechaHora, int idMedico, int idPaciente, String estado, int folio) {
+        super(idCita, fechaHora, idMedico, idPaciente, "Emergencia");
+        this.estado = estado;
         this.folio = folio;
     }
     
-    public CitaEmergencia(LocalDateTime fechaHora, int idMedico, int idPaciente, String tipoCita, int folio) {
-        super(fechaHora, idMedico, idPaciente, tipoCita);
+    public CitaEmergencia(LocalDateTime fechaHora, int idMedico, int idPaciente, String estado, int folio) {
+        super(fechaHora, idMedico, idPaciente, "Emergencia");
+        this.estado = estado;
         this.folio = folio;
-    }
-
-    public int getIdCitaEmergencia() {
-        return idCitaEmergencia;
-    }
-
-    public void setIdCitaEmergencia(int idCitaEmergencia) {
-        this.idCitaEmergencia = idCitaEmergencia;
-    }
-
-    public int getFolio() {
-        return folio;
     }
 
     public void setFolio(int folio) {
         this.folio = folio;
     }
 
+    public void setEstado(String estado) {
+        this.estado = estado;
+    }
+    public int getFolio() {
+        return folio;
+    }
+
+    public String getEstado() {
+        return estado;
+    }
+
     @Override
     public String toString() {
-        return "CitaEmergencia{" + "idCitaEmergencia=" + idCitaEmergencia + ", folio=" + folio + '}';
-    }
-    
-    
+        return "CitaEmergencia{" + "idCitaEmergencia=" + super.getIdCita() + ", folio=" + folio + '}';
+    }   
 }

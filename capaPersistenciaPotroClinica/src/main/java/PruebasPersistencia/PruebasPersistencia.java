@@ -5,6 +5,7 @@ import Conexion.iConexion;
 import DAO.CitaDAO;
 import DAO.ConsultaDAO;
 import Entidades.Cita;
+import Entidades.CitaEmergencia;
 import Entidades.Consulta;
 import Excepciones.PersistenciaException;
 import java.sql.Connection;
@@ -27,12 +28,20 @@ public class PruebasPersistencia {
         // PacienteDAO pacienteDAO = new PacienteDAO(conexion);
         CitaDAO citaDAO = new CitaDAO(conexion);
         // ConsultaDAO consultaDAO = new ConsultaDAO(conexion);
-        CitaDAO citas = new CitaDAO(conexion);
-        List<Cita> citasPaciente = citas.consultarCitasRangoDeFechas(LocalDate.of(2024, 10, 7), LocalDate.of(2024, 12, 10));
-        for(Cita cita : citasPaciente){
-            System.out.println(cita.getFechaHora().toString());
-        }
+//        CitaDAO citas = new CitaDAO(conexion);
+//        List<Cita> citasPaciente = citas.consultarCitasRangoDeFechas(LocalDate.of(2024, 10, 7), LocalDate.of(2024, 12, 10));
+//        for(Cita cita : citasPaciente){
+//            System.out.println(cita.getFechaHora().toString());
+//        }
+        ConsultaDAO consultas = new ConsultaDAO(conexion);
+        Cita cita = new CitaEmergencia(1, LocalDateTime.of(2025, 2, 22, 0, 34, 02), 9, 1, "No atendida", 12345678);
+        Consulta consulta = new Consulta("Cancer", "El paciente tiene cancer", "100 quimioterapias al anio", cita);
+        if(consultas.registrarConsulta(consulta))
+            System.out.println("Registro exitoso.");
+        else
+            System.out.println("Error en registro de consulta");
         
+
         // PacienteDAO paciente = new PacienteDAO(conexion);
         
 //        // Probar la conexion
