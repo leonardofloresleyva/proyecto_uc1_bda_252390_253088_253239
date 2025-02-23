@@ -13,11 +13,11 @@ BEGIN
 	SELECT COUNT(*)
 	INTO CITA_EXISTE
 	FROM CITAS
-	WHERE ID_CITA = CITA_ID;
+	WHERE ID_CITA = NEW.ID_CITA;
 	-- Lanzar mensaje de error si existe la cita
 	IF CITA_EXISTE = 0 THEN
 		SIGNAL SQLSTATE '45000'
-		SET MESSAGE_TEXT = "La cita que quiere consultar no existe.";
+		SET MESSAGE_TEXT = "La cita que quiere registrar en la consulta no existe.";
 	END IF;
 END $$
 DELIMITER ;

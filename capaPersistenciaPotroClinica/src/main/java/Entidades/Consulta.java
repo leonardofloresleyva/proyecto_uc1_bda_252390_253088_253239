@@ -9,23 +9,23 @@ package Entidades;
 public class Consulta {
     private int idConsulta;
     private String motivo, diagnostico, tratamiento;
-    private int idCita;
+    private Cita cita;
 
     public Consulta() {}
 
-    public Consulta(int idConsulta, String motivo, String diagnostico, String tratamiento, int idCita) {
+    public Consulta(int idConsulta, String motivo, String diagnostico, String tratamiento, Cita cita) {
         this.idConsulta = idConsulta;
         this.motivo = motivo;
         this.diagnostico = diagnostico;
         this.tratamiento = tratamiento;
-        this.idCita = idCita;
+        this.cita = cita;
     }
 
-    public Consulta(String motivo, String diagnostico, String tratamiento, int idCita) {
+    public Consulta(String motivo, String diagnostico, String tratamiento, Cita cita) {
         this.motivo = motivo;
         this.diagnostico = diagnostico;
         this.tratamiento = tratamiento;
-        this.idCita = idCita;
+        this.cita = cita;
     }
 
     public void setIdConsulta(int idConsulta) {
@@ -44,8 +44,8 @@ public class Consulta {
         this.tratamiento = tratamiento;
     }
 
-    public void setIdCita(int idCita) {
-        this.idCita = idCita;
+    public void setCita(Cita cita) {
+        this.cita = cita;
     }
 
     public int getIdConsulta() {
@@ -64,12 +64,12 @@ public class Consulta {
         return tratamiento;
     }
 
-    public int getIdCita() {
-        return idCita;
-    }    
+    public Cita getCita() {
+        return cita;
+    } 
 
     @Override
     public String toString() {
-        return "Consulta{" + "idConsulta=" + idConsulta + ", motivo=" + motivo + ", diagnostico=" + diagnostico + ", tratamiento=" + tratamiento + ", idCita=" + idCita + '}';
+        return "Consulta{" + "idConsulta=" + idConsulta + ", motivo=" + motivo + ", diagnostico=" + diagnostico + ", tratamiento=" + tratamiento + ", tipo_cita=" + cita.getTipoCita() + '}';
     }
 }
