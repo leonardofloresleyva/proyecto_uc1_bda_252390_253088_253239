@@ -137,7 +137,9 @@ public class DarAltaMedico extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void confirmarBajaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_confirmarBajaActionPerformed
-        // TODO add your handling code here:
+        PerfilMedico nuevaVentana = new PerfilMedico();
+        nuevaVentana.setVisible(true);
+        this.dispose();
     }//GEN-LAST:event_confirmarBajaActionPerformed
 
     private void volverAinicioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_volverAinicioActionPerformed
