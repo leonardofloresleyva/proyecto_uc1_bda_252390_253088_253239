@@ -6,7 +6,6 @@
     del tipo de estado, agrega los datos a la tabla CITAS_MEDICAS
     O CITAS_EMERGENCIA.
 */
-
 DELIMITER //
 CREATE PROCEDURE REGISTRAR_CITA (
 	IN FECHAHORA DATETIME,
@@ -17,15 +16,22 @@ CREATE PROCEDURE REGISTRAR_CITA (
 BEGIN
 	-- Comenzar la transacción
     START TRANSACTION;
-		-- Verificar si la cita que se quiere ingresar ya está asociada a una misma fecha y un mismo médico
-		IF EXISTS (
+		-- Verificar si el médico está activo
+		IF NOT EXISTS (
+			SELECT 1
+            FROM MEDICOS
+            WHERE ID_MEDICO = IDMEDICO
+            AND ESTADO = 'Activo'
+		) THEN
+			SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'El médico no está activo.';
+			ROLLBACK;
+		ELSEIF EXISTS (
 			SELECT 1
 			FROM CITAS
 			WHERE ID_PACIENTE = IDPACIENTE
 			AND ID_MEDICO = IDMEDICO
 			AND FECHA_HORA = FECHAHORA
 		) THEN
-			-- Si ya existe una cita, lanzar un error y deshacer la transacción
 			SIGNAL SQLSTATE '45000'
 			SET MESSAGE_TEXT = 'El paciente ya tiene una cita programada con este médico para esta fecha.';
 			ROLLBACK;

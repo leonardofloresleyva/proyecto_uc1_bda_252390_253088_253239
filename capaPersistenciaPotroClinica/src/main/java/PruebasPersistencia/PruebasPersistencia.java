@@ -27,35 +27,35 @@ public class PruebasPersistencia {
         // Establecer la conexión
         iConexion conexion = new Conexion();
         // PacienteDAO pacienteDAO = new PacienteDAO(conexion);
-        //CitaDAO citaDAO = new CitaDAO(conexion);
+        CitaDAO citaDAO = new CitaDAO(conexion);
         MedicoDAO medicoDAO = new MedicoDAO(conexion);
         
         // Mostrar la agenda del médico
-        List<Cita> agenda = medicoDAO.mostrarAgendaMedico(1);
-        if (agenda.isEmpty()) {
-            System.out.println("No hay citas por el momento.");
-        } else {
-            System.out.println("Citas registradas:");
-            for (Cita c: agenda) {
-                System.out.println(c); // imprime todas las citas encontradas
-            }
-        }
-        
-        // Dar de baja un médico
-//        boolean bajaExitosa = medicoDAO.darDeBajaMedico(5);
-//        if (bajaExitosa) {
-//            System.out.println("Medico dado de baja");
+//        List<Cita> agenda = medicoDAO.mostrarAgendaMedico(5);
+//        if (agenda.isEmpty()) {
+//            System.out.println("No hay citas por el momento.");
 //        } else {
-//            System.out.println("Medico no dado de baja");
+//            System.out.println("Citas registradas:");
+//            for (Cita c: agenda) {
+//                System.out.println(c); // imprime todas las citas encontradas
+//            }
 //        }
         
-        // Dar de alta un médico
-        boolean altaExitosa = medicoDAO.darDeAltaMedico(1);
-        if (altaExitosa) {
-            System.out.println("Medico dado de alta");
+        // Dar de baja un médico
+        boolean bajaExitosa = medicoDAO.darDeBajaMedico(5);
+        if (bajaExitosa) {
+            System.out.println("Medico dado de baja");
         } else {
-            System.out.println("Medico no dado de alta");
+            System.out.println("Medico no dado de baja");
         }
+        
+        // Dar de alta un médico
+//        boolean altaExitosa = medicoDAO.darDeAltaMedico(1);
+//        if (altaExitosa) {
+//            System.out.println("Medico dado de alta");
+//        } else {
+//            System.out.println("Medico no dado de alta");
+//        }
         
         // ConsultaDAO consultaDAO = new ConsultaDAO(conexion);
 //        CitaDAO citas = new CitaDAO(conexion);
@@ -96,7 +96,7 @@ public class PruebasPersistencia {
 ////            System.out.println("Error al registrar el paciente.");
 ////        }
 //        
-//        // Crear cita 
+//      // Crear cita 
 //        Cita cita = new Cita(LocalDateTime.of(2025, 2, 26, 17, 0, 0), 5, 9, "Previa");
 //        boolean registrada = citaDAO.registrarCita(cita);
 //        
