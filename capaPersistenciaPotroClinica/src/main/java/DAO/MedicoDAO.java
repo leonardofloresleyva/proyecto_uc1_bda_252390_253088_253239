@@ -6,7 +6,6 @@ package DAO;
 
 import Conexion.iConexion;
 import Entidades.Cita;
-import Entidades.Consulta;
 import Entidades.Medico;
 import Entidades.Paciente;
 import Excepciones.PersistenciaException;
@@ -79,44 +78,35 @@ public class MedicoDAO implements iMedicoDAO {
                 PreparedStatement ps = con.prepareStatement(comandoSQL)) {
             // Agregar parámetro a la llamada
             ps.setInt(1, id);
-            try (ResultSet rs = ps.executeQuery()) {
+            try (ResultSet rs = ps.executeQuery()) { // Ejecutar para obtener los resultados
                 while (rs.next()) {
-                    // Crear objeto Medico
-                    Medico medico = new Medico(
-                        rs.getInt("ID_MEDICO"),
-                        rs.getString("USUARIO"),
-                        rs.getString("CONTRASENIA"),
-                        rs.getString("ROL"),
-                        rs.getString("NOMBRES"),
-                        rs.getString("APELLIDO_PATERNO"),
-                        rs.getString("APELLIDO_MATERNO"),
-                        rs.getString("ESPECIALIDAD"),
-                        rs.getString("ESTADO")
-                    );
-                    // Crear objeto Paciente
+                    // Crear entidad Medico null porque no es relevante para la agenda
+                    Medico medico = new Medico();
+                    // Obtener datos relevantes del paciente
                     Paciente paciente = new Paciente(
-                        rs.getInt("ID_PACIENTE"),
-                        rs.getString("USUARIO"),
-                        rs.getString("CONTRASENIA"),
-                        rs.getString("ROL"),
-                        rs.getString("NOMBRES"),
-                        rs.getString("APELLIDO_PATERNO"),
-                        rs.getString("APELLIDO_MATERNO"),
-                        rs.getString("TELEFONO"),
-                        rs.getDate("FECHA_NACIMIENTO").toLocalDate(),
-                        rs.getString("ESTADO"),
-                        rs.getString("COLONIA"),
-                        rs.getString("CALLE"),
-                        rs.getString("NUMERO")
+                            "",
+                            "",
+                            "Paciente",
+                            rs.getString("NOMBRES_PACIENTE"),
+                            rs.getString("APELLIDO_PATERNO_PACIENTE"),
+                            rs.getString("APELLIDO_MATERNO_PACIENTE"),
+                            "",
+                            rs.getDate("FECHA_NACIMIENTO_PACIENTE").toLocalDate(),
+                            rs.getString("ESTADO_PACIENTE"),
+                            "",
+                            "",
+                            ""
                     );
-                    // Crear la cita y agregar a la lista
-                    agendaMedico.add(new Cita(
-                        rs.getInt("ID_CITA"),
-                        rs.getTimestamp("FECHA_HORA").toLocalDateTime(),
-                        medico,
-                        paciente,
-                        rs.getString("TIPO_CITA")
-                    ));
+                    // Almacenar los datos relevantes de la cita
+                    Cita cita = new Cita(
+                            rs.getInt("ID_CITA"),
+                            rs.getTimestamp("FECHA_HORA").toLocalDateTime(),
+                            medico,
+                            paciente,
+                            rs.getString("TIPO_CITA")
+                    );
+                    // Añadir objeto cita a la lista creada
+                    agendaMedico.add(cita);
                 }
             }
         } catch (SQLException ex) {

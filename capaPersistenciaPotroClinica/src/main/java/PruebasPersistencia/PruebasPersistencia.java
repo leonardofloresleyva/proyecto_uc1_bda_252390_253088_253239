@@ -5,6 +5,7 @@ import Conexion.iConexion;
 import DAO.CitaDAO;
 import DAO.ConsultaDAO;
 import DAO.MedicoDAO;
+import DAO.PacienteDAO;
 import Entidades.Cita;
 import Entidades.CitaEmergencia;
 import Entidades.Consulta;
@@ -13,6 +14,7 @@ import java.sql.Connection;
 import java.sql.SQLException;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.Month;
 import java.util.List;
 
 /**
@@ -26,20 +28,42 @@ public class PruebasPersistencia {
     public static void main(String[] args) throws PersistenciaException, SQLException {
         // Establecer la conexión
         iConexion conexion = new Conexion();
-        // PacienteDAO pacienteDAO = new PacienteDAO(conexion);
-        //CitaDAO citaDAO = new CitaDAO(conexion);
+        PacienteDAO pacienteDAO = new PacienteDAO(conexion);
+        // CitaDAO citaDAO = new CitaDAO(conexion);
         MedicoDAO medicoDAO = new MedicoDAO(conexion);
         
-        // Mostrar la agenda del médico
-        List<Cita> agenda = medicoDAO.mostrarAgendaMedico(1);
-        if (agenda.isEmpty()) {
-            System.out.println("No hay citas por el momento.");
+        // Mostrar historial de consultas por especialidad
+//        List<Consulta> consultasEspecialidad = pacienteDAO.consultarConsultasPorEspecialidad("usuario@gmail.com", "Psicología");
+//        if (consultasEspecialidad.isEmpty()) {
+//            System.out.println("No hay consultas por el momento.");
+//        } else {
+//            System.out.println("Consultas registradas:");
+//            for (Consulta c: consultasEspecialidad) {
+//                System.out.println(c); // imprime todas las consultas encontradas
+//            }
+//        }
+        
+        // Mostrar consultas por rango de fechas
+        List<Consulta> consultasRangoFechas = pacienteDAO.consultarConsultasRangoDeFechas("usuario@gmail.com", LocalDate.of(2025, 1, 20), LocalDate.of(2025, 2, 10));
+        if (consultasRangoFechas.isEmpty()) {
+            System.out.println("No hay consultas por el momento.");
         } else {
-            System.out.println("Citas registradas:");
-            for (Cita c: agenda) {
-                System.out.println(c); // imprime todas las citas encontradas
+            System.out.println("Consultas registradas:");
+            for (Consulta c: consultasRangoFechas) {
+                System.out.println(c); // imprime todas las consultas encontradas
             }
         }
+        
+        // Mostrar la agenda del médico
+//        List<Cita> agenda = medicoDAO.mostrarAgendaMedico(5);
+//        if (agenda.isEmpty()) {
+//            System.out.println("No hay citas por el momento.");
+//        } else {
+//            System.out.println("Citas registradas:");
+//            for (Cita c: agenda) {
+//                System.out.println(c); // imprime todas las citas encontradas
+//            }
+//        }
         
         // Dar de baja un médico
 //        boolean bajaExitosa = medicoDAO.darDeBajaMedico(5);
@@ -50,12 +74,12 @@ public class PruebasPersistencia {
 //        }
         
         // Dar de alta un médico
-        boolean altaExitosa = medicoDAO.darDeAltaMedico(1);
-        if (altaExitosa) {
-            System.out.println("Medico dado de alta");
-        } else {
-            System.out.println("Medico no dado de alta");
-        }
+//        boolean altaExitosa = medicoDAO.darDeAltaMedico(5);
+//        if (altaExitosa) {
+//            System.out.println("Medico dado de alta");
+//        } else {
+//            System.out.println("Medico no dado de alta");
+//        }
         
         // ConsultaDAO consultaDAO = new ConsultaDAO(conexion);
 //        CitaDAO citas = new CitaDAO(conexion);
@@ -96,7 +120,7 @@ public class PruebasPersistencia {
 ////            System.out.println("Error al registrar el paciente.");
 ////        }
 //        
-//        // Crear cita 
+//      // Crear cita 
 //        Cita cita = new Cita(LocalDateTime.of(2025, 2, 26, 17, 0, 0), 5, 9, "Previa");
 //        boolean registrada = citaDAO.registrarCita(cita);
 //        
