@@ -30,10 +30,11 @@ BEGIN
 		-- 1.- Se inserta el usuario.
         INSERT INTO USUARIOS(
 			USUARIO, 
-            CONTRASENIA
+            CONTRASENIA,
+            ROL
 		)
         VALUES(
-			CORREO, PASSW
+			CORREO, PASSW, "Paciente"
 		);
 		-- 2.- Se obtiene el ID generado por la tabla USUARIOS y se almacena en una variable.
         SET @ID_USUARIO = LAST_INSERT_ID();
@@ -44,7 +45,8 @@ BEGIN
             APELLIDO_PATERNO, 
             APELLIDO_MATERNO, 
             TELEFONO, 
-            FECHA_NACIMIENTO
+            FECHA_NACIMIENTO,
+            ESTADO
 		)
         VALUES(
 			@ID_USUARIO, 
@@ -52,7 +54,8 @@ BEGIN
             APELLIDO_P, 
             APELLIDO_M, 
             TELEFONO_PACIENTE, 
-            FECHA_N
+            FECHA_N,
+            "Alta"
 		);
         -- 4.- Se inserta la direccion del paciente.
         INSERT INTO DIRECCIONES(
