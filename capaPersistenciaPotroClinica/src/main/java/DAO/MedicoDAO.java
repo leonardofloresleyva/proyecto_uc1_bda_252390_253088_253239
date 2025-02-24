@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package DAO;
 
 import Conexion.iConexion;
@@ -21,7 +17,9 @@ import java.util.logging.Logger;
 
 /**
  *
- * @author Ximena
+ * @author Leonardo Flores Leyva (252390)
+ * @author Ximena Rosales Panduro (253088)
+ * @author Luis Uribe (253239)
  */
 public class MedicoDAO implements iMedicoDAO {
     iConexion conexion;

@@ -36,7 +36,7 @@ public class PacienteDAO implements iPacienteDAO {
     @Override
     public boolean registrarPaciente(Paciente paciente) throws PersistenciaException {
         // Comando SQL para insertar un paciente
-        String comandoSQL = "CALL REGISTRAR_PACIENTE(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+        String comandoSQL = "CALL REGISTRAR_PACIENTE(?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
         try (Connection con = conexion.crearConexion()) {
             try (CallableStatement cs = con.prepareCall(comandoSQL)) {
