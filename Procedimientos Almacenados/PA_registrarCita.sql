@@ -25,6 +25,7 @@ BEGIN
 		) THEN
 			SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'El médico no está activo.';
 			ROLLBACK;
+		-- Verifica si no hay otra cita existente en la misma hora con el mismo médico y paciente.
 		ELSEIF EXISTS (
 			SELECT 1
 			FROM CITAS

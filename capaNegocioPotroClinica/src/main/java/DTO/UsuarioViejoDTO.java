@@ -11,8 +11,7 @@ public abstract class UsuarioViejoDTO {
     private int id;
     private String usuario, contrasenia, rol;
 
-    public UsuarioViejoDTO() {
-    }
+    public UsuarioViejoDTO() {}
 
     public UsuarioViejoDTO(int id, String usuario, String contrasenia, String rol) {
         this.id = id;

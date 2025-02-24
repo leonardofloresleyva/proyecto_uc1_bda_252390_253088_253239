@@ -3,6 +3,8 @@ package Mapper;
 import DTO.PacienteNuevoDTO;
 import DTO.PacienteViejoDTO;
 import Entidades.Paciente;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * @author Leonardo Flores Leyva (252390)
@@ -78,5 +80,15 @@ public class PacienteMapper {
                 paciNuevo.getNumero()
         );
         return pacienteDTO;
+    }
+    
+    public List<PacienteViejoDTO> toListDTO(List<Paciente> listaPacientes){
+        if(listaPacientes == null || listaPacientes.isEmpty())
+            return new ArrayList<>();
+        List<PacienteViejoDTO> listaPacientesViejos = new ArrayList<>();
+        for(Paciente paciente : listaPacientes){
+            listaPacientesViejos.add(toDTOViejo(paciente));
+        }
+        return listaPacientesViejos;
     }
 }

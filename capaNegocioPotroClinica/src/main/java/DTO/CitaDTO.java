@@ -1,4 +1,4 @@
-package Entidades;
+package DTO;
 
 import java.time.LocalDateTime;
 
@@ -8,17 +8,17 @@ import java.time.LocalDateTime;
  * @author Ximena Rosales Panduro (253088)
  * @author Luis Eduardo Uribe Vega (253239)
  */
-public class Cita {
+public class CitaDTO {
+    
     private int idCita;
     private LocalDateTime fechaHora;
-    private Medico medico;
-    private Paciente paciente;
+    private MedicoViejoDTO medico;
+    private PacienteViejoDTO paciente;
     private String tipoCita;
 
-    public Cita() {
-    }
+    public CitaDTO() {}
 
-    public Cita(int idCita, LocalDateTime fechaHora, Medico medico, Paciente paciente, String tipoCita) {
+    public CitaDTO(int idCita, LocalDateTime fechaHora, MedicoViejoDTO medico, PacienteViejoDTO paciente, String tipoCita) {
         this.idCita = idCita;
         this.fechaHora = fechaHora;
         this.medico = medico;
@@ -26,7 +26,7 @@ public class Cita {
         this.tipoCita = tipoCita;
     }
 
-    public Cita(LocalDateTime fechaHora, Medico medico, Paciente paciente, String tipoCita) {
+    public CitaDTO(LocalDateTime fechaHora, MedicoViejoDTO medico, PacienteViejoDTO paciente, String tipoCita) {
         this.fechaHora = fechaHora;
         this.medico = medico;
         this.paciente = paciente;
@@ -41,11 +41,11 @@ public class Cita {
         this.fechaHora = fechaHora;
     }
 
-    public void setMedico(Medico medico) {
+    public void setMedico(MedicoViejoDTO medico) {
         this.medico = medico;
     }
 
-    public void setPaciente(Paciente paciente) {
+    public void setPaciente(PacienteViejoDTO paciente) {
         this.paciente = paciente;
     }
 
@@ -61,11 +61,11 @@ public class Cita {
         return fechaHora;
     }
 
-    public Medico getMedico() {
+    public MedicoViejoDTO getMedico() {
         return medico;
     }
 
-    public Paciente getPaciente() {
+    public PacienteViejoDTO getPaciente() {
         return paciente;
     }
 
@@ -75,6 +75,6 @@ public class Cita {
 
     @Override
     public String toString() {
-        return "Cita{" + "idCita=" + idCita + ", fechaHora=" + fechaHora + ", tipoCita=" + tipoCita + ", idMedico=" + medico.getId() + ", idPaciente=" + paciente.getId() + '}';
+        return "CitaDTO{" + "idCita=" + idCita + ", fechaHora=" + fechaHora + ", medico=" + medico + ", paciente=" + paciente + ", tipoCita=" + tipoCita + '}';
     }
 }

@@ -20,15 +20,58 @@ import java.util.logging.Logger;
  *
  * @author Leonardo Flores Leyva (252390)
  * @author Ximena Rosales Panduro (253088)
- * @author Luis Uribe (253239)
+ * @author Luis Eduardo Uribe Vega (253239)
  */
 public class MedicoDAO implements iMedicoDAO {
     iConexion conexion;
-
+    // Logger para el registro de información importante.
+    private static final Logger logger = Logger.getLogger(PacienteDAO.class.getName());
+    
     public MedicoDAO(iConexion conexion) {
         this.conexion = conexion;
     }
+    
+    @Override
+    public Medico iniciarSesionMedico(String cedula, String contrasenia) throws PersistenciaException{
+        String sentenciaSQL = """
+                              SELECT
+                              \tID,
+                                  NOMBRES,
+                                  APELLIDO_PATERNO,
+                                  APELLIDO_MATERNO,
+                                  ESPECIALIDAD,
+                                  ESTADO
+                              FROM DATOS_MEDICO
+                              WHERE USUARIO = ? AND CONTRASENIA = ?;""";
+        
+        if(verificarMedico(cedula, contrasenia)){
+            try(
+                    Connection con = conexion.crearConexion();
+                    PreparedStatement ps = con.prepareStatement(sentenciaSQL);
+                ){
+                    ps.setString(1, cedula);
+                    ps.setString(2, contrasenia);
+                    ResultSet resultado = ps.executeQuery();
+                    Medico medico = new Medico(
+                            resultado.getInt(1),
+                            cedula,
+                            contrasenia,
+                            resultado.getString(2),
+                            resultado.getString(3),
+                            resultado.getString(4),
+                            resultado.getString(5),
+                            resultado.getString(6)
+                    );
+                    return medico;
 
+            } catch(SQLException ex){
+                logger.log(Level.SEVERE, "Error al iniciar sesion en la base de datos.", ex);
+                throw new PersistenciaException("Error al iniciar sesion. Intentelo de nuevo mas tarde.", ex);
+            }
+        } else
+            throw new PersistenciaException("Medico no encontrado.");
+    }
+    
     @Override
     public boolean darDeBajaMedico(int id) throws PersistenciaException {
         String comandoSQL = "CALL DAR_BAJA_MEDICO(?)";
@@ -43,7 +86,7 @@ public class MedicoDAO implements iMedicoDAO {
                 return true;
             }
         } catch (SQLException ex) {
-            Logger.getLogger(MedicoDAO.class.getName()).log(Level.SEVERE, "Error al dar de baja al médico.", ex);
+            logger.log(Level.SEVERE, "Error al dar de baja al médico.", ex);
             throw new PersistenciaException("Error al dar de baja al médico.", ex);
         }
     }
@@ -63,7 +106,7 @@ public class MedicoDAO implements iMedicoDAO {
             }
             
         } catch (SQLException ex) {
-            Logger.getLogger(MedicoDAO.class.getName()).log(Level.SEVERE, "Error al dar de alta al médico.", ex);
+            logger.log(Level.SEVERE, "Error al dar de alta al médico.", ex);
             throw new PersistenciaException("Error al dar de alta al médico.", ex);
         }
     }
@@ -108,7 +151,7 @@ public class MedicoDAO implements iMedicoDAO {
                 }
             }
         } catch (SQLException ex) {
-            Logger.getLogger(MedicoDAO.class.getName()).log(Level.SEVERE, "Error al consultar agenda del médico.", ex);
+            logger.log(Level.SEVERE, "Error al consultar agenda del médico.", ex);
             throw new PersistenciaException("Error al consultar agenda del médico.", ex);
         }
         
@@ -133,7 +176,6 @@ public class MedicoDAO implements iMedicoDAO {
                     Medico medico = new Medico(
                             "",
                             "",
-                            "Medico",
                             rs.getString("NOMBRE_MEDICO"),
                             rs.getString("APELLIDO_PATERNO_MEDICO"),
                             rs.getString("APELLIDO_MATERNO_MEDICO"),
@@ -157,11 +199,30 @@ public class MedicoDAO implements iMedicoDAO {
             }
             
         } catch (SQLException ex) {
-            Logger.getLogger(MedicoDAO.class.getName()).log(Level.SEVERE, "Error al obtener consultas.", ex);
+            logger.log(Level.SEVERE, "Error al obtener consultas.", ex);
             throw new PersistenciaException("Error al obtener consultas.", ex);
         }
         // Regresar lista
         return consultasMedico;
+    }
+    
+    private boolean verificarMedico(String cedula, String contrasenia) throws PersistenciaException{
+        String consultaSQL = "SELECT * FROM USUARIOS WHERE USUARIO = ? AND CONTRASENIA = ?";
+
+        try (
+                Connection con = conexion.crearConexion(); 
+                PreparedStatement ps = con.prepareStatement(consultaSQL);
+            ) {
+            ps.setString(1, cedula);
+            ps.setString(2, contrasenia);
+
+            try (ResultSet rs = ps.executeQuery()) {
+                return rs.next(); // Si hay resultados, las credenciales son válidas
+            }
+        } catch (SQLException ex) {
+            logger.log(Level.SEVERE, "Error al validar paciente en la base de datos.", ex);
+            throw new PersistenciaException("Error al validar paciente.", ex);
+        }
     }
     
 }

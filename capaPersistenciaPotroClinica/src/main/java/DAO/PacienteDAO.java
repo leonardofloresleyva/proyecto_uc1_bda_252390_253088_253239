@@ -33,20 +33,22 @@ public class PacienteDAO implements iPacienteDAO {
         this.conexion = conexion;
     }
     
+    @Override
     public Paciente iniciarSesionPaciente(String correo, String contrasenia) throws PersistenciaException{
         String setenciaSQL = """
-                             SELECT 
-                                 NOMBRES,
-                                 APELLIDO_PATERNO,
-                                 APELLIDO_MATERNO,
-                                 TELEFONO,
-                                 FECHA_NACIMIENTO,
-                                 ESTADO,
-                                 COLONIA,
-                                 CALLE,
-                                 NUMERO
-                             FROM DATOS_PACIENTE
-                             WHERE USUARIO = ? AND CONTRASENIA = ?;""";
+                             SELECT
+                             \tID,
+                             \tNOMBRES,
+                             \tAPELLIDO_PATERNO,
+                             \tAPELLIDO_MATERNO,
+                             \tTELEFONO,
+                             \tFECHA_NACIMIENTO,
+                             \tESTADO,
+                             \tCOLONIA,
+                             \tCALLE,
+                             \tNUMERO
+                              FROM DATOS_PACIENTE
+                              WHERE USUARIO = ? AND CONTRASENIA = ?;""";
         if(verificarPaciente(correo, contrasenia)){
             try(
                     Connection con = conexion.crearConexion();
@@ -57,17 +59,18 @@ public class PacienteDAO implements iPacienteDAO {
                 ps.setString(2, contrasenia);
                 ResultSet resultado = ps.executeQuery();
                 Paciente pacienteEncontrado = new Paciente(
+                        resultado.getInt(1),
                         correo,
                         contrasenia,
-                        resultado.getString(1),
                         resultado.getString(2),
                         resultado.getString(3),
                         resultado.getString(4),
-                        resultado.getObject(5, LocalDate.class),
-                        resultado.getString(6),
+                        resultado.getString(5),
+                        resultado.getObject(6, LocalDate.class),
                         resultado.getString(7),
                         resultado.getString(8),
-                        resultado.getString(9)
+                        resultado.getString(9),
+                        resultado.getString(10)
                 );
                 return pacienteEncontrado;
             }catch(SQLException ex){
@@ -142,7 +145,7 @@ public class PacienteDAO implements iPacienteDAO {
     
     @Override
     public boolean cambiarContrasenia(Paciente paciente) throws PersistenciaException{
-        String sentenciaSQL = "";
+        String sentenciaSQL = "UPDATE USUARIOS SET CONTRASENIA = ? WHERE USUARIO = ?";
         try(
                 Connection con = conexion.crearConexion();
                 PreparedStatement ps = con.prepareStatement(sentenciaSQL);
@@ -183,7 +186,6 @@ public class PacienteDAO implements iPacienteDAO {
                         Medico medico = new Medico(
                                 "",
                                 "",
-                                "Medico",
                                 rs.getString("NOMBRE_MEDICO"),
                                 rs.getString("APELLIDO_PATERNO_MEDICO"),
                                 rs.getString("APELLIDO_MATERNO_MEDICO"),
@@ -234,7 +236,6 @@ public class PacienteDAO implements iPacienteDAO {
                         Medico medico = new Medico(
                                 "",
                                 "",
-                                "Medico",
                                 rs.getString("NOMBRE_MEDICO"),
                                 rs.getString("APELLIDO_PATERNO_MEDICO"),
                                 rs.getString("APELLIDO_MATERNO_MEDICO"),
@@ -266,7 +267,7 @@ public class PacienteDAO implements iPacienteDAO {
     
     
     private boolean verificarPaciente (String usuario, String contrasenia) throws PersistenciaException {
-        String consultaSQL = "SELECT * FROM USUARIOS WHERE CORREO = ? AND CONTRASENIA = ?";
+        String consultaSQL = "SELECT * FROM USUARIOS WHERE USUARIO = ? AND CONTRASENIA = ?";
 
         try (
                 Connection con = conexion.crearConexion(); 

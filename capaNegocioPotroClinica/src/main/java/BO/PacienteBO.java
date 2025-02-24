@@ -3,14 +3,17 @@ package BO;
 import Conexion.iConexion;
 import DAO.PacienteDAO;
 import DAO.iPacienteDAO;
+import DTO.ConsultaDTO;
 import DTO.PacienteNuevoDTO;
 import DTO.PacienteViejoDTO;
 import Entidades.Paciente;
 import Excepciones.NegocioException;
 import Excepciones.PersistenciaException;
+import Mapper.ConsultaMapper;
 import Mapper.PacienteMapper;
 import at.favre.lib.crypto.bcrypt.BCrypt;
 import java.time.LocalDate;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.regex.Pattern;
@@ -25,18 +28,20 @@ import org.apache.commons.validator.routines.EmailValidator;
 public class PacienteBO {
     private final iPacienteDAO pacienteDAO;
     private final PacienteMapper pacienteMapper;
+    private final ConsultaMapper consultaMapper;
     
     public PacienteBO (iConexion conexion) {
         this.pacienteDAO = new PacienteDAO(conexion);
         this.pacienteMapper = new PacienteMapper();
+        this.consultaMapper = new ConsultaMapper();
     }
     
     public PacienteViejoDTO iniciarSesion(String correo, String contrasenia) throws NegocioException{
         validarUsuario(correo, contrasenia);
         try{
-            Paciente paciente = pacienteDAO.iniciarSesionPaciente(correo, contrasenia);
-            PacienteViejoDTO pacienteViejo = pacienteMapper.toDTOViejo(paciente);
-            return pacienteViejo;
+            Paciente paciente = pacienteDAO.iniciarSesionPaciente(correo, encriptarContrasenia(contrasenia));
+            return pacienteMapper.toDTOViejo(paciente);
+            
         }catch(PersistenciaException ex){
             throw new NegocioException(ex.getMessage(), ex);
         }
@@ -127,16 +132,83 @@ public class PacienteBO {
         }
     }
     
+    public List<ConsultaDTO> consultasEspecialidad(String correo, String especialidad) throws NegocioException{
+        if (correo == null || correo.trim().isEmpty())
+            throw new NegocioException("El correo no puede estar vacio.");
+        
+        if (correo.length() > 150)
+            throw new NegocioException("No se permiten correos con mas de 150 caracteres.");
+        
+        if (!EmailValidator.getInstance().isValid(correo))  
+            throw new NegocioException("El correo ingresado no es válido.");
+        
+        if (correo.split("@")[0].length() < 2) 
+            throw new NegocioException("El correo debe tener al menos dos caracteres antes del '@'");
+        
+        if (!Pattern.matches("^[^@\\s]+@[^@\\s]+\\.com$", correo)) 
+             throw new NegocioException("La cadena ingresada no es un correo electronico.");
+        
+        if (especialidad == null || especialidad.trim().isEmpty())
+            throw new NegocioException("La especialidad no puede estar vacia.");
+        
+        if (especialidad.length() > 50)
+            throw new NegocioException("La especialidad no puede tener mas de 50 caracteres.");
+        
+        try{
+            return consultaMapper.consultasDTO(pacienteDAO.consultarConsultasPorEspecialidad(correo, especialidad));
+            
+        } catch (PersistenciaException ex){
+            
+            throw new NegocioException(ex.getMessage(), ex);
+        }
+    }
+    
+    public List<ConsultaDTO> consultaFechas(String correo, LocalDate fechaInicio, LocalDate fechaFinal) throws NegocioException{
+        if (correo == null || correo.trim().isEmpty())
+            throw new NegocioException("El correo no puede estar vacio.");
+        
+        if (correo.length() > 150)
+            throw new NegocioException("No se permiten correos con mas de 150 caracteres.");
+        
+        if (!EmailValidator.getInstance().isValid(correo))  
+            throw new NegocioException("El correo ingresado no es válido.");
+        
+        if (correo.split("@")[0].length() < 2) 
+            throw new NegocioException("El correo debe tener al menos dos caracteres antes del '@'");
+        
+        if (!Pattern.matches("^[^@\\s]+@[^@\\s]+\\.com$", correo)) 
+             throw new NegocioException("La cadena ingresada no es un correo electronico.");
+        
+        if(fechaInicio == null)
+            throw new NegocioException("La fecha de inicio no puede estar vacia.");
+        
+        if(fechaFinal == null)
+            throw new NegocioException("La fecha final no puede estar vacia.");
+        
+        if(fechaFinal.isAfter(LocalDate.now()))
+            throw new NegocioException("La fecha final no puede ser mayor a la fecha actual.");
+        
+        if(fechaInicio.isAfter(LocalDate.now()))
+            throw new NegocioException("La fecha de inicio no puede ser mayor a la fecha actual.");
+        
+        if(fechaInicio.isEqual(fechaFinal) || fechaInicio.isAfter(fechaFinal))
+            throw new NegocioException("La fecha de inicio no puede ser igual o menor a la fecha final.");
+        
+        try{
+            return consultaMapper.consultasDTO(pacienteDAO.consultarConsultasRangoDeFechas(correo, fechaInicio, fechaFinal));
+            
+        } catch(PersistenciaException ex){
+            
+            throw new NegocioException(ex.getMessage(), ex);
+        }
+    }
+    
     private String encriptarContrasenia(String contrasenia) throws NegocioException {
         try {
             return BCrypt.withDefaults().hashToString(12, contrasenia.toCharArray());
         } catch (Exception e) {
             throw new NegocioException("Error al encriptar contraseña: " + e.getMessage());
         }
-    }
-    
-    public boolean verificarContrasenia(String contraseniaIngresada, String contraseniaEncriptada) { 
-        return BCrypt.verifyer().verify(contraseniaIngresada.toCharArray(), contraseniaEncriptada).verified;
     }
     
     public void validarUsuario(String correo, String password) throws NegocioException{

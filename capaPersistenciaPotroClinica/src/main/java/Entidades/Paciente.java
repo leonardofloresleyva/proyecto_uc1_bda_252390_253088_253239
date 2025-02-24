@@ -6,7 +6,7 @@ import java.time.LocalDate;
  * Clase constructora de un Paciente
  * @author Leonardo Flores Leyva (252390)
  * @author Ximena Rosales Panduro (253088)
- * @author Luis Uribe (253239)
+ * @author Luis Eduardo Uribe Vega (253239)
  */
 public class Paciente extends Usuario {
     // Atributos de un Paciente.

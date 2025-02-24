@@ -1,19 +1,20 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Interface.java to edit this template
- */
 package DAO;
 
 import Entidades.Cita;
 import Entidades.Consulta;
+import Entidades.Medico;
 import Excepciones.PersistenciaException;
 import java.util.List;
 
 /**
  *
- * @author Ximena
+ * @author Leonardo Flores Leyva (252390)
+ * @author Ximena Rosales Panduro (253088)
+ * @author Luis Eduardo Uribe Vega (253239)
  */
 public interface iMedicoDAO {
+    
+    public Medico iniciarSesionMedico(String cedula, String contrasenia) throws PersistenciaException;
     
     public boolean darDeBajaMedico(int id) throws PersistenciaException;
     

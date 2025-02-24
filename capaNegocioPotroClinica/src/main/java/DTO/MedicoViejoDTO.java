@@ -1,12 +1,12 @@
-package Entidades;
+package DTO;
 
 /**
- *
+ * 
  * @author Leonardo Flores Leyva (252390)
  * @author Ximena Rosales Panduro (253088)
  * @author Luis Eduardo Uribe Vega (253239)
  */
-public class Medico extends Usuario{
+public class MedicoViejoDTO extends UsuarioViejoDTO{
     
     private String 
                 nombres, 
@@ -15,9 +15,9 @@ public class Medico extends Usuario{
                 especialidad, 
                 estado;
 
-    public Medico() {}
+    public MedicoViejoDTO() {}
 
-    public Medico(int id, String usuario, String contrasenia, String nombres, String apellidoPaterno, String apellidoMaterno, String especialidad, String estado) {
+    public MedicoViejoDTO(int id, String usuario, String contrasenia, String nombres, String apellidoPaterno, String apellidoMaterno, String especialidad, String estado) {
         super(id, usuario, contrasenia, "Medico");
         this.nombres = nombres;
         this.apellidoPaterno = apellidoPaterno;
@@ -26,7 +26,7 @@ public class Medico extends Usuario{
         this.estado = estado;
     }
 
-    public Medico(String usuario, String contrasenia, String nombres, String apellidoPaterno, String apellidoMaterno, String especialidad, String estado) {
+    public MedicoViejoDTO(String usuario, String contrasenia, String nombres, String apellidoPaterno, String apellidoMaterno, String especialidad, String estado) {
         super(usuario, contrasenia, "Medico");
         this.nombres = nombres;
         this.apellidoPaterno = apellidoPaterno;
@@ -77,6 +77,6 @@ public class Medico extends Usuario{
 
     @Override
     public String toString() {
-        return "Medico{" + "nombres=" + nombres + ", apellidoPaterno=" + apellidoPaterno + ", apellidoMaterno=" + apellidoMaterno + ", especialidad=" + especialidad + ", estado=" + estado + '}';
-    }   
+        return "MedicoViejoDTO{" + "nombres=" + nombres + ", apellidoPaterno=" + apellidoPaterno + ", apellidoMaterno=" + apellidoMaterno + ", especialidad=" + especialidad + ", estado=" + estado + '}';
+    }
 }

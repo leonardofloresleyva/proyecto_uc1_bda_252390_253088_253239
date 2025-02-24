@@ -15,8 +15,7 @@ public class PacienteViejoDTO extends UsuarioViejoDTO{
     // Atributos de la direccion del paciente.
     private String colonia, calle, numero;
 
-    public PacienteViejoDTO() {
-    }
+    public PacienteViejoDTO() {}
 
     public PacienteViejoDTO(
             int id, 
