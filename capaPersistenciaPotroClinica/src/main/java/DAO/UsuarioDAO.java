@@ -23,39 +23,21 @@ public class UsuarioDAO implements iUsuarioDAO {
     private static final Logger logger = Logger.getLogger(PacienteDAO.class.getName());
     
     @Override
-    public int registrarUsuario(Usuario usuario) throws PersistenciaException {
-        String sentenciaSQL = "INSERT INTO USUARIOS (USUARIO, CONTRASENIA, ROL) VALUES (?, ?, ?)";
-        int id = -1; // Variable que guarda el id del usuario
-        
-        try (Connection con = conexion.crearConexion();
-                // Statement.RETURN_GENERATED_KEYS recupera el id del usuario
-                PreparedStatement ps = con.prepareStatement(sentenciaSQL, Statement.RETURN_GENERATED_KEYS)) {
-            
-            // Crear al usuario
-            ps.setString(1, usuario.getUsuario());
-            ps.setString(2, usuario.getContrasenia());
-            ps.setString(3, usuario.getRol());
-            ps.executeUpdate();
-            
-            int filasAfectadas = ps.executeUpdate();
-            if (filasAfectadas == 0) {
-                throw new PersistenciaException("Error al registrar al usuario, no se generó ningún id");
+    public boolean iniciarSesion (String usuario, String contrasenia) throws PersistenciaException {
+        String consultaSQL = "SELECT * FROM USUARIOS WHERE CORREO = ? AND CONTRASENIA = ?";
+
+        try (
+                Connection con = conexion.crearConexion(); PreparedStatement ps = con.prepareStatement(consultaSQL);) {
+            ps.setString(1, usuario);
+            ps.setString(2, contrasenia);
+
+            try (ResultSet rs = ps.executeQuery()) {
+                return rs.next(); // Si hay resultados, las credenciales son válidas
             }
-            
-            // Obtener el id generado y verificar si se ha almacenado
-            try (ResultSet rs = ps.getGeneratedKeys()) {
-                if (!rs.next()) { // Si no lo tiene, se lanza una excepción
-                    throw new PersistenciaException("No se registró el usuario");
-                }
-                id = rs.getInt(1); // Si lo encuentra, se guarda en la variable id
-            }
-            
         } catch (SQLException ex) {
-            logger.log(Level.SEVERE, null, ex);
-            throw new PersistenciaException("Error al guardar el usuario");
+            logger.log(Level.SEVERE, "Error al validar credenciales.", ex);
+            throw new PersistenciaException("Error al validar las credenciales.", ex);
         }
-        
-        return id; // Regresar id generado
     }
     
     

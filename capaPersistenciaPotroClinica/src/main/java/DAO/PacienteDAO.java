@@ -32,7 +32,11 @@ public class PacienteDAO implements iPacienteDAO {
     public PacienteDAO(iConexion conexion) {
         this.conexion = conexion;
     }
-
+    
+    public Paciente iniciarSesion(String correo, String contrasenia){
+        
+    }
+    
     @Override
     public boolean registrarPaciente(Paciente paciente) throws PersistenciaException {
         // Comando SQL para insertar un paciente

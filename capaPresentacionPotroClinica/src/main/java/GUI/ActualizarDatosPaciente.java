@@ -17,7 +17,7 @@ import javax.swing.JOptionPane;
  * @author multaslokas33
  */
 public class ActualizarDatosPaciente extends javax.swing.JFrame {
-
+    
     /**
      * Creates new form InicioSecion
      */

@@ -1,22 +1,25 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
- */
 package GUI;
+
+import DTO.PacienteViejoDTO;
 
 /**
  *
  * @author multaslokas33
  */
 public class PerfilPaciente extends javax.swing.JFrame {
-
+    
+    private PacienteViejoDTO perfil;
+    
     /**
      * Creates new form InicioSecion
+     * @param paciente
      */
-    public PerfilPaciente() {
+    public PerfilPaciente(PacienteViejoDTO paciente) {
+        this.perfil = paciente;
         initComponents();
     }
-
+    
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
