@@ -2,6 +2,7 @@ package DAO;
 
 import Conexion.iConexion;
 import Entidades.Cita;
+import Entidades.Consulta;
 import Entidades.Medico;
 import Entidades.Paciente;
 import Excepciones.PersistenciaException;
@@ -112,6 +113,55 @@ public class MedicoDAO implements iMedicoDAO {
         }
         
         return agendaMedico;
+    }
+
+    @Override
+    public List<Consulta> consultarConsultasMedico(int id) throws PersistenciaException {
+        String comandoSQL = """
+                            SELECT * FROM HISTORIAL_CONSULTAS_PACIENTES
+                            WHERE ID_MEDICO = ? 
+                            ORDER BY NOMBRE_PACIENTE DESC;""";
+        List<Consulta> consultasMedico = new ArrayList<>();
+        
+        try (Connection con = conexion.crearConexion();
+                PreparedStatement ps = con.prepareStatement(comandoSQL)) {
+            ps.setInt(1, id);
+            
+            try (ResultSet rs = ps.executeQuery()) {
+                while (rs.next()) {
+                    // Se obtienen los datos relevantes del medico en una entidad.
+                    Medico medico = new Medico(
+                            "",
+                            "",
+                            "Medico",
+                            rs.getString("NOMBRE_MEDICO"),
+                            rs.getString("APELLIDO_PATERNO_MEDICO"),
+                            rs.getString("APELLIDO_MATERNO_MEDICO"),
+                            rs.getString("ESPECIALIDAD"),
+                            rs.getString("ESTADO_MEDICO")
+                    );
+                    // Se crea una entidad paciente null, ya que no es relevante para la consulta.
+                    Paciente paciente = new Paciente();
+                    // Se almacenan los datos relevantes de la cita en una entidad cita.
+                    Cita cita = new Cita(
+                            rs.getTimestamp("FECHA_HORA").toLocalDateTime(),
+                            medico,
+                            paciente,
+                            rs.getString("TIPO_CITA")
+                    );
+                    // Se almacenan los datos relevantes de la consulta en una entidad consulta.
+                    Consulta consulta = new Consulta(rs.getString("MOTIVO"), rs.getString("DIAGNOSTICO"), rs.getString("TRATAMIENTO"), cita);
+                    // Añadir consulta a la lista
+                    consultasMedico.add(consulta);
+                }
+            }
+            
+        } catch (SQLException ex) {
+            Logger.getLogger(MedicoDAO.class.getName()).log(Level.SEVERE, "Error al obtener consultas.", ex);
+            throw new PersistenciaException("Error al obtener consultas.", ex);
+        }
+        // Regresar lista
+        return consultasMedico;
     }
     
 }
