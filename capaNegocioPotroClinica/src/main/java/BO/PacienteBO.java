@@ -39,12 +39,10 @@ public class PacienteBO {
         String 
             correo = paciNuevo.getUsuario(),
             password = paciNuevo.getContrasenia(),
-            rol = paciNuevo.getRol(),
             nombre = paciNuevo.getNombres(),
             apellidoP = paciNuevo.getApellidoPaterno(),
             apellidoM = paciNuevo.getApellidoMaterno(),
-            telefono = paciNuevo.getTelefono(),
-            estado = paciNuevo.getEstado();
+            telefono = paciNuevo.getTelefono();
         
         LocalDate fechaN = paciNuevo.getFechaNacimiento();
         
@@ -68,15 +66,6 @@ public class PacienteBO {
         
         if (password.equalsIgnoreCase(correo) || password.equalsIgnoreCase(nombre)) 
             throw new NegocioException("La contraseña no puede ser igual al correo o al nombre");
-        
-        if (rol == null || rol.trim().isEmpty())
-            throw new NegocioException("El rol no puede estar vacío.");
-        
-        if (!"Paciente".equals(rol))
-            throw new NegocioException("El rol debe ser igual a \"Paciente\".");
-        
-        if (!"Alta".equals(estado)) 
-            throw new NegocioException("El estado del paciente debe ser 'Alta'.");
         
         String contraseniaEncriptada = encriptarContrasenia(password);
         paciNuevo.setContrasenia(contraseniaEncriptada);

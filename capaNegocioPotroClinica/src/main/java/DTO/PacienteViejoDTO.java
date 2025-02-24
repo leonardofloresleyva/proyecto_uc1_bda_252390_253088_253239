@@ -21,8 +21,7 @@ public class PacienteViejoDTO extends UsuarioViejoDTO{
     public PacienteViejoDTO(
             int id, 
             String usuario, 
-            String contrasenia, 
-            String rol,
+            String contrasenia,
             String nombres, 
             String apellidoPaterno, 
             String apellidoMaterno, 
@@ -33,7 +32,7 @@ public class PacienteViejoDTO extends UsuarioViejoDTO{
             String calle, 
             String numero
     ) {
-        super(id, usuario, contrasenia, rol);
+        super(id, usuario, contrasenia, "Paciente");
         this.nombres = nombres;
         this.apellidoPaterno = apellidoPaterno;
         this.apellidoMaterno = apellidoMaterno;
@@ -47,8 +46,7 @@ public class PacienteViejoDTO extends UsuarioViejoDTO{
 
     public PacienteViejoDTO(
             String usuario, 
-            String contrasenia, 
-            String rol,
+            String contrasenia,
             String nombres, 
             String apellidoPaterno, 
             String apellidoMaterno, 
@@ -59,7 +57,7 @@ public class PacienteViejoDTO extends UsuarioViejoDTO{
             String calle, 
             String numero
     ) {
-        super(usuario, contrasenia, rol);
+        super(usuario, contrasenia, "Paciente");
         this.nombres = nombres;
         this.apellidoPaterno = apellidoPaterno;
         this.apellidoMaterno = apellidoMaterno;

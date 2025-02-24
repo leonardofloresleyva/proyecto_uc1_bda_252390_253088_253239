@@ -45,18 +45,16 @@ public class PacienteDAO implements iPacienteDAO {
                 // Datos de tabla usuarios
                 cs.setString(1, paciente.getUsuario());
                 cs.setString(2, paciente.getContrasenia());
-                cs.setString(3, paciente.getRol());
                 // Datos de tabla pacientes
-                cs.setString(4, paciente.getNombres());
-                cs.setString(5, paciente.getApellidoPaterno());
-                cs.setString(6, paciente.getApellidoMaterno());
-                cs.setString(7, paciente.getTelefono());
-                cs.setObject(8, paciente.getFechaNacimiento());
-                cs.setString(9, paciente.getEstado());
+                cs.setString(3, paciente.getNombres());
+                cs.setString(4, paciente.getApellidoPaterno());
+                cs.setString(5, paciente.getApellidoMaterno());
+                cs.setString(6, paciente.getTelefono());
+                cs.setObject(6, paciente.getFechaNacimiento());
                 // Datos de tabla direcciones
-                cs.setString(10, paciente.getColonia());
-                cs.setString(11, paciente.getCalle());
-                cs.setString(12, paciente.getNumero());
+                cs.setString(8, paciente.getColonia());
+                cs.setString(9, paciente.getCalle());
+                cs.setString(10, paciente.getNumero());
 
                 // Ejecutar y regresar verdadero
                 cs.execute();   

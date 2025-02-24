@@ -20,8 +20,7 @@ public class Paciente extends Usuario {
     public Paciente(
             int id, 
             String usuario, 
-            String contrasenia, 
-            String rol, 
+            String contrasenia,
             String nombres, 
             String apellidoPaterno, 
             String apellidoMaterno, 
@@ -32,7 +31,7 @@ public class Paciente extends Usuario {
             String calle, 
             String numero
     ) {
-        super(id, usuario, contrasenia, rol);
+        super(id, usuario, contrasenia, "Paciente");
         this.nombres = nombres;
         this.apellidoPaterno = apellidoPaterno;
         this.apellidoMaterno = apellidoMaterno;
@@ -46,8 +45,7 @@ public class Paciente extends Usuario {
 
     public Paciente(
             String usuario, 
-            String contrasenia, 
-            String rol, 
+            String contrasenia,
             String nombres, 
             String apellidoPaterno, 
             String apellidoMaterno, 
@@ -58,7 +56,7 @@ public class Paciente extends Usuario {
             String calle, 
             String numero
     ) {
-        super(usuario, contrasenia, rol);
+        super(usuario, contrasenia, "Paciente");
         this.nombres = nombres;
         this.apellidoPaterno = apellidoPaterno;
         this.apellidoMaterno = apellidoMaterno;

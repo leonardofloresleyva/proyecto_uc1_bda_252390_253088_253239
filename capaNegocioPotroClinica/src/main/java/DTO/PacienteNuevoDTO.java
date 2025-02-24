@@ -11,9 +11,9 @@ import java.time.LocalDate;
 public class PacienteNuevoDTO {
     
     // Atributos de Usuario.
-    private String usuario, contrasenia, rol;
+    private String usuario, contrasenia;
     // Atributos del paciente como tal.
-    private String nombres, apellidoPaterno, apellidoMaterno, telefono, estado;
+    private String nombres, apellidoPaterno, apellidoMaterno, telefono;
     private LocalDate fechaNacimiento;
     // Atributos de la direccion del paciente.
     private String colonia, calle, numero;
@@ -23,39 +23,11 @@ public class PacienteNuevoDTO {
     public PacienteNuevoDTO(
             String usuario,
             String contrasenia,
-            String rol,
             String nombres, 
             String apellidoPaterno, 
             String apellidoMaterno, 
             String telefono, 
-            LocalDate fechaNacimiento, 
-            String estado, 
-            String colonia, 
-            String calle, 
-            String numero)
-    {
-        this.usuario = usuario;
-        this.contrasenia = contrasenia;
-        this.rol = rol;
-        this.nombres = nombres;
-        this.apellidoPaterno = apellidoPaterno;
-        this.apellidoMaterno = apellidoMaterno;
-        this.telefono = telefono;
-        this.fechaNacimiento = fechaNacimiento;
-        this.estado = estado;
-        this.colonia = colonia;
-        this.calle = calle;
-        this.numero = numero;
-    }
-    
-    public PacienteNuevoDTO(
-            String usuario,
-            String contrasenia,
-            String nombres, 
-            String apellidoPaterno, 
-            String apellidoMaterno, 
-            String telefono, 
-            LocalDate fechaNacimiento,  
+            LocalDate fechaNacimiento,
             String colonia, 
             String calle, 
             String numero)
@@ -76,8 +48,6 @@ public class PacienteNuevoDTO {
 
     public void setContrasenia(String contrasenia) {this.contrasenia = contrasenia;}
 
-    public void setRol(String rol) {this.rol = rol;}
-
     public void setNombres(String nombres) {this.nombres = nombres;}
 
     public void setApellidoPaterno(String apellidoPaterno) {this.apellidoPaterno = apellidoPaterno;}
@@ -87,8 +57,6 @@ public class PacienteNuevoDTO {
     public void setTelefono(String telefono) {this.telefono = telefono;}
 
     public void setFechaNacimiento(LocalDate fechaNacimiento) {this.fechaNacimiento = fechaNacimiento;}
-
-    public void setEstado(String estado) {this.estado = estado;}
 
     public void setColonia(String colonia) {this.colonia = colonia;}
 
@@ -100,8 +68,6 @@ public class PacienteNuevoDTO {
 
     public String getContrasenia() {return contrasenia;}
 
-    public String getRol() {return rol;}
-
     public String getNombres() {return nombres;}
 
     public String getApellidoPaterno() {return apellidoPaterno;}
@@ -112,8 +78,6 @@ public class PacienteNuevoDTO {
 
     public LocalDate getFechaNacimiento() {return fechaNacimiento;}
 
-    public String getEstado() {return estado;}
-
     public String getColonia() {return colonia;}
 
     public String getCalle() {return calle;}
@@ -122,6 +86,6 @@ public class PacienteNuevoDTO {
     
     @Override
     public String toString() {
-        return "PacienteNuevoDTO{" + "nombres=" + nombres + ", apellidoPaterno=" + apellidoPaterno + ", apellidoMaterno=" + apellidoMaterno + ", telefono=" + telefono + ", fechaNacimiento=" + fechaNacimiento + ", estado=" + estado + ", colonia=" + colonia + ", calle=" + calle + ", numero=" + numero + '}';
+        return "PacienteNuevoDTO{" + "nombres=" + nombres + ", apellidoPaterno=" + apellidoPaterno + ", apellidoMaterno=" + apellidoMaterno + ", telefono=" + telefono + ", fechaNacimiento=" + fechaNacimiento + ", colonia=" + colonia + ", calle=" + calle + ", numero=" + numero + '}';
     }
 }

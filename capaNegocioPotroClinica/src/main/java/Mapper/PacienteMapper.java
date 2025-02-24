@@ -15,13 +15,12 @@ public class PacienteMapper {
         Paciente paciente = new Paciente(
                 paciNuevo.getUsuario(),
                 paciNuevo.getContrasenia(),
-                paciNuevo.getRol(),
                 paciNuevo.getNombres(), 
                 paciNuevo.getApellidoPaterno(), 
                 paciNuevo.getApellidoMaterno(), 
                 paciNuevo.getTelefono(), 
                 paciNuevo.getFechaNacimiento(), 
-                paciNuevo.getEstado(), 
+                "Alta", 
                 paciNuevo.getColonia(), 
                 paciNuevo.getCalle(), 
                 paciNuevo.getNumero()
@@ -33,13 +32,11 @@ public class PacienteMapper {
         PacienteNuevoDTO pacienteDTO = new PacienteNuevoDTO(
                 paciViejo.getUsuario(),
                 paciViejo.getContrasenia(),
-                paciViejo.getRol(),
                 paciViejo.getNombres(), 
                 paciViejo.getApellidoPaterno(), 
                 paciViejo.getApellidoMaterno(), 
                 paciViejo.getTelefono(), 
                 paciViejo.getFechaNacimiento(), 
-                paciViejo.getEstado(), 
                 paciViejo.getColonia(), 
                 paciViejo.getCalle(), 
                 paciViejo.getNumero()
@@ -52,7 +49,6 @@ public class PacienteMapper {
                 paciViejo.getId(),
                 paciViejo.getUsuario(),
                 paciViejo.getContrasenia(),
-                paciViejo.getRol(),
                 paciViejo.getNombres(), 
                 paciViejo.getApellidoPaterno(), 
                 paciViejo.getApellidoMaterno(), 
@@ -71,7 +67,6 @@ public class PacienteMapper {
                 paciNuevo.getId(),
                 paciNuevo.getUsuario(),
                 paciNuevo.getContrasenia(),
-                paciNuevo.getRol(),
                 paciNuevo.getNombres(), 
                 paciNuevo.getApellidoPaterno(), 
                 paciNuevo.getApellidoMaterno(), 
@@ -84,5 +79,4 @@ public class PacienteMapper {
         );
         return pacienteDTO;
     }
-    
 }

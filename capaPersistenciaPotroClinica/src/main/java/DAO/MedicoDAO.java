@@ -86,7 +86,6 @@ public class MedicoDAO implements iMedicoDAO {
                     Paciente paciente = new Paciente(
                             "",
                             "",
-                            "Paciente",
                             rs.getString("NOMBRES_PACIENTE"),
                             rs.getString("APELLIDO_PATERNO_PACIENTE"),
                             rs.getString("APELLIDO_MATERNO_PACIENTE"),
