@@ -44,12 +44,12 @@ public class PruebasPersistencia {
 //        }
         
         // Mostrar consultas por rango de fechas
-        List<Consulta> consultasRangoFechas = pacienteDAO.consultarConsultasRangoDeFechas("usuario@gmail.com", LocalDate.of(2025, 1, 20), LocalDate.of(2025, 2, 10));
-        if (consultasRangoFechas.isEmpty()) {
+        List<Consulta> consultasMedico =  medicoDAO.consultarConsultasMedico(1);
+        if (consultasMedico.isEmpty()) {
             System.out.println("No hay consultas por el momento.");
         } else {
             System.out.println("Consultas registradas:");
-            for (Consulta c: consultasRangoFechas) {
+            for (Consulta c: consultasMedico) {
                 System.out.println(c); // imprime todas las consultas encontradas
             }
         }

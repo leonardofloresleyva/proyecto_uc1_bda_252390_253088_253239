@@ -5,6 +5,7 @@
 package DAO;
 
 import Entidades.Cita;
+import Entidades.Consulta;
 import Excepciones.PersistenciaException;
 import java.util.List;
 
@@ -19,4 +20,7 @@ public interface iMedicoDAO {
     public boolean darDeAltaMedico(int id) throws PersistenciaException;
     
     public List<Cita> mostrarAgendaMedico(int id) throws PersistenciaException;
+    
+    public List<Consulta> consultarConsultasMedico(int id) throws PersistenciaException;
+    
 }
