@@ -13,12 +13,6 @@ import Excepciones.PersistenciaException;
  */
 public interface iUsuarioDAO {
     
-    /**
-     * Método que registra un usuario nuevo
-     * @param usuario Objeto usuario
-     * @return ID del usuario
-     * @throws PersistenciaException Si no se pudo crear el usuario
-     */
-    public int registrarUsuario(Usuario usuario) throws PersistenciaException;
+    public boolean iniciarSesion(String usuario, String contrasenia) throws PersistenciaException;
     
 }
