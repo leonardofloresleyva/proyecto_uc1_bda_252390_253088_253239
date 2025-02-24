@@ -68,6 +68,27 @@ public class PacienteViejoDTO extends UsuarioViejoDTO{
         this.calle = calle;
         this.numero = numero;
     }
+    
+    public PacienteViejoDTO(
+        String nombres, 
+        String apellidoPaterno, 
+        String apellidoMaterno, 
+        String telefono, 
+        LocalDate fechaNacimiento, 
+        String colonia, 
+        String calle, 
+        String numero
+    ) {
+    
+        this.nombres = nombres;
+        this.apellidoPaterno = apellidoPaterno;
+        this.apellidoMaterno = apellidoMaterno;
+        this.telefono = telefono;
+        this.fechaNacimiento = fechaNacimiento;
+        this.colonia = colonia;
+        this.calle = calle;
+        this.numero = numero;
+    }
 
     public void setNombres(String nombres) {this.nombres = nombres;}
 

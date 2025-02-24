@@ -50,7 +50,7 @@ public class PacienteDAO implements iPacienteDAO {
                 cs.setString(4, paciente.getApellidoPaterno());
                 cs.setString(5, paciente.getApellidoMaterno());
                 cs.setString(6, paciente.getTelefono());
-                cs.setObject(6, paciente.getFechaNacimiento());
+                cs.setObject(7, paciente.getFechaNacimiento());
                 // Datos de tabla direcciones
                 cs.setString(8, paciente.getColonia());
                 cs.setString(9, paciente.getCalle());

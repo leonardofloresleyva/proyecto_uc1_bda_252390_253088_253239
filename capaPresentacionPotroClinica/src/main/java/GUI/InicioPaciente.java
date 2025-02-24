@@ -4,10 +4,16 @@
  */
 package GUI;
 
+import BO.PacienteBO;
+import Conexion.Conexion;
+import Conexion.iConexion;
+import DAO.PacienteDAO;
+
 /**
  *
  * @author multaslokas33
  */
+
 public class InicioPaciente extends javax.swing.JFrame {
 
     /**
@@ -36,7 +42,7 @@ public class InicioPaciente extends javax.swing.JFrame {
         jLabel3 = new javax.swing.JLabel();
         Registrar = new javax.swing.JButton();
         InicioSecionPaciente = new javax.swing.JButton();
-        Contraseña = new javax.swing.JPasswordField();
+        Contrasenia = new javax.swing.JPasswordField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -133,7 +139,7 @@ public class InicioPaciente extends javax.swing.JFrame {
                         .addComponent(Registrar, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(70, 70, 70)
                         .addComponent(InicioSecionPaciente, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(Contraseña))
+                    .addComponent(Contrasenia))
                 .addContainerGap(137, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
@@ -147,7 +153,7 @@ public class InicioPaciente extends javax.swing.JFrame {
                 .addGap(18, 18, 18)
                 .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(Contraseña, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(Contrasenia, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(37, 37, 37)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(Registrar)
@@ -175,7 +181,7 @@ public class InicioPaciente extends javax.swing.JFrame {
     }//GEN-LAST:event_CorreoActionPerformed
 
     private void InicioSecionPacienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_InicioSecionPacienteActionPerformed
-        PerfilPaciente nuevaVentana = new PerfilPaciente();
+    PerfilPaciente nuevaVentana = new PerfilPaciente();
         nuevaVentana.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_InicioSecionPacienteActionPerformed
@@ -197,7 +203,7 @@ public class InicioPaciente extends javax.swing.JFrame {
      */
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JPasswordField Contraseña;
+    private javax.swing.JPasswordField Contrasenia;
     private javax.swing.JTextField Correo;
     private javax.swing.JButton InicioSecionPaciente;
     private javax.swing.JButton Registrar;

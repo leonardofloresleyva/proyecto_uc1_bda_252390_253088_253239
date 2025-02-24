@@ -128,7 +128,7 @@ public class PacienteBO {
         return BCrypt.verifyer().verify(contraseniaIngresada.toCharArray(), contraseniaEncriptada).verified;
     }
     
-    private void validarUsuario(String correo, String password) throws NegocioException{
+    public void validarUsuario(String correo, String password) throws NegocioException{
         if (correo == null || correo.trim().isEmpty())
             throw new NegocioException("El correo no puede estar vacio.");
         

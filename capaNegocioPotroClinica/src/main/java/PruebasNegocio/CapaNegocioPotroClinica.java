@@ -21,13 +21,11 @@ public class CapaNegocioPotroClinica {
         pacienteBO.registrarPaciente(new PacienteNuevoDTO(
                 "josehernandez@gmail.com",
                 "1234Jose",
-                "Paciente",
                 "Jose",
                 "Hernandez",
                 "Casarez",
                 "6441352678",
                 LocalDate.of(2005, 2, 15),
-                "Alta",
                 "Jecopaco",
                 "Cinco de mayo",
                 "32"
