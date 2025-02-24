@@ -75,7 +75,7 @@
                   <Group type="103" groupAlignment="0" max="-2" attributes="0">
                       <Component id="jLabel2" min="-2" max="-2" attributes="0"/>
                       <Component id="ConsultarAgenda" max="32767" attributes="0"/>
-                      <Component id="histroial" alignment="0" pref="180" max="32767" attributes="0"/>
+                      <Component id="historial" alignment="0" pref="180" max="32767" attributes="0"/>
                       <Component id="Baja" alignment="0" max="32767" attributes="0"/>
                       <Component id="alta" alignment="0" max="32767" attributes="0"/>
                   </Group>
@@ -111,7 +111,7 @@
                   <EmptySpace type="separate" max="-2" attributes="0"/>
                   <Component id="ConsultarAgenda" min="-2" max="-2" attributes="0"/>
                   <EmptySpace type="separate" max="-2" attributes="0"/>
-                  <Component id="histroial" min="-2" max="-2" attributes="0"/>
+                  <Component id="historial" min="-2" max="-2" attributes="0"/>
                   <EmptySpace type="separate" max="-2" attributes="0"/>
                   <Component id="Baja" min="-2" max="-2" attributes="0"/>
                   <EmptySpace type="separate" max="-2" attributes="0"/>
@@ -240,12 +240,12 @@
             <Property name="text" type="java.lang.String" value="&#xa1;Bienvenido, &quot;Medico&quot;!"/>
           </Properties>
         </Component>
-        <Component class="javax.swing.JButton" name="histroial">
+        <Component class="javax.swing.JButton" name="historial">
           <Properties>
             <Property name="text" type="java.lang.String" value="Historial de consultas"/>
           </Properties>
           <Events>
-            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="histroialActionPerformed"/>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="historialActionPerformed"/>
           </Events>
         </Component>
         <Component class="javax.swing.JButton" name="Baja">

@@ -4,16 +4,29 @@
  */
 package GUI;
 
+import BO.MedicoBO;
+import Conexion.Conexion;
+import Conexion.iConexion;
+import DTO.MedicoViejoDTO;
+import Excepciones.NegocioException;
+import Excepciones.PresentacionException;
+import javax.swing.JOptionPane;
+
 /**
  *
  * @author multaslokas33
  */
 public class DarBajaMedico extends javax.swing.JFrame {
 
+    private final MedicoViejoDTO perfil;
+
     /**
      * Creates new form InicioSecion
+     *
+     * @param paciente
      */
-    public DarBajaMedico() {
+    public DarBajaMedico(MedicoViejoDTO medico) {
+        this.perfil = medico;
         initComponents();
     }
 
@@ -44,7 +57,7 @@ public class DarBajaMedico extends javax.swing.JFrame {
         jPanel3.setLayout(jPanel3Layout);
         jPanel3Layout.setHorizontalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 604, Short.MAX_VALUE)
+            .addGap(0, 602, Short.MAX_VALUE)
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -64,7 +77,7 @@ public class DarBajaMedico extends javax.swing.JFrame {
         jPanel4Layout.setHorizontalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel4Layout.createSequentialGroup()
-                .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, 598, Short.MAX_VALUE)
+                .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, 596, Short.MAX_VALUE)
                 .addContainerGap())
         );
         jPanel4Layout.setVerticalGroup(
@@ -107,7 +120,7 @@ public class DarBajaMedico extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(jLabel2)
                         .addGap(32, 32, 32)))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(153, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -138,13 +151,14 @@ public class DarBajaMedico extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void confirmarBajaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_confirmarBajaActionPerformed
-        PerfilMedico nuevaVentana = new PerfilMedico();
-        nuevaVentana.setVisible(true);
-        this.dispose();
+        try {
+            Baja();
+        } catch (PresentacionException ex) {
+        }
     }//GEN-LAST:event_confirmarBajaActionPerformed
 
     private void volverAinicioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_volverAinicioActionPerformed
-        PerfilMedico nuevaVentana = new PerfilMedico();
+        PerfilMedico nuevaVentana = new PerfilMedico(perfil);
         nuevaVentana.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_volverAinicioActionPerformed
@@ -162,4 +176,20 @@ public class DarBajaMedico extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel4;
     private javax.swing.JButton volverAinicio;
     // End of variables declaration//GEN-END:variables
+
+    private void Baja() throws PresentacionException {
+        iConexion conexion = new Conexion();
+        MedicoBO medicoBO = new MedicoBO(conexion);
+        try {
+            if (medicoBO.darDeBaja(perfil.getId())) {
+                perfil.setEstado("Baja");
+                JOptionPane.showMessageDialog(this, "Se ha dado de baja correctamente.", "Éxito", JOptionPane.INFORMATION_MESSAGE);
+                PerfilMedico nuevaVentana = new PerfilMedico(perfil);
+                nuevaVentana.setVisible(true);
+                this.dispose();
+            }
+        } catch (NegocioException ex) {
+            throw new PresentacionException(ex.getMessage(), ex);
+        }
+    }
 }

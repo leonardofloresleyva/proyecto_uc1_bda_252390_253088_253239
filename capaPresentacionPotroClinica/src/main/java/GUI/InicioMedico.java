@@ -4,6 +4,12 @@
  */
 package GUI;
 
+import BO.MedicoBO;
+import BO.PacienteBO;
+import Conexion.Conexion;
+import Excepciones.NegocioException;
+import java.util.Arrays;
+
 /**
  *
  * @author multaslokas33
@@ -26,6 +32,7 @@ public class InicioMedico extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jFormattedTextField1 = new javax.swing.JFormattedTextField();
         jPanel1 = new javax.swing.JPanel();
         jPanel3 = new javax.swing.JPanel();
         Volver = new javax.swing.JButton();
@@ -36,6 +43,8 @@ public class InicioMedico extends javax.swing.JFrame {
         jLabel3 = new javax.swing.JLabel();
         InicioSecionPaciente = new javax.swing.JButton();
         Contrasenia = new javax.swing.JPasswordField();
+
+        jFormattedTextField1.setText("jFormattedTextField1");
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -176,6 +185,19 @@ public class InicioMedico extends javax.swing.JFrame {
         this.dispose();
     }//GEN-LAST:event_VolverActionPerformed
 
+    private void IniciarSesion () throws NegocioException {
+        Conexion conexion = new Conexion();
+        MedicoBO negocio = new MedicoBO(conexion);
+        try{
+            PerfilMedico nuevaVentana = new PerfilMedico(negocio.iniciarSesion(Cedula.getText(), Arrays.toString(Contrasenia.getPassword())));
+            nuevaVentana.setVisible(true);
+            this.dispose();
+        }catch(NegocioException ex){
+            
+        }
+    
+    }
+    
     /**
      * @param args the command line arguments
      */
@@ -185,6 +207,7 @@ public class InicioMedico extends javax.swing.JFrame {
     private javax.swing.JPasswordField Contrasenia;
     private javax.swing.JButton InicioSecionPaciente;
     private javax.swing.JButton Volver;
+    private javax.swing.JFormattedTextField jFormattedTextField1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;

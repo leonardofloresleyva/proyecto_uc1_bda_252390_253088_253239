@@ -1,12 +1,14 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
- */
 package GUI;
 
-import javax.swing.ListSelectionModel;
-import javax.swing.event.ListSelectionEvent;
-import javax.swing.event.ListSelectionListener;
+import BO.MedicoBO;
+import Conexion.Conexion;
+import Conexion.iConexion;
+import DTO.ConsultaDTO;
+import DTO.MedicoViejoDTO;
+import Excepciones.NegocioException;
+import Excepciones.PresentacionException;
+import java.util.ArrayList;
+import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
 /**
@@ -14,11 +16,13 @@ import javax.swing.table.DefaultTableModel;
  * @author multaslokas33
  */
 public class HistorialConsultas extends javax.swing.JFrame {
-
+    private final MedicoViejoDTO perfil;
     /**
      * Creates new form InicioSecion
+     * @param perfil
      */
-    public HistorialConsultas() {
+    public HistorialConsultas(MedicoViejoDTO perfil) {
+        this.perfil = perfil;
         initComponents();
     }
 
@@ -220,19 +224,50 @@ public class HistorialConsultas extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void VolverActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_VolverActionPerformed
-        PerfilMedico nuevaVentana = new PerfilMedico();
+        PerfilMedico nuevaVentana = new PerfilMedico(perfil);
         nuevaVentana.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_VolverActionPerformed
 
     private void ConsultarHistorialActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ConsultarHistorialActionPerformed
- 
+        try{
+            historialConsultas();
+        } catch(PresentacionException ex){
+            
+        }
     }//GEN-LAST:event_ConsultarHistorialActionPerformed
 
     private void tablaConsultasDiaAncestorAdded(javax.swing.event.AncestorEvent evt) {//GEN-FIRST:event_tablaConsultasDiaAncestorAdded
         
     }//GEN-LAST:event_tablaConsultasDiaAncestorAdded
-
+    
+    private void historialConsultas()throws PresentacionException{
+        iConexion conexion = new Conexion();
+        MedicoBO medicoBO = new MedicoBO(conexion);
+        try{
+            ArrayList<ConsultaDTO> consultas = (ArrayList<ConsultaDTO>) medicoBO.consultasMedico(perfil.getId());
+            if(consultas.isEmpty())
+                JOptionPane.showMessageDialog(this, "", "", JOptionPane.ERROR_MESSAGE);
+            else{
+                DefaultTableModel tabla = (DefaultTableModel) tablaConsultasDia.getModel();
+                for(ConsultaDTO consulta : consultas){
+                    tabla.addRow(new Object[]{
+                        consulta.getCita().getFechaHora(),
+                        String.format("%s %s %s", 
+                                consulta.getCita().getPaciente().getNombres(),
+                                consulta.getCita().getPaciente().getApellidoPaterno(),
+                                consulta.getCita().getPaciente().getApellidoMaterno()),
+                        consulta.getMotivo(),
+                        consulta.getDiagnostico(),
+                        consulta.getTratamiento()
+                    });
+                }
+            }
+        } catch(NegocioException ex){
+            throw new PresentacionException(ex.getMessage(), ex);
+        }
+    }
+    
     /**
      * @param args the command line arguments
      */

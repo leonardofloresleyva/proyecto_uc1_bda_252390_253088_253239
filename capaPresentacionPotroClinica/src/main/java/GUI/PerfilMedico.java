@@ -1,8 +1,6 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
- */
 package GUI;
+
+import DTO.MedicoViejoDTO;
 
 /**
  *
@@ -10,10 +8,14 @@ package GUI;
  */
 public class PerfilMedico extends javax.swing.JFrame {
 
+    private final MedicoViejoDTO perfil;
+    
     /**
      * Creates new form InicioSecion
+     * @param paciente
      */
-    public PerfilMedico() {
+    public PerfilMedico(MedicoViejoDTO medico) {
+        this.perfil = medico;
         initComponents();
     }
 
@@ -36,7 +38,7 @@ public class PerfilMedico extends javax.swing.JFrame {
         jLabel7 = new javax.swing.JLabel();
         jLabel8 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
-        histroial = new javax.swing.JButton();
+        historial = new javax.swing.JButton();
         Baja = new javax.swing.JButton();
         alta = new javax.swing.JButton();
         jSeparator1 = new javax.swing.JSeparator();
@@ -108,10 +110,10 @@ public class PerfilMedico extends javax.swing.JFrame {
         jLabel3.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
         jLabel3.setText("¡Bienvenido, \"Medico\"!");
 
-        histroial.setText("Historial de consultas");
-        histroial.addActionListener(new java.awt.event.ActionListener() {
+        historial.setText("Historial de consultas");
+        historial.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                histroialActionPerformed(evt);
+                historialActionPerformed(evt);
             }
         });
 
@@ -169,7 +171,7 @@ public class PerfilMedico extends javax.swing.JFrame {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(jLabel2)
                     .addComponent(ConsultarAgenda, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(histroial, javax.swing.GroupLayout.DEFAULT_SIZE, 180, Short.MAX_VALUE)
+                    .addComponent(historial, javax.swing.GroupLayout.DEFAULT_SIZE, 180, Short.MAX_VALUE)
                     .addComponent(Baja, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(alta, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
@@ -199,7 +201,7 @@ public class PerfilMedico extends javax.swing.JFrame {
                 .addGap(18, 18, 18)
                 .addComponent(ConsultarAgenda)
                 .addGap(18, 18, 18)
-                .addComponent(histroial)
+                .addComponent(historial)
                 .addGap(18, 18, 18)
                 .addComponent(Baja)
                 .addGap(18, 18, 18)
@@ -228,11 +230,11 @@ public class PerfilMedico extends javax.swing.JFrame {
         this.dispose();
     }//GEN-LAST:event_VolverActionPerformed
 
-    private void histroialActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_histroialActionPerformed
-        HistorialConsultas nuevaVentana = new HistorialConsultas();
+    private void historialActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_historialActionPerformed
+        HistorialConsultas nuevaVentana = new HistorialConsultas(perfil);
         nuevaVentana.setVisible(true);
         this.dispose();
-    }//GEN-LAST:event_histroialActionPerformed
+    }//GEN-LAST:event_historialActionPerformed
 
     private void BajaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BajaActionPerformed
         DarBajaMedico nuevaVentana = new DarBajaMedico();
@@ -261,7 +263,7 @@ public class PerfilMedico extends javax.swing.JFrame {
     private javax.swing.JButton ConsultarAgenda;
     private javax.swing.JButton Volver;
     private javax.swing.JButton alta;
-    private javax.swing.JButton histroial;
+    private javax.swing.JButton historial;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;

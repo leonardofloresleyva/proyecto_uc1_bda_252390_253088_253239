@@ -1,5 +1,7 @@
 package BO;
 
+import Conexion.iConexion;
+import DAO.MedicoDAO;
 import DAO.iMedicoDAO;
 import DTO.CitaDTO;
 import DTO.ConsultaDTO;
@@ -27,8 +29,8 @@ public class MedicoBO {
     private final CitaMapper citaMapper;
     private final ConsultaMapper consultaMapper;
 
-    public MedicoBO(iMedicoDAO medicoDAO) {
-        this.medicoDAO = medicoDAO;
+    public MedicoBO(iConexion conexion) {
+        this.medicoDAO = new MedicoDAO(conexion);
         this.medicoMapper = new MedicoMapper();
         this.citaMapper = new CitaMapper();
         this.consultaMapper = new ConsultaMapper();

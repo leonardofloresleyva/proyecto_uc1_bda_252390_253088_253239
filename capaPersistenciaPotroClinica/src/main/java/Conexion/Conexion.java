@@ -11,7 +11,7 @@ import java.util.logging.Logger;
  * Clase que implementa la interfaz de conexión
  * @author Leonardo Flores Leyva (252390)
  * @author Ximena Rosales Panduro (253088)
- * @author Luis Uribe (253239)
+ * @author Luis Eduardo Uribe Vega (253239)
  */
 public class Conexion implements iConexion {
     

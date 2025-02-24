@@ -4,16 +4,29 @@
  */
 package GUI;
 
+import BO.MedicoBO;
+import Conexion.Conexion;
+import Conexion.iConexion;
+import DTO.MedicoViejoDTO;
+import Excepciones.NegocioException;
+import Excepciones.PresentacionException;
+import javax.swing.JOptionPane;
+
 /**
  *
  * @author multaslokas33
  */
 public class DarAltaMedico extends javax.swing.JFrame {
 
+    private final MedicoViejoDTO perfil;
+
     /**
      * Creates new form InicioSecion
+     *
+     * @param paciente
      */
-    public DarAltaMedico() {
+    public DarAltaMedico(MedicoViejoDTO medico) {
+        this.perfil = medico;
         initComponents();
     }
 
@@ -137,13 +150,14 @@ public class DarAltaMedico extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void confirmarBajaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_confirmarBajaActionPerformed
-        PerfilMedico nuevaVentana = new PerfilMedico();
-        nuevaVentana.setVisible(true);
-        this.dispose();
+        try {
+            Alta();
+        } catch (PresentacionException ex) {
+        }
     }//GEN-LAST:event_confirmarBajaActionPerformed
 
     private void volverAinicioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_volverAinicioActionPerformed
-        PerfilMedico nuevaVentana = new PerfilMedico();
+        PerfilMedico nuevaVentana = new PerfilMedico(perfil);
         nuevaVentana.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_volverAinicioActionPerformed
@@ -161,4 +175,20 @@ public class DarAltaMedico extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel4;
     private javax.swing.JButton volverAinicio;
     // End of variables declaration//GEN-END:variables
+
+    private void Alta() throws PresentacionException {
+        iConexion conexion = new Conexion();
+        MedicoBO medicoBO = new MedicoBO(conexion);
+        try {
+            if (medicoBO.darDeAlta(perfil.getId())) {
+                perfil.setEstado("Alta");
+                JOptionPane.showMessageDialog(this, "Se ha dado de alta correctamente.", "Éxito", JOptionPane.INFORMATION_MESSAGE);
+                PerfilMedico nuevaVentana = new PerfilMedico(perfil);
+                nuevaVentana.setVisible(true);
+                this.dispose();
+            }
+        } catch (NegocioException ex) {
+            throw new PresentacionException(ex.getMessage(), ex);
+        }
+    }
 }

@@ -11,6 +11,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
@@ -173,17 +174,21 @@ public class MedicoDAO implements iMedicoDAO {
             try (ResultSet rs = ps.executeQuery()) {
                 while (rs.next()) {
                     // Se obtienen los datos relevantes del medico en una entidad.
-                    Medico medico = new Medico(
-                            "",
-                            "",
-                            rs.getString("NOMBRE_MEDICO"),
-                            rs.getString("APELLIDO_PATERNO_MEDICO"),
-                            rs.getString("APELLIDO_MATERNO_MEDICO"),
-                            rs.getString("ESPECIALIDAD"),
-                            rs.getString("ESTADO_MEDICO")
-                    );
+                    Medico medico = new Medico();
                     // Se crea una entidad paciente null, ya que no es relevante para la consulta.
-                    Paciente paciente = new Paciente();
+                    Paciente paciente = new Paciente(
+                            "",
+                            "",
+                            rs.getString("NOMBRE_PACIENTE"),
+                            rs.getString("APELLIDO_PATERNO_PACIENTE"),
+                            rs.getString("APELLIDO_MATERNO_PACIENTE"),
+                            "",
+                            rs.getObject("FECHA_NACIMIENTO", LocalDate.class),
+                            "",
+                            "",
+                            "",
+                            ""
+                    );
                     // Se almacenan los datos relevantes de la cita en una entidad cita.
                     Cita cita = new Cita(
                             rs.getTimestamp("FECHA_HORA").toLocalDateTime(),
