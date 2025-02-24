@@ -8,12 +8,13 @@ import BO.PacienteBO;
 import Conexion.Conexion;
 import Conexion.iConexion;
 import DAO.PacienteDAO;
+import Excepciones.PersistenciaException;
+import javax.swing.JOptionPane;
 
 /**
  *
  * @author multaslokas33
  */
-
 public class InicioPaciente extends javax.swing.JFrame {
 
     /**
@@ -181,7 +182,7 @@ public class InicioPaciente extends javax.swing.JFrame {
     }//GEN-LAST:event_CorreoActionPerformed
 
     private void InicioSecionPacienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_InicioSecionPacienteActionPerformed
-    PerfilPaciente nuevaVentana = new PerfilPaciente();
+        PerfilPaciente nuevaVentana = new PerfilPaciente();
         nuevaVentana.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_InicioSecionPacienteActionPerformed
