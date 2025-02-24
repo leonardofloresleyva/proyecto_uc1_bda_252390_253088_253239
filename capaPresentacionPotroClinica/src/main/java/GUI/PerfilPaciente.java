@@ -240,7 +240,7 @@ public class PerfilPaciente extends javax.swing.JFrame {
     }//GEN-LAST:event_VolverActionPerformed
 
     private void ActualizarDatosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ActualizarDatosActionPerformed
-        ActualizarDatosPaciente nuevaVentana = new ActualizarDatosPaciente();
+        ActualizarDatosPaciente nuevaVentana = new ActualizarDatosPaciente(perfil);
         nuevaVentana.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_ActualizarDatosActionPerformed

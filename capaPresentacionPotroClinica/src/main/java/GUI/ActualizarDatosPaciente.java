@@ -18,10 +18,14 @@ import javax.swing.JOptionPane;
  */
 public class ActualizarDatosPaciente extends javax.swing.JFrame {
     
+    private PacienteViejoDTO pacienteActualizado;
+    
     /**
      * Creates new form InicioSecion
+     * @param pacienteActualizado
      */
-    public ActualizarDatosPaciente() {
+    public ActualizarDatosPaciente(PacienteViejoDTO pacienteActualizado) {
+        this.pacienteActualizado = pacienteActualizado;
         initComponents();
     }
 
@@ -319,7 +323,7 @@ public class ActualizarDatosPaciente extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void VolverActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_VolverActionPerformed
-        PerfilPaciente nuevaVentana = new PerfilPaciente();
+        PerfilPaciente nuevaVentana = new PerfilPaciente(pacienteActualizado);
         nuevaVentana.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_VolverActionPerformed
@@ -361,14 +365,21 @@ public class ActualizarDatosPaciente extends javax.swing.JFrame {
         
         LocalDate fechaNacimiento = LocalDate.parse(Fecha.getText()); 
         
-        PacienteViejoDTO pacienteActualizado = new PacienteViejoDTO(
+        PacienteViejoDTO paciente = new PacienteViejoDTO(
             nombres, apellidoPaterno, apellidoMaterno, telefono, fechaNacimiento, colonia, calle, numero
         );
 
         PacienteBO pacienteBO = new PacienteBO(new Conexion());
-        boolean actualizado = pacienteBO.actualizarDatosPaciente(pacienteActualizado);
+        boolean actualizado = pacienteBO.actualizarDatosPaciente(paciente);
 
         if (actualizado) {
+            pacienteActualizado.setNombres(nombres);
+            pacienteActualizado.setApellidoPaterno(apellidoPaterno);
+            pacienteActualizado.setApellidoMaterno(apellidoMaterno);
+            pacienteActualizado.setTelefono(telefono);
+            pacienteActualizado.setColonia(colonia);
+            pacienteActualizado.setCalle(calle);
+            pacienteActualizado.setNumero(numero);
             JOptionPane.showMessageDialog(this, "Datos actualizados correctamente.", "Éxito", JOptionPane.INFORMATION_MESSAGE);
         } else {
             JOptionPane.showMessageDialog(this, "No se pudo actualizar la información.", "Error", JOptionPane.ERROR_MESSAGE);

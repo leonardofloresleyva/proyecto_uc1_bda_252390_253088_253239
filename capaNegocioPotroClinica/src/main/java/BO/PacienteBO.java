@@ -31,6 +31,17 @@ public class PacienteBO {
         this.pacienteMapper = new PacienteMapper();
     }
     
+    public PacienteViejoDTO iniciarSesion(String correo, String contrasenia) throws NegocioException{
+        validarUsuario(correo, contrasenia);
+        try{
+            Paciente paciente = pacienteDAO.iniciarSesionPaciente(correo, contrasenia);
+            PacienteViejoDTO pacienteViejo = pacienteMapper.toDTOViejo(paciente);
+            return pacienteViejo;
+        }catch(PersistenciaException ex){
+            throw new NegocioException(ex.getMessage(), ex);
+        }
+    }
+    
     public boolean registrarPaciente(PacienteNuevoDTO paciNuevo) throws NegocioException {
         
         if (paciNuevo == null) 

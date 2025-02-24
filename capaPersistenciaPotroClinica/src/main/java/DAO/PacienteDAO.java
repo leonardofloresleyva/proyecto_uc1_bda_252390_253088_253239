@@ -33,8 +33,48 @@ public class PacienteDAO implements iPacienteDAO {
         this.conexion = conexion;
     }
     
-    public Paciente iniciarSesion(String correo, String contrasenia){
-        
+    public Paciente iniciarSesionPaciente(String correo, String contrasenia) throws PersistenciaException{
+        String setenciaSQL = """
+                             SELECT 
+                                 NOMBRES,
+                                 APELLIDO_PATERNO,
+                                 APELLIDO_MATERNO,
+                                 TELEFONO,
+                                 FECHA_NACIMIENTO,
+                                 ESTADO,
+                                 COLONIA,
+                                 CALLE,
+                                 NUMERO
+                             FROM DATOS_PACIENTE
+                             WHERE USUARIO = ? AND CONTRASENIA = ?;""";
+        if(verificarPaciente(correo, contrasenia)){
+            try(
+                    Connection con = conexion.crearConexion();
+                    PreparedStatement ps = con.prepareStatement(setenciaSQL);
+                ){
+
+                ps.setString(1, correo);
+                ps.setString(2, contrasenia);
+                ResultSet resultado = ps.executeQuery();
+                Paciente pacienteEncontrado = new Paciente(
+                        correo,
+                        contrasenia,
+                        resultado.getString(1),
+                        resultado.getString(2),
+                        resultado.getString(3),
+                        resultado.getString(4),
+                        resultado.getObject(5, LocalDate.class),
+                        resultado.getString(6),
+                        resultado.getString(7),
+                        resultado.getString(8),
+                        resultado.getString(9)
+                );
+                return pacienteEncontrado;
+            }catch(SQLException ex){
+                throw new PersistenciaException("Error al iniciar sesion.", ex);
+            }
+        } else
+            throw new PersistenciaException("Paciente no encontrado.");
     }
     
     @Override
@@ -78,7 +118,7 @@ public class PacienteDAO implements iPacienteDAO {
                 Connection con = conexion.crearConexion();
                 PreparedStatement ps = con.prepareStatement(sentenciaSQL);
             ){
-            if(verificarPaciente(paciente.getId())){
+            if(verificarPaciente(paciente.getUsuario(), paciente.getContrasenia())){
                 ps.setString(1, paciente.getUsuario());
                 ps.setString(2, paciente.getNombres());
                 ps.setString(3, paciente.getApellidoPaterno());
@@ -223,19 +263,24 @@ public class PacienteDAO implements iPacienteDAO {
         return citasRangoFechas;
     }
     
-    private boolean verificarPaciente(int id) throws PersistenciaException{
-        String SentenciaSQL = "SELECT * FROM PACIENTES WHERE ID_PACIENTE = ?";
-        try(
-                Connection con = conexion.crearConexion();
-                PreparedStatement ps = con.prepareStatement(SentenciaSQL);
-        ){
-            ps.setInt(1, id);
-            ResultSet resultado = ps.executeQuery();
-            return resultado.next();
-            
-        } catch(SQLException ex){
-            logger.log(Level.SEVERE, "Error al verificar el paciente en la base de datos.", ex);
-            throw new PersistenciaException("Error al verificar el paciente. Inténtelo de nuevo mas tarde.");
+    
+    
+    private boolean verificarPaciente (String usuario, String contrasenia) throws PersistenciaException {
+        String consultaSQL = "SELECT * FROM USUARIOS WHERE CORREO = ? AND CONTRASENIA = ?";
+
+        try (
+                Connection con = conexion.crearConexion(); 
+                PreparedStatement ps = con.prepareStatement(consultaSQL);
+            ) {
+            ps.setString(1, usuario);
+            ps.setString(2, contrasenia);
+
+            try (ResultSet rs = ps.executeQuery()) {
+                return rs.next(); // Si hay resultados, las credenciales son válidas
+            }
+        } catch (SQLException ex) {
+            logger.log(Level.SEVERE, "Error al validar paciente en la base de datos.", ex);
+            throw new PersistenciaException("Error al validar paciente.", ex);
         }
     }
 }

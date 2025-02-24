@@ -22,6 +22,8 @@ public interface iPacienteDAO {
      */
     public boolean registrarPaciente(Paciente paciente) throws PersistenciaException;
     
+    public Paciente iniciarSesionPaciente(String correo, String contrasenia) throws PersistenciaException;
+    
     public boolean cambiarContrasenia(Paciente paciente) throws PersistenciaException;
     
     public boolean actualizarPaciente(Paciente paciente) throws PersistenciaException;

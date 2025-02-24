@@ -8,6 +8,8 @@ import BO.PacienteBO;
 import Conexion.Conexion;
 import Conexion.iConexion;
 import DAO.PacienteDAO;
+import Excepciones.NegocioException;
+import java.util.Arrays;
 
 /**
  *
@@ -181,9 +183,15 @@ public class InicioPaciente extends javax.swing.JFrame {
     }//GEN-LAST:event_CorreoActionPerformed
 
     private void InicioSecionPacienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_InicioSecionPacienteActionPerformed
-    PerfilPaciente nuevaVentana = new PerfilPaciente();
-        nuevaVentana.setVisible(true);
-        this.dispose();
+        Conexion conexion = new Conexion();
+        PacienteBO negocio = new PacienteBO(conexion);
+        try{
+            PerfilPaciente nuevaVentana = new PerfilPaciente(negocio.iniciarSesion(Correo.getText(), Arrays.toString(Contrasenia.getPassword())));
+            nuevaVentana.setVisible(true);
+            this.dispose();
+        }catch(NegocioException ex){
+            
+        }
     }//GEN-LAST:event_InicioSecionPacienteActionPerformed
 
     private void VolverActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_VolverActionPerformed
