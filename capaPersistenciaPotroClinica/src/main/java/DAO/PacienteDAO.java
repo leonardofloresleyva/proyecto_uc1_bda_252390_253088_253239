@@ -106,30 +106,30 @@ public class PacienteDAO implements iPacienteDAO {
         }
     }
 
-    @Override
-    public boolean actualizarPaciente(Paciente paciente) throws PersistenciaException {
-        String sentenciaSQL = "UPDATE PACIENTES SET nombres = ?, apellido_paterno = ?, apellido_materno = ?, telefono = ?, fecha_nacimiento = ? WHERE id_paciente = ?;";
-        try (
-                Connection con = conexion.crearConexion(); PreparedStatement ps = con.prepareStatement(sentenciaSQL);) {
-            if (verificarPaciente(paciente.getUsuario(), paciente.getContrasenia())) {
-                ps.setString(1, paciente.getNombres());
-                ps.setString(2, paciente.getApellidoPaterno());
-                ps.setString(3, paciente.getApellidoMaterno());
-                ps.setString(4, paciente.getTelefono());
-                ps.setObject(5, paciente.getFechaNacimiento());
-                ps.setInt(6, paciente.getId());
-                ps.executeUpdate();
-                logger.log(Level.INFO, "Datos del paciente actualizados con éxito en la base de datos.");
-                return true;
-            } else {
-                throw new PersistenciaException("El paciente no está registrado en la Potro Clínica");
-            }
+        @Override
+        public boolean actualizarPaciente(Paciente paciente) throws PersistenciaException {
+            String sentenciaSQL = "UPDATE PACIENTES SET nombres = ?, apellido_paterno = ?, apellido_materno = ?, telefono = ?, fecha_nacimiento = ? WHERE id_paciente = ?;";
+            try (
+                    Connection con = conexion.crearConexion(); PreparedStatement ps = con.prepareStatement(sentenciaSQL);) {
+                if (verificarPaciente(paciente.getUsuario(), paciente.getContrasenia())) {
+                    ps.setString(1, paciente.getNombres());
+                    ps.setString(2, paciente.getApellidoPaterno());
+                    ps.setString(3, paciente.getApellidoMaterno());
+                    ps.setString(4, paciente.getTelefono());
+                    ps.setObject(5, paciente.getFechaNacimiento());
+                    ps.setInt(6, paciente.getId());
+                    ps.executeUpdate();
+                    logger.log(Level.INFO, "Datos del paciente actualizados con éxito en la base de datos.");
+                    return true;
+                } else {
+                    throw new PersistenciaException("El paciente no está registrado en la Potro Clínica");
+                }
 
-        } catch (SQLException ex) {
-            logger.log(Level.SEVERE, "Error al actualizar los datos del paciente en la base de datos.", ex);
-            throw new PersistenciaException("Ha ocurrido un error al intentar actualizar los datos del paciente");
+            } catch (SQLException ex) {
+                logger.log(Level.SEVERE, "Error al actualizar los datos del paciente en la base de datos.", ex);
+                throw new PersistenciaException("Ha ocurrido un error al intentar actualizar los datos del paciente");
+            }
         }
-    }
 
     @Override
     public boolean cambiarContrasenia(Paciente paciente) throws PersistenciaException {
