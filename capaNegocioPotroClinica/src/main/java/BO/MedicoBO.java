@@ -100,33 +100,33 @@ public class MedicoBO {
     
     private void validarUsuario(String cedula, String password) throws NegocioException{
         if (cedula == null || cedula.trim().isEmpty())
-            throw new NegocioException("El correo no puede estar vacio.");
+            throw new NegocioException("La cedula no puede estar vacio.");
         
-        if (cedula.length() > 150)
-            throw new NegocioException("No se permiten correos con mas de 150 caracteres.");
-        
-        if (!EmailValidator.getInstance().isValid(cedula))  
-            throw new NegocioException("El correo ingresado no es válido.");
-        
-        if (cedula.split("@")[0].length() < 2) 
-            throw new NegocioException("El correo debe tener al menos dos caracteres antes del '@'");
-        
-        if (!Pattern.matches("^[^@\\s]+@[^@\\s]+\\.com$", cedula)) 
-             throw new NegocioException("La cadena ingresada no es un correo electronico.");
+//        if (cedula.length() > 150)
+//            throw new NegocioException("No se permiten correos con mas de 150 caracteres.");
+//        
+//        if (!EmailValidator.getInstance().isValid(cedula))  
+//            throw new NegocioException("El correo ingresado no es válido.");
+//        
+//        if (cedula.split("@")[0].length() < 2) 
+//            throw new NegocioException("El correo debe tener al menos dos caracteres antes del '@'");
+//        
+//        if (!Pattern.matches("^[^@\\s]+@[^@\\s]+\\.com$", cedula)) 
+//             throw new NegocioException("La cadena ingresada no es un correo electronico.");
         
         if (password == null || password.trim().isEmpty())
             throw new NegocioException("La contrasenia no puede estar vacia.");
         
-        if (password.length() > 20)
-            throw new NegocioException("No se permiten contrasenias con mas de 20 caracteres.");
-        
-        if (!password.matches("^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d).+$")) 
-            throw new NegocioException("La contraseña debe contener al menos una mayúscula, una minúscula y un número");
-        
-        if (password.matches(".*(.)\\1{2,}.*")) 
-            throw new NegocioException("La contraseña no puede contener secuencias repetitivas");
-        
-        if (password.contains(" ")) 
-            throw new NegocioException("La contraseña no debe contener espacios en ninguna parte");
+//        if (password.length() > 20)
+//            throw new NegocioException("No se permiten contrasenias con mas de 20 caracteres.");
+//        
+//        if (!password.matches("^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d).+$")) 
+//            throw new NegocioException("La contraseña debe contener al menos una mayúscula, una minúscula y un número");
+//        
+//        if (password.matches(".*(.)\\1{2,}.*")) 
+//            throw new NegocioException("La contraseña no puede contener secuencias repetitivas");
+//        
+//        if (password.contains(" ")) 
+//            throw new NegocioException("La contraseña no debe contener espacios en ninguna parte");
     }
 }
