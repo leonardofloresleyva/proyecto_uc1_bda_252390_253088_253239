@@ -4,6 +4,7 @@
  */
 package GUI;
 
+import DTO.PacienteViejoDTO;
 import javax.swing.ListSelectionModel;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
@@ -15,11 +16,16 @@ import javax.swing.table.DefaultTableModel;
  */
 public class MedicosDisponbles extends javax.swing.JFrame {
 
+    private PacienteViejoDTO perfil;
+    
     /**
      * Creates new form InicioSecion
+     * @param paciente
      */
-    public MedicosDisponbles() {
+    public MedicosDisponbles(PacienteViejoDTO paciente) {
+        this.perfil = paciente;
         initComponents();
+        addSelectionListener();
     }
     
     private void addSelectionListener() {
@@ -240,7 +246,7 @@ public class MedicosDisponbles extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void VolverActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_VolverActionPerformed
-        PerfilPaciente nuevaVentana = new PerfilPaciente();
+        PerfilPaciente nuevaVentana = new PerfilPaciente(perfil);
         nuevaVentana.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_VolverActionPerformed

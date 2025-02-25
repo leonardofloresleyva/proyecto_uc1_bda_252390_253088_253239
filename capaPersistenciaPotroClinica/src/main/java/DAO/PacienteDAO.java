@@ -37,16 +37,16 @@ public class PacienteDAO implements iPacienteDAO {
     public Paciente iniciarSesionPaciente(String correo, String contrasenia) throws PersistenciaException{
         String setenciaSQL = """
                              SELECT
-                             \tID,
-                             \tNOMBRES,
-                             \tAPELLIDO_PATERNO,
-                             \tAPELLIDO_MATERNO,
-                             \tTELEFONO,
-                             \tFECHA_NACIMIENTO,
-                             \tESTADO,
-                             \tCOLONIA,
-                             \tCALLE,
-                             \tNUMERO
+                             ID,
+                             NOMBRES,
+                             APELLIDO_PATERNO,
+                             APELLIDO_MATERNO,
+                             TELEFONO,
+                             FECHA_NACIMIENTO,
+                             ESTADO,
+                             COLONIA,
+                             CALLE,
+                             NUMERO
                               FROM DATOS_PACIENTE
                               WHERE USUARIO = ? AND CONTRASENIA = ?;""";
         if(verificarPaciente(correo, contrasenia)){
@@ -54,7 +54,7 @@ public class PacienteDAO implements iPacienteDAO {
                     Connection con = conexion.crearConexion();
                     PreparedStatement ps = con.prepareStatement(setenciaSQL);
                 ){
-
+                
                 ps.setString(1, correo);
                 ps.setString(2, contrasenia);
                 ResultSet resultado = ps.executeQuery();

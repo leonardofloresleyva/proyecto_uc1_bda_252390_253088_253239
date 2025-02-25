@@ -233,7 +233,6 @@ public class HistorialConsultas extends javax.swing.JFrame {
         try{
             historialConsultas();
         } catch(PresentacionException ex){
-            
         }
     }//GEN-LAST:event_ConsultarHistorialActionPerformed
 

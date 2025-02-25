@@ -1,9 +1,17 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
- */
 package GUI;
 
+import BO.CitaBO;
+import BO.MedicoBO;
+import Conexion.Conexion;
+import Conexion.iConexion;
+import DTO.CitaDTO;
+import DTO.ConsultaDTO;
+import DTO.MedicoViejoDTO;
+import DTO.PacienteViejoDTO;
+import Excepciones.NegocioException;
+import Excepciones.PresentacionException;
+import java.util.ArrayList;
+import javax.swing.JOptionPane;
 import javax.swing.ListSelectionModel;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
@@ -15,14 +23,24 @@ import javax.swing.table.DefaultTableModel;
  */
 public class ConsultaAgendaMedico extends javax.swing.JFrame {
 
+    private final MedicoViejoDTO perfil;
+    private ArrayList<CitaDTO> citasMedico;
+
     /**
      * Creates new form InicioSecion
+     *
+     * @param medico
      */
-    public ConsultaAgendaMedico() {
+    public ConsultaAgendaMedico(MedicoViejoDTO medico) {
+        this.perfil = medico;
         initComponents();
         addSelectionListener();
+         try {
+            citas();
+        } catch (PresentacionException ex) {
+        }
     }
-    
+
     private void addSelectionListener() {
         tablaConsultasDia.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
             @Override
@@ -57,10 +75,9 @@ public class ConsultaAgendaMedico extends javax.swing.JFrame {
         jLabel2 = new javax.swing.JLabel();
         jPanel4 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
-        ConsultarAgenda = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         tablaConsultasDia = new javax.swing.JTable();
-        ConsultarAgenda1 = new javax.swing.JButton();
+        iniciarConsulta = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -115,15 +132,6 @@ public class ConsultaAgendaMedico extends javax.swing.JFrame {
             .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, 70, Short.MAX_VALUE)
         );
 
-        ConsultarAgenda.setBackground(new java.awt.Color(0, 0, 0));
-        ConsultarAgenda.setForeground(new java.awt.Color(255, 255, 255));
-        ConsultarAgenda.setText("Consultar");
-        ConsultarAgenda.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                ConsultarAgendaActionPerformed(evt);
-            }
-        });
-
         tablaConsultasDia.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 { new Boolean(false), null, null, null},
@@ -161,7 +169,7 @@ public class ConsultaAgendaMedico extends javax.swing.JFrame {
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.Boolean.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class
+                java.lang.Boolean.class, java.lang.Object.class, java.lang.String.class, java.lang.String.class
             };
             boolean[] canEdit = new boolean [] {
                 true, false, false, false
@@ -187,12 +195,12 @@ public class ConsultaAgendaMedico extends javax.swing.JFrame {
         });
         jScrollPane1.setViewportView(tablaConsultasDia);
 
-        ConsultarAgenda1.setBackground(new java.awt.Color(0, 0, 0));
-        ConsultarAgenda1.setForeground(new java.awt.Color(255, 255, 255));
-        ConsultarAgenda1.setText("Iniciar Consulta");
-        ConsultarAgenda1.addActionListener(new java.awt.event.ActionListener() {
+        iniciarConsulta.setBackground(new java.awt.Color(0, 0, 0));
+        iniciarConsulta.setForeground(new java.awt.Color(255, 255, 255));
+        iniciarConsulta.setText("Iniciar Consulta");
+        iniciarConsulta.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                ConsultarAgenda1ActionPerformed(evt);
+                iniciarConsultaActionPerformed(evt);
             }
         });
 
@@ -208,14 +216,11 @@ public class ConsultaAgendaMedico extends javax.swing.JFrame {
                         .addGap(37, 37, 37)
                         .addComponent(jLabel2))
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(242, 242, 242)
-                        .addComponent(ConsultarAgenda, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(70, 70, 70)
                         .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(239, 239, 239)
-                        .addComponent(ConsultarAgenda1, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(iniciarConsulta, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
@@ -224,12 +229,10 @@ public class ConsultaAgendaMedico extends javax.swing.JFrame {
                 .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(ConsultarAgenda)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGap(41, 41, 41)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 215, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(ConsultarAgenda1)
+                .addComponent(iniciarConsulta)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 18, Short.MAX_VALUE)
                 .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
@@ -249,33 +252,70 @@ public class ConsultaAgendaMedico extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void VolverActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_VolverActionPerformed
-        PerfilMedico nuevaVentana = new PerfilMedico();
+        PerfilMedico nuevaVentana = new PerfilMedico(perfil);
         nuevaVentana.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_VolverActionPerformed
-
-    private void ConsultarAgendaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ConsultarAgendaActionPerformed
- 
-    }//GEN-LAST:event_ConsultarAgendaActionPerformed
 
     private void tablaConsultasDiaAncestorAdded(javax.swing.event.AncestorEvent evt) {//GEN-FIRST:event_tablaConsultasDiaAncestorAdded
         
     }//GEN-LAST:event_tablaConsultasDiaAncestorAdded
 
-    private void ConsultarAgenda1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ConsultarAgenda1ActionPerformed
-        RegistrarConsultas nuevaVentana = new RegistrarConsultas();
-        nuevaVentana.setVisible(true);
-        this.dispose();
-    }//GEN-LAST:event_ConsultarAgenda1ActionPerformed
-
+    private void iniciarConsultaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_iniciarConsultaActionPerformed
+        try{
+            obtenerCita();
+        }catch(PresentacionException ex){
+            
+        }
+    }//GEN-LAST:event_iniciarConsultaActionPerformed
+    
+    private void obtenerCita() throws PresentacionException{
+        int citaSeleccionada = tablaConsultasDia.getSelectedRow();
+        if(citaSeleccionada != -1){
+            DefaultTableModel tabla = (DefaultTableModel) tablaConsultasDia.getModel();
+            CitaDTO cita = new CitaDTO(
+                    citasMedico.get(citaSeleccionada).getFechaHora(), 
+                    perfil, 
+                    citasMedico.get(citaSeleccionada).getPaciente(), 
+                    citasMedico.get(citaSeleccionada).getTipoCita());
+            RegistrarConsultas nuevaVentana = new RegistrarConsultas(cita);
+            nuevaVentana.setVisible(true);
+            this.dispose();
+        }
+    }
+    
+    private void citas() throws PresentacionException {
+        iConexion conexion = new Conexion();
+        MedicoBO medicoBO = new MedicoBO(conexion);
+        try {
+            citasMedico = (ArrayList<CitaDTO>) medicoBO.agendaMedico(perfil.getId());
+            if (citasMedico.isEmpty()) {
+                JOptionPane.showMessageDialog(this, "", "", JOptionPane.ERROR_MESSAGE);
+            } else {
+                DefaultTableModel tabla = (DefaultTableModel) tablaConsultasDia.getModel();
+                for (CitaDTO cita : citasMedico) {
+                    tabla.addRow(new Object[]{
+                        false,
+                        cita.getFechaHora(),
+                        String.format("%s %s %s", 
+                                cita.getPaciente().getNombres(),
+                                cita.getPaciente().getApellidoPaterno(),
+                                cita.getPaciente().getApellidoMaterno()
+                                ),
+                        cita.getTipoCita()
+                    });
+                }
+            }
+        } catch (NegocioException ex) {
+            throw new PresentacionException(ex.getMessage(), ex);
+        }
+    }
     /**
      * @param args the command line arguments
      */
-
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton ConsultarAgenda;
-    private javax.swing.JButton ConsultarAgenda1;
     private javax.swing.JButton Volver;
+    private javax.swing.JButton iniciarConsulta;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JPanel jPanel1;

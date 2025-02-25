@@ -56,7 +56,6 @@ public class RegistarPacientee extends javax.swing.JFrame {
         jLabel9 = new javax.swing.JLabel();
         jLabel11 = new javax.swing.JLabel();
         jLabel12 = new javax.swing.JLabel();
-        Contrasenia = new javax.swing.JPasswordField();
         Registro = new javax.swing.JButton();
         Calle = new javax.swing.JTextField();
         jLabel10 = new javax.swing.JLabel();
@@ -67,6 +66,7 @@ public class RegistarPacientee extends javax.swing.JFrame {
         jSeparator4 = new javax.swing.JSeparator();
         jSeparator5 = new javax.swing.JSeparator();
         Correo = new javax.swing.JTextField();
+        Contrasenia = new javax.swing.JTextField();
 
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -195,12 +195,6 @@ public class RegistarPacientee extends javax.swing.JFrame {
         jLabel12.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
         jLabel12.setText("Contraseña");
 
-        Contrasenia.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                ContraseniaActionPerformed(evt);
-            }
-        });
-
         Registro.setBackground(new java.awt.Color(0, 0, 0));
         Registro.setForeground(new java.awt.Color(255, 255, 255));
         Registro.setText("Confirmar Registro");
@@ -240,6 +234,12 @@ public class RegistarPacientee extends javax.swing.JFrame {
         Correo.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 CorreoActionPerformed(evt);
+            }
+        });
+
+        Contrasenia.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                ContraseniaActionPerformed(evt);
             }
         });
 
@@ -290,8 +290,8 @@ public class RegistarPacientee extends javax.swing.JFrame {
                             .addComponent(jLabel11))
                         .addGap(86, 86, 86)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(Contrasenia, javax.swing.GroupLayout.PREFERRED_SIZE, 190, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel12))))
+                            .addComponent(jLabel12)
+                            .addComponent(Contrasenia, javax.swing.GroupLayout.PREFERRED_SIZE, 190, javax.swing.GroupLayout.PREFERRED_SIZE))))
                 .addContainerGap(39, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -352,8 +352,8 @@ public class RegistarPacientee extends javax.swing.JFrame {
                     .addComponent(jLabel12, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(Contrasenia, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(Correo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(Correo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(Contrasenia, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addComponent(Registro)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 18, Short.MAX_VALUE)
@@ -404,10 +404,6 @@ public class RegistarPacientee extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_ColoniaActionPerformed
 
-    private void ContraseniaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ContraseniaActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_ContraseniaActionPerformed
-
     private void RegistroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_RegistroActionPerformed
         try {
 
@@ -416,7 +412,7 @@ public class RegistarPacientee extends javax.swing.JFrame {
             String apellidoMaterno = ApellidoMaterno.getText().trim();
             String telefono = Telefono.getText().trim();
             String usuario = Correo.getText().trim();
-            String contrasenia = new String(Contrasenia.getPassword()).trim();
+            String contrasenia = Contrasenia.getText().trim();
             LocalDate fechaNacimiento = LocalDate.parse(Fecha.getText().trim());
 
             String calle = Calle.getText().trim();
@@ -475,6 +471,10 @@ public class RegistarPacientee extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_CorreoActionPerformed
 
+    private void ContraseniaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ContraseniaActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_ContraseniaActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -484,7 +484,7 @@ public class RegistarPacientee extends javax.swing.JFrame {
     private javax.swing.JTextField ApellidoPaterno;
     private javax.swing.JTextField Calle;
     private javax.swing.JTextField Colonia;
-    private javax.swing.JPasswordField Contrasenia;
+    private javax.swing.JTextField Contrasenia;
     private javax.swing.JTextField Correo;
     private javax.swing.JTextField Fecha;
     private javax.swing.JTextField Nombre;

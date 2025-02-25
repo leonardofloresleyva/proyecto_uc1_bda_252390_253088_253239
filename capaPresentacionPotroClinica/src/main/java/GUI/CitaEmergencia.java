@@ -4,16 +4,22 @@
  */
 package GUI;
 
+import DTO.PacienteViejoDTO;
+
 /**
  *
  * @author multaslokas33
  */
 public class CitaEmergencia extends javax.swing.JFrame {
 
+    private PacienteViejoDTO perfil;
+    
     /**
      * Creates new form InicioSecion
+     * @param paciente
      */
-    public CitaEmergencia() {
+    public CitaEmergencia(PacienteViejoDTO paciente) {
+        this.perfil = paciente;
         initComponents();
     }
 
@@ -232,13 +238,13 @@ public class CitaEmergencia extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void ConfirmarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ConfirmarActionPerformed
-        PerfilPaciente nuevaVentana = new PerfilPaciente();
+        PerfilPaciente nuevaVentana = new PerfilPaciente(perfil);
         nuevaVentana.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_ConfirmarActionPerformed
 
     private void CancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CancelarActionPerformed
-        PerfilPaciente nuevaVentana = new PerfilPaciente();
+        PerfilPaciente nuevaVentana = new PerfilPaciente(perfil);
         nuevaVentana.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_CancelarActionPerformed

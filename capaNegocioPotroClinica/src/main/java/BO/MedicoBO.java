@@ -12,7 +12,7 @@ import Excepciones.PersistenciaException;
 import Mapper.CitaMapper;
 import Mapper.ConsultaMapper;
 import Mapper.MedicoMapper;
-import at.favre.lib.crypto.bcrypt.BCrypt;
+//import at.favre.lib.crypto.bcrypt.BCrypt;
 import java.util.List;
 import java.util.regex.Pattern;
 import org.apache.commons.validator.routines.EmailValidator;
@@ -39,7 +39,7 @@ public class MedicoBO {
     public MedicoViejoDTO iniciarSesion(String cedula, String contrasenia) throws NegocioException{
         validarUsuario(cedula, contrasenia);
         try{
-            Medico medico = medicoDAO.iniciarSesionMedico(cedula, encriptarContrasenia(contrasenia));
+            Medico medico = medicoDAO.iniciarSesionMedico(cedula,(contrasenia));
             return medicoMapper.toDTO(medico);
             
         }catch(PersistenciaException ex){
@@ -96,14 +96,6 @@ public class MedicoBO {
 
         if(id > Integer.MAX_VALUE)
             throw new NegocioException("Ingrese un id valido.");
-    }
-    
-    private String encriptarContrasenia(String contrasenia) throws NegocioException {
-        try {
-            return BCrypt.withDefaults().hashToString(12, contrasenia.toCharArray());
-        } catch (Exception e) {
-            throw new NegocioException("Error al encriptar contraseña: " + e.getMessage());
-        }
     }
     
     private void validarUsuario(String cedula, String password) throws NegocioException{

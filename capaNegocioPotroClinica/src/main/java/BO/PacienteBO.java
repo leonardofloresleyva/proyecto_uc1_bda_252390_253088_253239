@@ -39,7 +39,7 @@ public class PacienteBO {
     public PacienteViejoDTO iniciarSesion(String correo, String contrasenia) throws NegocioException{
         validarUsuario(correo, contrasenia);
         try{
-            Paciente paciente = pacienteDAO.iniciarSesionPaciente(correo, encriptarContrasenia(contrasenia));
+            Paciente paciente = pacienteDAO.iniciarSesionPaciente(correo,(contrasenia));
             return pacienteMapper.toDTOViejo(paciente);
             
         }catch(PersistenciaException ex){
@@ -83,8 +83,8 @@ public class PacienteBO {
         if (password.equalsIgnoreCase(correo) || password.equalsIgnoreCase(nombre)) 
             throw new NegocioException("La contraseña no puede ser igual al correo o al nombre");
         
-        String contraseniaEncriptada = encriptarContrasenia(password);
-        paciNuevo.setContrasenia(contraseniaEncriptada);
+        //String contraseniaEncriptada = encriptarContrasenia(password);
+        //paciNuevo.setContrasenia(contraseniaEncriptada);
         
         Paciente paciente = pacienteMapper.toEntityNuevo(paciNuevo);
         
@@ -117,20 +117,6 @@ public class PacienteBO {
         }
     }
     
-    public boolean cambiarContrasenia(PacienteViejoDTO paciViejo) throws NegocioException{
-        String 
-            correo = paciViejo.getUsuario(),
-            contraseniaNueva = paciViejo.getContrasenia();
-        validarUsuario(correo, contraseniaNueva);
-        paciViejo.setContrasenia(encriptarContrasenia(contraseniaNueva));
-        Paciente paciente = pacienteMapper.toEntityViejo(paciViejo);
-        try{
-            return pacienteDAO.cambiarContrasenia(paciente);
-        } catch (PersistenciaException ex) {
-            Logger.getLogger(PacienteBO.class.getName()).log(Level.SEVERE, null, ex);
-            throw new NegocioException("Error: " + ex.getMessage());
-        }
-    }
     
     public List<ConsultaDTO> consultasEspecialidad(String correo, String especialidad) throws NegocioException{
         if (correo == null || correo.trim().isEmpty())
@@ -200,14 +186,6 @@ public class PacienteBO {
         } catch(PersistenciaException ex){
             
             throw new NegocioException(ex.getMessage(), ex);
-        }
-    }
-    
-    private String encriptarContrasenia(String contrasenia) throws NegocioException {
-        try {
-            return BCrypt.withDefaults().hashToString(12, contrasenia.toCharArray());
-        } catch (Exception e) {
-            throw new NegocioException("Error al encriptar contraseña: " + e.getMessage());
         }
     }
     

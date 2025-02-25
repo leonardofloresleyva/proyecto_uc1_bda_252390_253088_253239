@@ -127,6 +127,7 @@ public class MedicoDAO implements iMedicoDAO {
                     Medico medico = new Medico();
                     // Obtener datos relevantes del paciente
                     Paciente paciente = new Paciente(
+                            rs.getInt("ID_PACIENTE"),
                             "",
                             "",
                             rs.getString("NOMBRES_PACIENTE"),

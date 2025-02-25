@@ -23,7 +23,7 @@ public class DarAltaMedico extends javax.swing.JFrame {
     /**
      * Creates new form InicioSecion
      *
-     * @param paciente
+     * @param medico
      */
     public DarAltaMedico(MedicoViejoDTO medico) {
         this.perfil = medico;

@@ -8,6 +8,7 @@ import BO.MedicoBO;
 import BO.PacienteBO;
 import Conexion.Conexion;
 import Excepciones.NegocioException;
+import Excepciones.PresentacionException;
 import java.util.Arrays;
 
 /**
@@ -174,9 +175,10 @@ public class InicioMedico extends javax.swing.JFrame {
     }//GEN-LAST:event_CedulaActionPerformed
 
     private void InicioSecionPacienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_InicioSecionPacienteActionPerformed
-        PerfilMedico nuevaVentana = new PerfilMedico();
-        nuevaVentana.setVisible(true);
-        this.dispose();
+        try {
+            IniciarSesion();
+        } catch (NegocioException ex) {
+        }
     }//GEN-LAST:event_InicioSecionPacienteActionPerformed
 
     private void VolverActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_VolverActionPerformed

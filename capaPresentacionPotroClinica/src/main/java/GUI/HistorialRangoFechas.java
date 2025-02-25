@@ -1,9 +1,6 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
- */
 package GUI;
 
+import DTO.PacienteViejoDTO;
 import javax.swing.ListSelectionModel;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
@@ -14,11 +11,15 @@ import javax.swing.table.DefaultTableModel;
  * @author multaslokas33
  */
 public class HistorialRangoFechas extends javax.swing.JFrame {
-
+    
+    private final PacienteViejoDTO perfil;
+    
     /**
      * Creates new form InicioSecion
+     * @param perfil
      */
-    public HistorialRangoFechas() {
+    public HistorialRangoFechas(PacienteViejoDTO perfil) {
+        this.perfil = perfil;
         initComponents();
     }
 
@@ -244,7 +245,7 @@ public class HistorialRangoFechas extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void VolverActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_VolverActionPerformed
-        PerfilPaciente nuevaVentana = new PerfilPaciente();
+        PerfilPaciente nuevaVentana = new PerfilPaciente(perfil);
         nuevaVentana.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_VolverActionPerformed
@@ -256,7 +257,11 @@ public class HistorialRangoFechas extends javax.swing.JFrame {
     private void tablaConsultasDiaAncestorAdded(javax.swing.event.AncestorEvent evt) {//GEN-FIRST:event_tablaConsultasDiaAncestorAdded
         
     }//GEN-LAST:event_tablaConsultasDiaAncestorAdded
-
+    
+    private void historialFechas(){
+        
+    }
+    
     /**
      * @param args the command line arguments
      */

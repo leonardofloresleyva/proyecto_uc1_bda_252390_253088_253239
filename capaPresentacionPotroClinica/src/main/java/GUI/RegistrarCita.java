@@ -4,16 +4,22 @@
  */
 package GUI;
 
+import DTO.PacienteViejoDTO;
+
 /**
  *
  * @author multaslokas33
  */
 public class RegistrarCita extends javax.swing.JFrame {
 
+    private PacienteViejoDTO perfil;
+    
     /**
      * Creates new form InicioSecion
+     * @param paciente
      */
-    public RegistrarCita() {
+    public RegistrarCita(PacienteViejoDTO paciente) {
+        this.perfil = paciente;
         initComponents();
     }
 
@@ -155,16 +161,16 @@ public class RegistrarCita extends javax.swing.JFrame {
         String seleccion =  Agendar.getSelectedItem().toString(); // Obtener la selección del ComboBox
 
         if ("Previa".equals(seleccion)) {
-            new RegistrarCitaPrevia().setVisible(true); // Abre la ventana de Médico
+            new RegistrarCitaPrevia(perfil).setVisible(true); // Abre la ventana de Médico
         } else if ("Emergencia".equals(seleccion)) {
-            new RegistrarCitaEmergencia().setVisible(true); // Abre la ventana de Paciente
+            new RegistrarCitaEmergencia(perfil).setVisible(true); // Abre la ventana de Paciente
         }
 
         this.dispose();
     }//GEN-LAST:event_ConfirmarActionPerformed
 
     private void VolverActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_VolverActionPerformed
-        PerfilPaciente nuevaVentana = new PerfilPaciente();
+        PerfilPaciente nuevaVentana = new PerfilPaciente(perfil);
         nuevaVentana.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_VolverActionPerformed

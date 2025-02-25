@@ -4,18 +4,25 @@
  */
 package GUI;
 
+import DTO.PacienteViejoDTO;
+
 /**
  *
  * @author multaslokas33
  */
 public class RegistrarCitaEmergencia extends javax.swing.JFrame {
 
+    private PacienteViejoDTO perfil;
+    
     /**
      * Creates new form InicioSecion
+     * @param paciente
      */
-    public RegistrarCitaEmergencia() {
+    public RegistrarCitaEmergencia(PacienteViejoDTO paciente) {
+        this.perfil = paciente;
         initComponents();
     }
+
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -195,13 +202,13 @@ public class RegistrarCitaEmergencia extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void ConfirmarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ConfirmarActionPerformed
-        CitaEmergencia nuevaVentana = new CitaEmergencia();
+        CitaEmergencia nuevaVentana = new CitaEmergencia(perfil);
         nuevaVentana.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_ConfirmarActionPerformed
 
     private void CancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CancelarActionPerformed
-        PerfilPaciente nuevaVentana = new PerfilPaciente();
+        PerfilPaciente nuevaVentana = new PerfilPaciente(perfil);
         nuevaVentana.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_CancelarActionPerformed

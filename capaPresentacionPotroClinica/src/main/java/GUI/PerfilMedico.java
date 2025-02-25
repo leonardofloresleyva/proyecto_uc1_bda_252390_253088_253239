@@ -12,7 +12,7 @@ public class PerfilMedico extends javax.swing.JFrame {
     
     /**
      * Creates new form InicioSecion
-     * @param paciente
+     * @param medico
      */
     public PerfilMedico(MedicoViejoDTO medico) {
         this.perfil = medico;
@@ -237,19 +237,19 @@ public class PerfilMedico extends javax.swing.JFrame {
     }//GEN-LAST:event_historialActionPerformed
 
     private void BajaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BajaActionPerformed
-        DarBajaMedico nuevaVentana = new DarBajaMedico();
+        DarBajaMedico nuevaVentana = new DarBajaMedico(perfil);
         nuevaVentana.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_BajaActionPerformed
 
     private void altaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_altaActionPerformed
-        DarAltaMedico nuevaVentana = new DarAltaMedico();
+        DarAltaMedico nuevaVentana = new DarAltaMedico(perfil);
         nuevaVentana.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_altaActionPerformed
 
     private void ConsultarAgendaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ConsultarAgendaActionPerformed
-        ConsultaAgendaMedico nuevaVentana = new ConsultaAgendaMedico();
+        ConsultaAgendaMedico nuevaVentana = new ConsultaAgendaMedico(perfil);
         nuevaVentana.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_ConsultarAgendaActionPerformed

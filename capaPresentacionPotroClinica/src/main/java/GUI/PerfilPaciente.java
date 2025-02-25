@@ -8,7 +8,7 @@ import DTO.PacienteViejoDTO;
  */
 public class PerfilPaciente extends javax.swing.JFrame {
     
-    private PacienteViejoDTO perfil;
+    private final PacienteViejoDTO perfil;
     
     /**
      * Creates new form InicioSecion
@@ -246,25 +246,25 @@ public class PerfilPaciente extends javax.swing.JFrame {
     }//GEN-LAST:event_ActualizarDatosActionPerformed
 
     private void HistorialRangoFechasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_HistorialRangoFechasActionPerformed
-        HistorialRangoFechas nuevaVentana = new HistorialRangoFechas();
+        HistorialRangoFechas nuevaVentana = new HistorialRangoFechas(perfil);
         nuevaVentana.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_HistorialRangoFechasActionPerformed
 
     private void CancelarCitasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CancelarCitasActionPerformed
-        CancelarCitas nuevaVentana = new CancelarCitas();
+        CancelarCitas nuevaVentana = new CancelarCitas(perfil);
         nuevaVentana.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_CancelarCitasActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        RegistrarCita nuevaVentana = new RegistrarCita();
+        RegistrarCita nuevaVentana = new RegistrarCita(perfil);
         nuevaVentana.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void HitorialEspecialidadActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_HitorialEspecialidadActionPerformed
-        HistorialPorEspecialidad nuevaVentana = new HistorialPorEspecialidad();
+        HistorialPorEspecialidad nuevaVentana = new HistorialPorEspecialidad(perfil);
         nuevaVentana.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_HitorialEspecialidadActionPerformed
