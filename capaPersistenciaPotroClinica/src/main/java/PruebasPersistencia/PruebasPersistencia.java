@@ -9,12 +9,15 @@ import DAO.PacienteDAO;
 import Entidades.Cita;
 import Entidades.CitaEmergencia;
 import Entidades.Consulta;
+import Entidades.Medico;
+import Entidades.Paciente;
 import Excepciones.PersistenciaException;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.Month;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -28,10 +31,24 @@ public class PruebasPersistencia {
     public static void main(String[] args) throws PersistenciaException, SQLException {
         // Establecer la conexión
         iConexion conexion = new Conexion();
-        PacienteDAO pacienteDAO = new PacienteDAO(conexion);
+        //PacienteDAO pacienteDAO = new PacienteDAO(conexion);
         // CitaDAO citaDAO = new CitaDAO(conexion);
         MedicoDAO medicoDAO = new MedicoDAO(conexion);
-        
+        //Medico medico = medicoDAO.iniciarSesionMedico("113259", "JbiIUbKBk");
+        //System.out.println(medico);
+//        if(medicoDAO.darDeAltaMedico(14))
+//            System.out.println("Medico dado de baja exitosamente.");
+        List<Cita> citas = medicoDAO.mostrarAgendaMedico(9);
+        for(Cita cita : citas){
+            System.out.printf("%s %s %s %s %s %s%n", 
+                    cita.getFechaHora().toString(),
+                    cita.getTipoCita(),
+                    cita.getPaciente().getNombres(),
+                    cita.getPaciente().getApellidoPaterno(),
+                    cita.getPaciente().getApellidoMaterno(),
+                    cita.getPaciente().getEstado());
+        }
+            
         // Mostrar historial de consultas por especialidad
 //        List<Consulta> consultasEspecialidad = pacienteDAO.consultarConsultasPorEspecialidad("usuario@gmail.com", "Psicología");
 //        if (consultasEspecialidad.isEmpty()) {
@@ -44,11 +61,11 @@ public class PruebasPersistencia {
 //        }
         
         // Mostrar consultas por rango de fechas
-        List<Consulta> consultasMedico =  medicoDAO.consultarConsultasMedico(1);
+        List<Consulta> consultasMedico =  medicoDAO.consultarConsultasMedico(9);
         if (consultasMedico.isEmpty()) {
-            System.out.println("No hay consultas por el momento.");
+            System.out.println("\nNo hay consultas por el momento.");
         } else {
-            System.out.println("Consultas registradas:");
+            System.out.println("\nConsultas registradas:");
             for (Consulta c: consultasMedico) {
                 System.out.println(c); // imprime todas las consultas encontradas
             }

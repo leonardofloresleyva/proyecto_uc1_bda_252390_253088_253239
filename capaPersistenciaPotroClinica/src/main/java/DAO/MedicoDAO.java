@@ -36,12 +36,12 @@ public class MedicoDAO implements iMedicoDAO {
     public Medico iniciarSesionMedico(String cedula, String contrasenia) throws PersistenciaException{
         String sentenciaSQL = """
                               SELECT
-                              \tID,
-                                  NOMBRES,
-                                  APELLIDO_PATERNO,
-                                  APELLIDO_MATERNO,
-                                  ESPECIALIDAD,
-                                  ESTADO
+                                ID,
+                                NOMBRES,
+                                APELLIDO_PATERNO,
+                                APELLIDO_MATERNO,
+                                ESPECIALIDAD,
+                                ESTADO
                               FROM DATOS_MEDICO
                               WHERE USUARIO = ? AND CONTRASENIA = ?;""";
         
@@ -53,17 +53,19 @@ public class MedicoDAO implements iMedicoDAO {
                     ps.setString(1, cedula);
                     ps.setString(2, contrasenia);
                     ResultSet resultado = ps.executeQuery();
-                    Medico medico = new Medico(
-                            resultado.getInt(1),
-                            cedula,
-                            contrasenia,
-                            resultado.getString(2),
-                            resultado.getString(3),
-                            resultado.getString(4),
-                            resultado.getString(5),
-                            resultado.getString(6)
-                    );
-                    return medico;
+                    if(resultado.next()){
+                        return new Medico(
+                                resultado.getInt("ID"),
+                                cedula,
+                                contrasenia,
+                                resultado.getString("NOMBRES"),
+                                resultado.getString("APELLIDO_PATERNO"),
+                                resultado.getString("APELLIDO_MATERNO"),
+                                resultado.getString("ESPECIALIDAD"),
+                                resultado.getString("ESTADO")
+                        );
+                    } else
+                        throw new PersistenciaException("Medico no encontrado.");
 
             } catch(SQLException ex){
                 logger.log(Level.SEVERE, "Error al iniciar sesion en la base de datos.", ex);
