@@ -17,11 +17,12 @@ import javax.swing.JOptionPane;
  * @author multaslokas33
  */
 public class ActualizarDatosPaciente extends javax.swing.JFrame {
-    
+
     private PacienteViejoDTO pacienteActualizado;
-    
+
     /**
      * Creates new form InicioSecion
+     *
      * @param pacienteActualizado
      */
     public ActualizarDatosPaciente(PacienteViejoDTO pacienteActualizado) {
@@ -354,36 +355,42 @@ public class ActualizarDatosPaciente extends javax.swing.JFrame {
 
     private void GuardarDatosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_GuardarDatosActionPerformed
         try {
-            
-        String nombres = Nombre.getText();
-        String apellidoPaterno = ApellidoPaterno.getText();
-        String apellidoMaterno = ApellidoMaterno.getText();
-        String telefono = Telefono.getText();
-        String colonia = Colonia.getText();
-        String calle = Calle.getText();
-        String numero = Numero.getText(); 
-        
-        LocalDate fechaNacimiento = LocalDate.parse(Fecha.getText()); 
-        
-        PacienteViejoDTO paciente = new PacienteViejoDTO(
-            nombres, apellidoPaterno, apellidoMaterno, telefono, fechaNacimiento, colonia, calle, numero
-        );
 
-        PacienteBO pacienteBO = new PacienteBO(new Conexion());
-        boolean actualizado = pacienteBO.actualizarDatosPaciente(paciente);
+            String nombres = Nombre.getText();
+            String apellidoPaterno = ApellidoPaterno.getText();
+            String apellidoMaterno = ApellidoMaterno.getText();
+            String telefono = Telefono.getText();
+            String colonia = Colonia.getText();
+            String calle = Calle.getText();
+            String numero = Numero.getText();
 
-        if (actualizado) {
-            pacienteActualizado.setNombres(nombres);
-            pacienteActualizado.setApellidoPaterno(apellidoPaterno);
-            pacienteActualizado.setApellidoMaterno(apellidoMaterno);
-            pacienteActualizado.setTelefono(telefono);
-            pacienteActualizado.setColonia(colonia);
-            pacienteActualizado.setCalle(calle);
-            pacienteActualizado.setNumero(numero);
-            JOptionPane.showMessageDialog(this, "Datos actualizados correctamente.", "Éxito", JOptionPane.INFORMATION_MESSAGE);
-        } else {
-            JOptionPane.showMessageDialog(this, "No se pudo actualizar la información.", "Error", JOptionPane.ERROR_MESSAGE);
-        }
+            LocalDate fechaNacimiento = LocalDate.parse(Fecha.getText());
+
+            PacienteViejoDTO paciente = new PacienteViejoDTO(
+                    pacienteActualizado.getUsuario(), // Asegúrate de tener el usuario
+                    pacienteActualizado.getContrasenia(), // También la contraseña
+                    nombres, apellidoPaterno, apellidoMaterno, telefono, fechaNacimiento, "Activo", colonia, calle, numero
+            );
+
+            PacienteBO pacienteBO = new PacienteBO(new Conexion());
+            boolean actualizado = pacienteBO.actualizarDatosPaciente(paciente);
+
+            if (actualizado) {
+                pacienteActualizado.setNombres(nombres);
+                pacienteActualizado.setApellidoPaterno(apellidoPaterno);
+                pacienteActualizado.setApellidoMaterno(apellidoMaterno);
+                pacienteActualizado.setTelefono(telefono);
+                pacienteActualizado.setColonia(colonia);
+                pacienteActualizado.setCalle(calle);
+                pacienteActualizado.setNumero(numero);
+
+                JOptionPane.showMessageDialog(this, "Datos actualizados correctamente.", "Éxito", JOptionPane.INFORMATION_MESSAGE);
+                PerfilPaciente nuevaVentana = new PerfilPaciente(pacienteActualizado);
+                nuevaVentana.setVisible(true);
+                this.dispose();
+            } else {
+                JOptionPane.showMessageDialog(this, "No se pudo actualizar la información.", "Error", JOptionPane.ERROR_MESSAGE);
+            }
         } catch (NegocioException e) {
             JOptionPane.showMessageDialog(this, "Error: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
         } catch (Exception e) {

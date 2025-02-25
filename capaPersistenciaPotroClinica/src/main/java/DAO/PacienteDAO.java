@@ -108,24 +108,21 @@ public class PacienteDAO implements iPacienteDAO {
 
     @Override
     public boolean actualizarPaciente(Paciente paciente) throws PersistenciaException {
-        String sentenciaSQL = "CALL ACTUALIZAR_PACIENTE(?, ?, ?, ?, ?, ?, ?, ?, ?);";
+        String sentenciaSQL = "UPDATE PACIENTES SET nombres = ?, apellido_paterno = ?, apellido_materno = ?, telefono = ?, fecha_nacimiento = ? WHERE id_paciente = ?;";
         try (
                 Connection con = conexion.crearConexion(); PreparedStatement ps = con.prepareStatement(sentenciaSQL);) {
             if (verificarPaciente(paciente.getUsuario(), paciente.getContrasenia())) {
-                ps.setString(1, paciente.getUsuario());
-                ps.setString(2, paciente.getNombres());
-                ps.setString(3, paciente.getApellidoPaterno());
-                ps.setString(4, paciente.getApellidoMaterno());
-                ps.setString(5, paciente.getTelefono());
-                ps.setObject(6, paciente.getFechaNacimiento());
-                ps.setString(7, paciente.getColonia());
-                ps.setString(8, paciente.getCalle());
-                ps.setString(9, paciente.getNumero());
+                ps.setString(1, paciente.getNombres());
+                ps.setString(2, paciente.getApellidoPaterno());
+                ps.setString(3, paciente.getApellidoMaterno());
+                ps.setString(4, paciente.getTelefono());
+                ps.setObject(5, paciente.getFechaNacimiento());
+                ps.setInt(6, paciente.getId());
                 ps.executeUpdate();
-                logger.log(Level.INFO, "Datos personales del paciente actualizados con exito en la base de datos.");
+                logger.log(Level.INFO, "Datos del paciente actualizados con éxito en la base de datos.");
                 return true;
             } else {
-                throw new PersistenciaException("El paciente no esta registrado en la potro clinica");
+                throw new PersistenciaException("El paciente no está registrado en la Potro Clínica");
             }
 
         } catch (SQLException ex) {
