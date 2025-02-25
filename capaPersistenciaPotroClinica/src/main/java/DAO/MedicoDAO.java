@@ -126,7 +126,16 @@ public class MedicoDAO implements iMedicoDAO {
             try (ResultSet rs = ps.executeQuery()) { // Ejecutar para obtener los resultados
                 while (rs.next()) {
                     // Crear entidad Medico null porque no es relevante para la agenda
-                    Medico medico = new Medico();
+                    Medico medico = new Medico(
+                            id,
+                            "",
+                            "",
+                            "",
+                            "",
+                            "",
+                            "",
+                            ""
+                    );
                     // Obtener datos relevantes del paciente
                     Paciente paciente = new Paciente(
                             rs.getInt("ID_PACIENTE"),
