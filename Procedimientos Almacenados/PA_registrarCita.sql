@@ -36,6 +36,10 @@ BEGIN
 			SIGNAL SQLSTATE '45000'
 			SET MESSAGE_TEXT = 'El paciente ya tiene una cita programada con este médico para esta fecha.';
 			ROLLBACK;
+		-- Validar que la cita esté dentro de un intervalo de 30 minutos
+		ELSEIF MINUTE(FECHAHORA) NOT IN (0, 30) THEN
+			SIGNAL SQLSTATE '45000'
+            SET MESSAGE_TEXT = "La cita debe de realizarse en intervalos de 30 minutos";
 		ELSE
 			-- Insertar la cita
 			INSERT INTO CITAS (FECHA_HORA, TIPO_CITA, ID_MEDICO, ID_PACIENTE) VALUES (FECHAHORA, CITA_TIPO, IDMEDICO, IDPACIENTE);
