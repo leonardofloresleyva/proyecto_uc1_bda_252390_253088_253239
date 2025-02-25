@@ -4,7 +4,13 @@
  */
 package GUI;
 
+import BO.PacienteBO;
+import Conexion.Conexion;
+import Conexion.iConexion;
+import DTO.ConsultaDTO;
 import DTO.PacienteViejoDTO;
+import Excepciones.PresentacionException;
+import java.util.ArrayList;
 import javax.swing.ListSelectionModel;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
@@ -247,7 +253,7 @@ public class HistorialPorEspecialidad extends javax.swing.JFrame {
     private void tablaConsultasDiaAncestorAdded(javax.swing.event.AncestorEvent evt) {//GEN-FIRST:event_tablaConsultasDiaAncestorAdded
         
     }//GEN-LAST:event_tablaConsultasDiaAncestorAdded
-
+    
     /**
      * @param args the command line arguments
      */
