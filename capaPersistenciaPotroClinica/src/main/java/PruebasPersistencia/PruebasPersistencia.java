@@ -38,16 +38,16 @@ public class PruebasPersistencia {
         //System.out.println(medico);
 //        if(medicoDAO.darDeAltaMedico(14))
 //            System.out.println("Medico dado de baja exitosamente.");
-        List<Cita> citas = medicoDAO.mostrarAgendaMedico(9);
-        for(Cita cita : citas){
-            System.out.printf("%s %s %s %s %s %s%n", 
-                    cita.getFechaHora().toString(),
-                    cita.getTipoCita(),
-                    cita.getPaciente().getNombres(),
-                    cita.getPaciente().getApellidoPaterno(),
-                    cita.getPaciente().getApellidoMaterno(),
-                    cita.getPaciente().getEstado());
-        }
+//        List<Cita> citas = medicoDAO.mostrarAgendaMedico(9);
+//        for(Cita cita : citas){
+//            System.out.printf("%s %s %s %s %s %s%n", 
+//                    cita.getFechaHora().toString(),
+//                    cita.getTipoCita(),
+//                    cita.getPaciente().getNombres(),
+//                    cita.getPaciente().getApellidoPaterno(),
+//                    cita.getPaciente().getApellidoMaterno(),
+//                    cita.getPaciente().getEstado());
+//        }
             
         // Mostrar historial de consultas por especialidad
 //        List<Consulta> consultasEspecialidad = pacienteDAO.consultarConsultasPorEspecialidad("usuario@gmail.com", "Psicología");
@@ -61,7 +61,7 @@ public class PruebasPersistencia {
 //        }
         
         // Mostrar consultas por rango de fechas
-        List<Consulta> consultasMedico =  medicoDAO.consultarConsultasMedico(9);
+        List<Consulta> consultasMedico =  medicoDAO.consultarConsultasMedico(2);
         if (consultasMedico.isEmpty()) {
             System.out.println("\nNo hay consultas por el momento.");
         } else {
