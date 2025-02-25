@@ -21,7 +21,7 @@ BEGIN
 			SELECT 1
             FROM MEDICOS
             WHERE ID_MEDICO = IDMEDICO
-            AND ESTADO = 'Activo'
+            AND ESTADO = 'Alta'
 		) THEN
 			SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'El médico no está activo.';
 			ROLLBACK;
