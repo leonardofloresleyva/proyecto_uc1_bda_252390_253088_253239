@@ -6,6 +6,7 @@ import Conexion.iConexion;
 import DAO.PacienteDAO;
 import Excepciones.NegocioException;
 import java.util.Arrays;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -190,7 +191,7 @@ public class InicioPaciente extends javax.swing.JFrame {
             nuevaVentana.setVisible(true);
             this.dispose();
         }catch(NegocioException ex){
-            
+            JOptionPane.showMessageDialog(this, ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
         }
     }//GEN-LAST:event_InicioSecionPacienteActionPerformed
 
