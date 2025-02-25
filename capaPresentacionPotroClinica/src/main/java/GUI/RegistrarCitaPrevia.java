@@ -76,7 +76,7 @@ public class RegistrarCitaPrevia extends javax.swing.JFrame {
             .addGap(0, 70, Short.MAX_VALUE)
         );
 
-        jLabel2.setText("Fecha y Hora");
+        jLabel2.setText("Fecha");
         jLabel2.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
 
         jPanel4.setBackground(new java.awt.Color(153, 204, 255));

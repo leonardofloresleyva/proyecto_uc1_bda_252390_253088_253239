@@ -33,12 +33,13 @@ public class ConsultaAgendaMedico extends javax.swing.JFrame {
      */
     public ConsultaAgendaMedico(MedicoViejoDTO medico) {
         this.perfil = medico;
-        initComponents();
-        addSelectionListener();
-         try {
+        try {
             citas();
         } catch (PresentacionException ex) {
         }
+        initComponents();
+        addSelectionListener();
+         
     }
 
     private void addSelectionListener() {
