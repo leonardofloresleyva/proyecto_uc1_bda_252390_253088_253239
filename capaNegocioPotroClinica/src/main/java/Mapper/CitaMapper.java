@@ -17,8 +17,13 @@ import java.util.List;
  */
 public class CitaMapper {
     
-    private MedicoMapper medicoMapper;
-    private PacienteMapper pacienteMapper;
+    private final MedicoMapper medicoMapper;
+    private final PacienteMapper pacienteMapper;
+
+    public CitaMapper(MedicoMapper medicoMapper, PacienteMapper pacienteMapper) {
+        this.medicoMapper = medicoMapper;
+        this.pacienteMapper = pacienteMapper;
+    }
     
     public Cita toEntity(CitaDTO citaDTO){
         Cita cita = new Cita(

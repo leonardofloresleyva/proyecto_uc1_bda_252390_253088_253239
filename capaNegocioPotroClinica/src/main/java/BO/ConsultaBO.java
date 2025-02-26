@@ -5,7 +5,10 @@ import DAO.ConsultaDAO;
 import DTO.ConsultaDTO;
 import Excepciones.NegocioException;
 import Excepciones.PersistenciaException;
+import Mapper.CitaMapper;
 import Mapper.ConsultaMapper;
+import Mapper.MedicoMapper;
+import Mapper.PacienteMapper;
 
 /**
  *
@@ -20,7 +23,7 @@ public class ConsultaBO {
 
     public ConsultaBO(iConexion conexion) {
         this.consultaDAO = new ConsultaDAO(conexion);
-        this.consultaMapper = new ConsultaMapper();
+        this.consultaMapper = new ConsultaMapper(new CitaMapper(new MedicoMapper(), new PacienteMapper()));
     }
     
     

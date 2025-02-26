@@ -12,10 +12,9 @@ import Excepciones.PersistenciaException;
 import Mapper.CitaMapper;
 import Mapper.ConsultaMapper;
 import Mapper.MedicoMapper;
+import Mapper.PacienteMapper;
 //import at.favre.lib.crypto.bcrypt.BCrypt;
 import java.util.List;
-import java.util.regex.Pattern;
-import org.apache.commons.validator.routines.EmailValidator;
 
 /**
  *
@@ -32,8 +31,8 @@ public class MedicoBO {
     public MedicoBO(iConexion conexion) {
         this.medicoDAO = new MedicoDAO(conexion);
         this.medicoMapper = new MedicoMapper();
-        this.citaMapper = new CitaMapper();
-        this.consultaMapper = new ConsultaMapper();
+        this.citaMapper = new CitaMapper(medicoMapper, new PacienteMapper());
+        this.consultaMapper = new ConsultaMapper(citaMapper);
     }
     
     public MedicoViejoDTO iniciarSesion(String cedula, String contrasenia) throws NegocioException{

@@ -14,7 +14,11 @@ import java.util.List;
  */
 public class ConsultaMapper {
     
-    private CitaMapper citaMapper;
+    private final CitaMapper citaMapper;
+
+    public ConsultaMapper(CitaMapper citaMapper) {
+        this.citaMapper = citaMapper;
+    }
     
     public Consulta toEntity(ConsultaDTO consultaDTO){
         Consulta consulta = new Consulta(

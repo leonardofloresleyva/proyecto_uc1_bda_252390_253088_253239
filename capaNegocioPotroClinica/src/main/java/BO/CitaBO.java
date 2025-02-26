@@ -6,6 +6,8 @@ import DTO.CitaDTO;
 import Excepciones.NegocioException;
 import Excepciones.PersistenciaException;
 import Mapper.CitaMapper;
+import Mapper.MedicoMapper;
+import Mapper.PacienteMapper;
 import java.time.LocalDateTime;
 
 /**
@@ -21,7 +23,7 @@ public class CitaBO {
 
     public CitaBO(iConexion conexion) {
         this.citaDAO = new CitaDAO(conexion);
-        this.citaMapper = new CitaMapper();
+        this.citaMapper = new CitaMapper(new MedicoMapper(), new PacienteMapper());
     }
     
     public boolean registrarCita(CitaDTO cita) throws NegocioException{

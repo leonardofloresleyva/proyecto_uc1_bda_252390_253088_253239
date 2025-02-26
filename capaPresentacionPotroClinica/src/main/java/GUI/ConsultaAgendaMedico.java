@@ -11,6 +11,7 @@ import DTO.PacienteViejoDTO;
 import Excepciones.NegocioException;
 import Excepciones.PresentacionException;
 import java.util.ArrayList;
+import java.util.Vector;
 import javax.swing.JOptionPane;
 import javax.swing.ListSelectionModel;
 import javax.swing.event.ListSelectionEvent;
@@ -34,11 +35,12 @@ public class ConsultaAgendaMedico extends javax.swing.JFrame {
     public ConsultaAgendaMedico(MedicoViejoDTO medico) {
         this.perfil = medico;
         try {
+            initComponents();
+            addSelectionListener();
             citas();
         } catch (PresentacionException ex) {
+            JOptionPane.showMessageDialog(this, ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
         }
-        initComponents();
-        addSelectionListener();
          
     }
 
@@ -273,7 +275,6 @@ public class ConsultaAgendaMedico extends javax.swing.JFrame {
     private void obtenerCita() throws PresentacionException{
         int citaSeleccionada = tablaConsultasDia.getSelectedRow();
         if(citaSeleccionada != -1){
-            DefaultTableModel tabla = (DefaultTableModel) tablaConsultasDia.getModel();
             CitaDTO cita = new CitaDTO(
                     citasMedico.get(citaSeleccionada).getFechaHora(), 
                     perfil, 
@@ -282,7 +283,8 @@ public class ConsultaAgendaMedico extends javax.swing.JFrame {
             RegistrarConsultas nuevaVentana = new RegistrarConsultas(cita);
             nuevaVentana.setVisible(true);
             this.dispose();
-        }
+        } else
+            JOptionPane.showMessageDialog(this, "Por favor, seleccione una cita.", "Cita no seleccionada", JOptionPane.INFORMATION_MESSAGE);
     }
     
     private void citas() throws PresentacionException {
@@ -291,11 +293,15 @@ public class ConsultaAgendaMedico extends javax.swing.JFrame {
         try {
             citasMedico = (ArrayList<CitaDTO>) medicoBO.agendaMedico(perfil.getId());
             if (citasMedico.isEmpty()) {
-                JOptionPane.showMessageDialog(this, "", "", JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(this, "No hay citas pendientes.", "Libre de citas.", JOptionPane.OK_OPTION);
+                PerfilMedico nuevaVentana = new PerfilMedico(perfil);
+                nuevaVentana.setVisible(true);
+                this.dispose();
             } else {
                 DefaultTableModel tabla = (DefaultTableModel) tablaConsultasDia.getModel();
-                for (CitaDTO cita : citasMedico) {
-                    tabla.addRow(new Object[]{
+                int filas = 0;
+                for (CitaDTO cita : citasMedico) {                    
+                    tabla.insertRow(filas, new Object[]{
                         false,
                         cita.getFechaHora(),
                         String.format("%s %s %s", 
@@ -305,6 +311,7 @@ public class ConsultaAgendaMedico extends javax.swing.JFrame {
                                 ),
                         cita.getTipoCita()
                     });
+                    filas++;
                 }
             }
         } catch (NegocioException ex) {

@@ -1,6 +1,7 @@
 package GUI;
 
 import DTO.MedicoViejoDTO;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -249,9 +250,13 @@ public class PerfilMedico extends javax.swing.JFrame {
     }//GEN-LAST:event_altaActionPerformed
 
     private void ConsultarAgendaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ConsultarAgendaActionPerformed
-        ConsultaAgendaMedico nuevaVentana = new ConsultaAgendaMedico(perfil);
-        nuevaVentana.setVisible(true);
-        this.dispose();
+        try {
+            ConsultaAgendaMedico nuevaVentana = new ConsultaAgendaMedico(perfil);
+            nuevaVentana.setVisible(true);
+            this.dispose();
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, e.getMessage(), "Error en consulta", JOptionPane.ERROR_MESSAGE);
+        }
     }//GEN-LAST:event_ConsultarAgendaActionPerformed
 
     /**

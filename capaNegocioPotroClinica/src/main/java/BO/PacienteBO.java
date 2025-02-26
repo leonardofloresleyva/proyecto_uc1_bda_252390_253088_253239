@@ -9,7 +9,9 @@ import DTO.PacienteViejoDTO;
 import Entidades.Paciente;
 import Excepciones.NegocioException;
 import Excepciones.PersistenciaException;
+import Mapper.CitaMapper;
 import Mapper.ConsultaMapper;
+import Mapper.MedicoMapper;
 import Mapper.PacienteMapper;
 import at.favre.lib.crypto.bcrypt.BCrypt;
 import java.time.LocalDate;
@@ -34,7 +36,7 @@ public class PacienteBO {
     public PacienteBO(iConexion conexion) {
         this.pacienteDAO = new PacienteDAO(conexion);
         this.pacienteMapper = new PacienteMapper();
-        this.consultaMapper = new ConsultaMapper();
+        this.consultaMapper = new ConsultaMapper(new CitaMapper(new MedicoMapper(), pacienteMapper));
     }
 
     public PacienteViejoDTO iniciarSesion(String correo, String contrasenia) throws NegocioException {
