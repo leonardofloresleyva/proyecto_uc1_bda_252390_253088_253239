@@ -18,8 +18,22 @@ public class PacienteNuevoDTO {
     // Atributos de la direccion del paciente.
     private String colonia, calle, numero;
 
+    // Constructor por defecto de la clase PacienteNuevoDTO.
     public PacienteNuevoDTO() {}
 
+    /**
+     * Constructor con parámetros para inicializar un paciente con toda su información.
+     * @param usuario Nombre de usuario del paciente.
+     * @param contrasenia Contraseña del paciente.
+     * @param nombres Nombre(s) del paciente.
+     * @param apellidoPaterno Apellido paterno del paciente.
+     * @param apellidoMaterno Apellido materno del paciente.
+     * @param telefono Teléfono de contacto del paciente.
+     * @param fechaNacimiento Fecha de nacimiento del paciente.
+     * @param colonia Colonia donde reside el paciente.
+     * @param calle Calle donde reside el paciente.
+     * @param numero Número de la dirección del paciente.
+     */
     public PacienteNuevoDTO(
             String usuario,
             String contrasenia,
@@ -44,6 +58,7 @@ public class PacienteNuevoDTO {
         this.numero = numero;
     }
 
+    // Métodos setters
     public void setUsuario(String usuario) {this.usuario = usuario;}
 
     public void setContrasenia(String contrasenia) {this.contrasenia = contrasenia;}
@@ -64,6 +79,7 @@ public class PacienteNuevoDTO {
 
     public void setNumero(String numero) {this.numero = numero;}
 
+    // Métodos getters
     public String getUsuario() {return usuario;}
 
     public String getContrasenia() {return contrasenia;}
@@ -84,6 +100,10 @@ public class PacienteNuevoDTO {
     
     public String getNumero() {return numero;}
     
+    /**
+     * Devuelve una representación en cadena del objeto PacienteNuevoDTO. 
+     * @return Cadena con los valores de los atributos del paciente.
+     */
     @Override
     public String toString() {
         return "PacienteNuevoDTO{" + "nombres=" + nombres + ", apellidoPaterno=" + apellidoPaterno + ", apellidoMaterno=" + apellidoMaterno + ", telefono=" + telefono + ", fechaNacimiento=" + fechaNacimiento + ", colonia=" + colonia + ", calle=" + calle + ", numero=" + numero + '}';

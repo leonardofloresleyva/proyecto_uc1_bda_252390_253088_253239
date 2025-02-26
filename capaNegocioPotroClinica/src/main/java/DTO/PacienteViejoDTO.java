@@ -15,8 +15,25 @@ public class PacienteViejoDTO extends UsuarioViejoDTO{
     // Atributos de la direccion del paciente.
     private String colonia, calle, numero;
 
+    
+    // Constructor por defecto de la clase PacienteViejoDTO.
     public PacienteViejoDTO() {}
 
+    /**
+     * Constructor que inicializa todos los atributos del paciente.
+     * @param id Identificador del paciente.
+     * @param usuario Nombre de usuario del paciente.
+     * @param contrasenia Contraseña del paciente.
+     * @param nombres Nombre(s) del paciente.
+     * @param apellidoPaterno Apellido paterno del paciente.
+     * @param apellidoMaterno Apellido materno del paciente.
+     * @param telefono Teléfono de contacto del paciente.
+     * @param fechaNacimiento Fecha de nacimiento del paciente.
+     * @param estado Estado actual del paciente en el sistema.
+     * @param colonia Colonia de residencia del paciente.
+     * @param calle Calle de residencia del paciente.
+     * @param numero Número de residencia del paciente.
+     */
     public PacienteViejoDTO(
             int id, 
             String usuario, 
@@ -43,6 +60,21 @@ public class PacienteViejoDTO extends UsuarioViejoDTO{
         this.numero = numero;
     }
 
+    /**
+     * Constructor que inicializa los atributos sin ID de usuario.
+     * 
+     * @param usuario Nombre de usuario del paciente.
+     * @param contrasenia Contraseña del paciente.
+     * @param nombres Nombre(s) del paciente.
+     * @param apellidoPaterno Apellido paterno del paciente.
+     * @param apellidoMaterno Apellido materno del paciente.
+     * @param telefono Teléfono de contacto del paciente.
+     * @param fechaNacimiento Fecha de nacimiento del paciente.
+     * @param estado Estado actual del paciente en el sistema.
+     * @param colonia Colonia de residencia del paciente.
+     * @param calle Calle de residencia del paciente.
+     * @param numero Número de residencia del paciente.
+     */
     public PacienteViejoDTO(
             String usuario, 
             String contrasenia,
@@ -68,6 +100,18 @@ public class PacienteViejoDTO extends UsuarioViejoDTO{
         this.numero = numero;
     }
     
+    /**
+     * Constructor que inicializa los atributos básicos del paciente sin credenciales.
+     * 
+     * @param nombres Nombre(s) del paciente.
+     * @param apellidoPaterno Apellido paterno del paciente.
+     * @param apellidoMaterno Apellido materno del paciente.
+     * @param telefono Teléfono de contacto del paciente.
+     * @param fechaNacimiento Fecha de nacimiento del paciente.
+     * @param colonia Colonia de residencia del paciente.
+     * @param calle Calle de residencia del paciente.
+     * @param numero Número de residencia del paciente.
+     */
     public PacienteViejoDTO(
         String nombres, 
         String apellidoPaterno, 
@@ -89,6 +133,7 @@ public class PacienteViejoDTO extends UsuarioViejoDTO{
         this.numero = numero;
     }
 
+    // Métodos setters
     public void setNombres(String nombres) {this.nombres = nombres;}
 
     public void setApellidoPaterno(String apellidoPaterno) {this.apellidoPaterno = apellidoPaterno;}
@@ -107,6 +152,7 @@ public class PacienteViejoDTO extends UsuarioViejoDTO{
 
     public void setNumero(String numero) {this.numero = numero;}
 
+    // Métodos getters
     public String getNombres() {return nombres;}
 
     public String getApellidoPaterno() {return apellidoPaterno;}
@@ -125,6 +171,10 @@ public class PacienteViejoDTO extends UsuarioViejoDTO{
 
     public String getNumero() {return numero;}
 
+    /**
+     * Devuelve una representación en cadena del objeto PacienteViejoDTO.
+     * @return Cadena con los valores de los atributos del paciente.
+     */
     @Override
     public String toString() {
         return "PacienteViejoDTO{" + 

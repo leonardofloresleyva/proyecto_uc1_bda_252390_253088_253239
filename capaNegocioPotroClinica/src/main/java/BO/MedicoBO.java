@@ -28,6 +28,10 @@ public class MedicoBO {
     private final CitaMapper citaMapper;
     private final ConsultaMapper consultaMapper;
 
+    /**
+     * Constructor de la clase MedicoBO.
+     * @param conexion Objeto de conexión a la base de datos.
+     */
     public MedicoBO(iConexion conexion) {
         this.medicoDAO = new MedicoDAO(conexion);
         this.medicoMapper = new MedicoMapper();
@@ -35,6 +39,13 @@ public class MedicoBO {
         this.consultaMapper = new ConsultaMapper(citaMapper);
     }
     
+    /**
+     * Permite a un médico iniciar sesión en el sistema.
+     * @param cedula Cédula del médico.
+     * @param contrasenia Contraseña del médico.
+     * @return Un objeto MedicoViejoDTO con la información del médico.
+     * @throws NegocioException Si los datos son inválidos o hay un error en la persistencia.
+     */
     public MedicoViejoDTO iniciarSesion(String cedula, String contrasenia) throws NegocioException{
         validarUsuario(cedula, contrasenia);
         try{
@@ -46,6 +57,12 @@ public class MedicoBO {
         }
     }
     
+     /**
+     * Da de baja a un médico en el sistema.
+     * @param id Identificador del médico.
+     * @return true si el médico fue dado de baja correctamente, false en caso contrario.
+     * @throws NegocioException Si el ID es inválido o hay un error en la persistencia.
+     */
     public boolean darDeBaja(int id) throws NegocioException{
         validarID(id);
         
@@ -57,6 +74,12 @@ public class MedicoBO {
         }
     }
     
+    /**
+     * Obtiene la agenda de un médico con sus citas programadas.
+     * @param id Identificador del médico.
+     * @return Lista de citas del médico.
+     * @throws NegocioException Si el ID es inválido o hay un error en la persistencia.
+     */
     public List<CitaDTO> agendaMedico(int id) throws NegocioException{
         validarID(id);
         
@@ -67,6 +90,12 @@ public class MedicoBO {
         }
     }
     
+    /**
+     * Obtiene la lista de consultas realizadas por un médico.
+     * @param id Identificador del médico.
+     * @return Lista de consultas realizadas por el médico.
+     * @throws NegocioException Si el ID es inválido o hay un error en la persistencia.
+     */
     public List<ConsultaDTO> consultasMedico(int id) throws NegocioException{
         validarID(id);
         try{
@@ -78,6 +107,12 @@ public class MedicoBO {
         }
     }
     
+    /**
+     * Da de alta nuevamente a un médico en el sistema.
+     * @param id Identificador del médico.
+     * @return true si el médico fue dado de alta correctamente, false en caso contrario.
+     * @throws NegocioException Si el ID es inválido o hay un error en la persistencia.
+     */
     public boolean darDeAlta(int id) throws NegocioException{
         validarID(id);
         
@@ -89,6 +124,11 @@ public class MedicoBO {
         }
     }
     
+    /**
+     * Valida que el ID sea mayor o igual a 1.
+     * @param id Identificador a validar.
+     * @throws NegocioException Si el ID es menor a 1 o inválido.
+     */
     private void validarID(int id) throws NegocioException{
         if(id < 1)
             throw new NegocioException("No se permiten IDs menores a uno. Intentelo de nuevo.");
@@ -97,35 +137,18 @@ public class MedicoBO {
             throw new NegocioException("Ingrese un id valido.");
     }
     
+    /**
+     * Valida las credenciales de un usuario antes de iniciar sesión.
+     * @param cedula Cédula del médico.
+     * @param password Contraseña del médico.
+     * @throws NegocioException Si la cédula o la contraseña son inválidas.
+     */
     private void validarUsuario(String cedula, String password) throws NegocioException{
         if (cedula == null || cedula.trim().isEmpty())
             throw new NegocioException("La cedula no puede estar vacio.");
         
-//        if (cedula.length() > 150)
-//            throw new NegocioException("No se permiten correos con mas de 150 caracteres.");
-//        
-//        if (!EmailValidator.getInstance().isValid(cedula))  
-//            throw new NegocioException("El correo ingresado no es válido.");
-//        
-//        if (cedula.split("@")[0].length() < 2) 
-//            throw new NegocioException("El correo debe tener al menos dos caracteres antes del '@'");
-//        
-//        if (!Pattern.matches("^[^@\\s]+@[^@\\s]+\\.com$", cedula)) 
-//             throw new NegocioException("La cadena ingresada no es un correo electronico.");
-        
         if (password == null || password.trim().isEmpty())
             throw new NegocioException("La contrasenia no puede estar vacia.");
-        
-//        if (password.length() > 20)
-//            throw new NegocioException("No se permiten contrasenias con mas de 20 caracteres.");
-//        
-//        if (!password.matches("^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d).+$")) 
-//            throw new NegocioException("La contraseña debe contener al menos una mayúscula, una minúscula y un número");
-//        
-//        if (password.matches(".*(.)\\1{2,}.*")) 
-//            throw new NegocioException("La contraseña no puede contener secuencias repetitivas");
-//        
-//        if (password.contains(" ")) 
-//            throw new NegocioException("La contraseña no debe contener espacios en ninguna parte");
+
     }
 }

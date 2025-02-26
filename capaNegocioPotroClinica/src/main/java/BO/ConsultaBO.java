@@ -20,13 +20,22 @@ public class ConsultaBO {
     
     private final ConsultaDAO consultaDAO;
     private final ConsultaMapper consultaMapper;
-
+    
+    /**
+     * Constructor de la clase ConsultaBO.
+     * @param conexion Objeto de conexión a la base de datos.
+     */
     public ConsultaBO(iConexion conexion) {
         this.consultaDAO = new ConsultaDAO(conexion);
         this.consultaMapper = new ConsultaMapper(new CitaMapper(new MedicoMapper(), new PacienteMapper()));
     }
     
-    
+    /**
+     * Registra una consulta médica de tipo previa en el sistema.
+     * @param consulta Objeto DTO que contiene la información de la consulta.
+     * @return true si la consulta fue registrada correctamente, false en caso contrario.
+     * @throws NegocioException Si hay problemas en la validación de los datos o en la persistencia.
+     */
     public boolean registrarConsultaPrevia(ConsultaDTO consulta) throws NegocioException{
         
         verificarConsulta(consulta);
@@ -38,7 +47,15 @@ public class ConsultaBO {
         }
     }
     
+    /**
+     * Registra una consulta médica de emergencia en el sistema.
+     * @param consulta Objeto DTO que contiene la información de la consulta.
+     * @param folio Número de folio asociado a la consulta de emergencia.
+     * @return true si la consulta fue registrada correctamente, false en caso contrario.
+     * @throws NegocioException Si hay problemas en la validación de los datos, el folio o en la persistencia.
+     */
     public boolean registrarConsultaEmergencia(ConsultaDTO consulta, int folio) throws NegocioException{
+        //Todas las validaciones al registrar una consulta de emergencia
         verificarConsulta(consulta);
         if(folio < 0)
             throw new NegocioException("El folio no puede ser menor que cero.");
@@ -59,7 +76,13 @@ public class ConsultaBO {
         }
     }
     
+    /**
+     * Verifica que los datos de la consulta sean válidos antes de su registro.
+     * @param consulta Objeto DTO que contiene la información de la consulta.
+     * @throws NegocioException Si algún dato de la consulta es inválido.
+     */
     private void verificarConsulta(ConsultaDTO consulta) throws NegocioException{
+        //Todas las validaciones al verificar los datos
         if(consulta == null)
             throw new NegocioException("La consulta no puede ser nula.");
         

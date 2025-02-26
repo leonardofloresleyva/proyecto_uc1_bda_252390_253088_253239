@@ -21,12 +21,23 @@ public class CitaBO {
     private final CitaDAO citaDAO;
     private final CitaMapper citaMapper;
 
+    /**
+     * Constructor de la clase CitaBO.
+     * @param conexion Objeto de conexión a la base de datos.
+     */
     public CitaBO(iConexion conexion) {
         this.citaDAO = new CitaDAO(conexion);
         this.citaMapper = new CitaMapper(new MedicoMapper(), new PacienteMapper());
     }
     
+    /**
+     * Registra una nueva cita médica en el sistema.
+     * @param cita Objeto DTO que contiene la información de la cita.
+     * @return true si la cita fue registrada correctamente, false en caso contrario.
+     * @throws NegocioException Si hay problemas en la validación de los datos o en la persistencia.
+     */
     public boolean registrarCita(CitaDTO cita) throws NegocioException{
+        //Todas las validaciones al momento de registrar una cita
         if(cita == null)
             throw new NegocioException("La cita no puede ser nula.");
         
@@ -67,6 +78,12 @@ public class CitaBO {
                     
     }
     
+    /**
+     * Cancela una cita médica registrada en el sistema.
+     * @param id Identificador único de la cita a cancelar.
+     * @return true si la cita fue cancelada correctamente, false en caso contrario.
+     * @throws NegocioException Si hay problemas en la validación del ID o en la persistencia.
+     */
     public boolean cancelarCita(int id) throws NegocioException{
         validarID(id);
         try{
@@ -76,6 +93,11 @@ public class CitaBO {
         }
     }
     
+    /**
+     * Valida que el ID de la cita sea un número válido.
+     * @param id Identificador a validar.
+     * @throws NegocioException Si el ID es menor a 1 o inválido.
+     */
     private void validarID(int id) throws NegocioException{
         if(id < 1)
             throw new NegocioException("No se permiten IDs menores a uno. Intentelo de nuevo.");

@@ -33,12 +33,23 @@ public class PacienteBO {
     private final PacienteMapper pacienteMapper;
     private final ConsultaMapper consultaMapper;
 
+    /**
+     * Constructor que inicializa los mappers y el DAO.
+     * @param conexion Objeto de conexión a la base de datos.
+     */
     public PacienteBO(iConexion conexion) {
         this.pacienteDAO = new PacienteDAO(conexion);
         this.pacienteMapper = new PacienteMapper();
         this.consultaMapper = new ConsultaMapper(new CitaMapper(new MedicoMapper(), pacienteMapper));
     }
 
+    /**
+     * Inicia sesión para un paciente.
+     * @param correo Correo electrónico del paciente.
+     * @param contrasenia Contraseña del paciente.
+     * @return Objeto DTO con los datos del paciente.
+     * @throws NegocioException Si ocurre un error en la validación o acceso a datos.
+     */
     public PacienteViejoDTO iniciarSesion(String correo, String contrasenia) throws NegocioException {
         validarUsuario(correo, contrasenia); // Validamos los datos antes de continuar
 
@@ -50,12 +61,19 @@ public class PacienteBO {
         }
     }
 
+    /**
+     * Registra un nuevo paciente en el sistema.
+     * @param paciNuevo Datos del nuevo paciente.
+     * @return true si el registro fue exitoso.
+     * @throws NegocioException Si hay errores en los datos o en la persistencia.
+     */
     public boolean registrarPaciente(PacienteNuevoDTO paciNuevo) throws NegocioException {
 
         if (paciNuevo == null) {
             throw new NegocioException("El paciente no puede ser nulo.");
         }
 
+        // Extracción de datos del DTO
         String correo = paciNuevo.getUsuario(),
                 password = paciNuevo.getContrasenia(),
                 nombre = paciNuevo.getNombres(),
@@ -99,6 +117,12 @@ public class PacienteBO {
         }
     }
 
+    /**
+     * Actualiza los datos de un paciente existente.
+     * @param paciViejo Objeto DTO con los datos actualizados del paciente.
+     * @return true si la actualización fue exitosa.
+     * @throws NegocioException Si los datos son inválidos o hay un error en la persistencia.
+     */
     public boolean actualizarDatosPaciente(PacienteViejoDTO paciViejo) throws NegocioException {
         validarDatosPaciente(
                 paciViejo.getNombres(),
@@ -119,6 +143,13 @@ public class PacienteBO {
         }
     }
 
+    /**
+     * Obtiene la lista de consultas de un paciente según la especialidad.
+     * @param correo Correo del paciente.
+     * @param especialidad Especialidad médica de las consultas.
+     * @return Lista de consultas en formato DTO.
+     * @throws NegocioException Si los datos son inválidos o hay un error en la consulta.
+     */
     public List<ConsultaDTO> consultasEspecialidad(String correo, String especialidad) throws NegocioException {
         if (correo == null || correo.trim().isEmpty()) {
             throw new NegocioException("El correo no puede estar vacio.");
@@ -157,6 +188,14 @@ public class PacienteBO {
         }
     }
 
+    /**
+     * Obtiene la lista de consultas de un paciente en un rango de fechas.
+     * @param correo Correo del paciente.
+     * @param fechaInicio Fecha de inicio del rango.
+     * @param fechaFinal Fecha final del rango.
+     * @return Lista de consultas en formato DTO.
+     * @throws NegocioException Si los datos son inválidos o hay un error en la consulta.
+     */
     public List<ConsultaDTO> consultaFechas(String correo, LocalDate fechaInicio, LocalDate fechaFinal) throws NegocioException {
         if (correo == null || correo.trim().isEmpty()) {
             throw new NegocioException("El correo no puede estar vacio.");
@@ -207,7 +246,14 @@ public class PacienteBO {
         }
     }
 
+    /**
+     * Valida el correo y la contraseña de un usuario.
+     * @param correo Correo del usuario.
+     * @param password Contraseña del usuario.
+     * @throws NegocioException Si los datos no cumplen con los requisitos.
+     */
     public void validarUsuario(String correo, String password) throws NegocioException {
+        //Todas las validaciones al validar los datos del usuario
         if (correo == null || correo.trim().isEmpty()) {
             throw new NegocioException("El correo no puede estar vacio.");
         }
@@ -250,6 +296,8 @@ public class PacienteBO {
 
     }
 
+    
+    //Valida los datos de un paciente antes de registrarlo o actualizarlo.
     private void validarDatosPaciente(
             String nombre,
             String apellidoP,
@@ -260,7 +308,7 @@ public class PacienteBO {
             String calle,
             String numero
     ) throws NegocioException {
-
+        //Todas las validaciones al validar los datos del paciente
         if (nombre == null || nombre.trim().isEmpty()) {
             throw new NegocioException("El nombre no puede estar vacio.");
         }
