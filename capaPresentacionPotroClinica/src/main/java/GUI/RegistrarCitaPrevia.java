@@ -3,6 +3,7 @@ package GUI;
 import BO.CitaBO;
 import Conexion.Conexion;
 import Conexion.iConexion;
+import DTO.CitaDTO;
 import DTO.MedicoViejoDTO;
 import DTO.PacienteViejoDTO;
 import Excepciones.NegocioException;
@@ -12,6 +13,10 @@ import java.time.LocalTime;
 import java.time.Month;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
 
 /**
  *
@@ -20,6 +25,7 @@ import java.util.List;
 public class RegistrarCitaPrevia extends javax.swing.JFrame {
 
     private final PacienteViejoDTO perfil;
+    private LocalDateTime fechaHora;
     
     /**
      * Creates new form InicioSecion
@@ -59,7 +65,7 @@ public class RegistrarCitaPrevia extends javax.swing.JFrame {
         Especialidad1 = new javax.swing.JComboBox<>();
         jLabel5 = new javax.swing.JLabel();
         jScrollPane3 = new javax.swing.JScrollPane();
-        tablaConsultasDia1 = new javax.swing.JTable();
+        tablaConsultasMedicos = new javax.swing.JTable();
         Seleccionar = new javax.swing.JButton();
 
         jList1.setModel(new javax.swing.AbstractListModel<String>() {
@@ -142,10 +148,10 @@ public class RegistrarCitaPrevia extends javax.swing.JFrame {
 
         Especialidad1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Medicina General", "Pediatria", "Otorrinolaringologia", "Neumonia", "Cirujia Nuerologica", "Cardiologia", "Radiologia", "Psiquiatria" }));
 
-        jLabel5.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
         jLabel5.setText("Especialidad");
+        jLabel5.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
 
-        tablaConsultasDia1.setModel(new javax.swing.table.DefaultTableModel(
+        tablaConsultasMedicos.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 { new Boolean(false), null, null, null},
                 {null, null, null, null},
@@ -196,20 +202,25 @@ public class RegistrarCitaPrevia extends javax.swing.JFrame {
                 return canEdit [columnIndex];
             }
         });
-        tablaConsultasDia1.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
-        tablaConsultasDia1.addAncestorListener(new javax.swing.event.AncestorListener() {
+        tablaConsultasMedicos.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        tablaConsultasMedicos.addAncestorListener(new javax.swing.event.AncestorListener() {
             public void ancestorAdded(javax.swing.event.AncestorEvent evt) {
-                tablaConsultasDia1AncestorAdded(evt);
+                tablaConsultasMedicosAncestorAdded(evt);
             }
             public void ancestorMoved(javax.swing.event.AncestorEvent evt) {
             }
             public void ancestorRemoved(javax.swing.event.AncestorEvent evt) {
             }
         });
-        jScrollPane3.setViewportView(tablaConsultasDia1);
+        jScrollPane3.setViewportView(tablaConsultasMedicos);
 
         Seleccionar.setText("Seleccionar medico");
         Seleccionar.setEnabled(false);
+        Seleccionar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                SeleccionarActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -288,9 +299,11 @@ public class RegistrarCitaPrevia extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void ConfirmarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ConfirmarActionPerformed
-        PerfilPaciente nuevaVentana = new PerfilPaciente(perfil);
-        nuevaVentana.setVisible(true);
-        this.dispose();
+        try {
+            obtenerMedicos();
+        } catch (PresentacionException ex) {
+            JOptionPane.showMessageDialog(this, ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+        }
     }//GEN-LAST:event_ConfirmarActionPerformed
 
     private void CancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CancelarActionPerformed
@@ -299,23 +312,42 @@ public class RegistrarCitaPrevia extends javax.swing.JFrame {
         this.dispose();
     }//GEN-LAST:event_CancelarActionPerformed
 
-    private void tablaConsultasDia1AncestorAdded(javax.swing.event.AncestorEvent evt) {//GEN-FIRST:event_tablaConsultasDia1AncestorAdded
+    private void tablaConsultasMedicosAncestorAdded(javax.swing.event.AncestorEvent evt) {//GEN-FIRST:event_tablaConsultasMedicosAncestorAdded
 
-    }//GEN-LAST:event_tablaConsultasDia1AncestorAdded
+    }//GEN-LAST:event_tablaConsultasMedicosAncestorAdded
 
     private void HoraActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_HoraActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_HoraActionPerformed
+
+    private void SeleccionarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_SeleccionarActionPerformed
+        
+    }//GEN-LAST:event_SeleccionarActionPerformed
     
     private void obtenerMedicos() throws PresentacionException{
-        Seleccionar.setEnabled(true);
         try {
             iConexion conexion = new Conexion();
             CitaBO citaBO = new CitaBO(conexion);
             DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm");
             LocalTime hora = LocalTime.parse((String) Hora.getSelectedItem(), formatter);
-            LocalDateTime fecha = LocalDateTime.of(Fecha.getDate(), hora);
-            List<MedicoViejoDTO> medicosDisponibles = citaBO.medicosDisponibles(fecha, (String) Especialidad1.getSelectedItem());
+            fechaHora = LocalDateTime.of(Fecha.getDate(), hora);
+            List<MedicoViejoDTO> medicosDisponibles = citaBO.medicosDisponibles(fechaHora, (String) Especialidad1.getSelectedItem());
+            if(medicosDisponibles.isEmpty())
+                throw new PresentacionException("No hay médicos disponibles para la fecha y especialidad seleccionadas");
+             else{
+                DefaultTableModel tabla = (DefaultTableModel) tablaConsultasMedicos.getModel();
+                int filas = 0;
+                for (MedicoViejoDTO medico : medicosDisponibles) {                    
+                    tabla.insertRow(filas, new Object[]{
+                        false,
+                        medico.getNombres(),
+                        medico.getApellidoPaterno(),
+                        medico.getApellidoMaterno()
+                    });
+                    filas++;
+                }
+                Seleccionar.setEnabled(true);
+            }
         } catch (NegocioException e) {
             throw new PresentacionException(e.getMessage(), e);
         }
@@ -323,7 +355,14 @@ public class RegistrarCitaPrevia extends javax.swing.JFrame {
     }
     
     private void registrarCita(){
-        
+        try {
+            int medicoSeleccionado = tablaConsultasMedicos.getSelectedRow();
+            if(medicoSeleccionado != - 1){
+                
+            }
+        } catch (Exception e) {
+            
+        }
     }
     
     /**
@@ -351,6 +390,6 @@ public class RegistrarCitaPrevia extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JSeparator jSeparator1;
-    private javax.swing.JTable tablaConsultasDia1;
+    private javax.swing.JTable tablaConsultasMedicos;
     // End of variables declaration//GEN-END:variables
 }

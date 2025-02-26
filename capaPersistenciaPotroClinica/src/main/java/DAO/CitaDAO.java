@@ -33,6 +33,7 @@ public class CitaDAO implements iCitaDAO {
         this.conexion = conexion;
     }
     
+    @Override
     public List<Medico> medicosDisponibles(LocalDateTime fechaHora, String especialidad) throws PersistenciaException{
         String sentenciaSQL = """
                               SELECT *

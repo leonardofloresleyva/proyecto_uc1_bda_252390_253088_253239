@@ -1,7 +1,10 @@
 package DAO;
 
 import Entidades.Cita;
+import Entidades.Medico;
 import Excepciones.PersistenciaException;
+import java.time.LocalDateTime;
+import java.util.List;
 
 /**
  * Interfaz de la clase CitaDAO.
@@ -10,6 +13,8 @@ import Excepciones.PersistenciaException;
  * @author Luis Eduardo Uribe Vega (253239)
  */
 public interface iCitaDAO {
+    
+    public List<Medico> medicosDisponibles(LocalDateTime fechaHora, String especialidad) throws PersistenciaException;
     
     /**
      * Método que permite registrar una cita.
