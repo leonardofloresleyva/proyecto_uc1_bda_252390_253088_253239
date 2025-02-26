@@ -1,7 +1,6 @@
 package DAO;
 
 import Conexion.iConexion;
-import Entidades.CitaEmergencia;
 import Entidades.Consulta;
 import Excepciones.PersistenciaException;
 import java.sql.CallableStatement;
@@ -46,49 +45,22 @@ public class ConsultaDAO implements iConsultaDAO {
                 Connection con = conexion.crearConexion();
                 CallableStatement cs = con.prepareCall(comandoSQL)
             ) {
-<<<<<<< Updated upstream
-            // Si el tipo de cita es "Previa", se asignan los valores de la consulta
-                if("Previa".equals(consulta.getCita().getTipoCita())){
-                    // Agregar valores a la tabla de consultas
-=======
-                // Agregar valores a la tabla de consultas
->>>>>>> Stashed changes
-                    cs.setString(1, consulta.getMotivo());
-                    cs.setString(2, consulta.getDiagnostico());
-                    cs.setString(3, consulta.getTratamiento());
-                    cs.setInt(4, consulta.getCita().getIdCita());
-                    // Ejecutar y regresar verdadero.
-                    cs.execute();
-                    return true;
-<<<<<<< Updated upstream
-                } else{
-                // Si el tipo de cita es "Emergencia", se asignan valores de la consulta
-                    CitaEmergencia citaEmergencia = (CitaEmergencia) consulta.getCita();
-                    // Se llama al método privado que verifica el folio de la cita. Si es válido y coincide, se agrega la consulta.
-                    if(verificarFolio(citaEmergencia.getIdCita(), citaEmergencia.getFolio())){
-                        // Agregar valores a la tabla de consultas
-                        cs.setString(1, consulta.getMotivo());
-                        cs.setString(2, consulta.getDiagnostico());
-                        cs.setString(3, consulta.getTratamiento());
-                        cs.setInt(4, citaEmergencia.getIdCita());
-                        // Ejecutar y regresar verdadero.
-                        cs.execute();
-                        return true;
-                    // Si el folio no coincide, se lanza una excepción.
-                    } else
-                        throw new PersistenciaException("El folio ingresado no coincide con ninguna cita.");
-                }
-        // Lanzar una excepción si no se pudo registrar la consulta.
-=======
-            
->>>>>>> Stashed changes
+
+                cs.setString(1, consulta.getMotivo());
+                cs.setString(2, consulta.getDiagnostico());
+                cs.setString(3, consulta.getTratamiento());
+                cs.setInt(4, consulta.getCita().getIdCita());
+                // Ejecutar y regresar verdadero.
+                cs.execute();
+                return true;
+
         } catch (SQLException ex) {
             logger.log(Level.SEVERE, "Error al registrar la consulta en la base de datos.", ex);
             throw new PersistenciaException("Error al insertar una consulta", ex);
         }
     }
 
-<<<<<<< Updated upstream
+
     /**
      * Método privado que verifica el folio de la cita de emergencia.
      * @param idCita ID de la cita de emergencia.
@@ -96,10 +68,8 @@ public class ConsultaDAO implements iConsultaDAO {
      * @return True si el folio coincide, false en caso contrario.
      * @throws PersistenciaException 
      */
-    private boolean verificarFolio(int idCita, int folio) throws PersistenciaException{
-=======
     public boolean verificarFolio(int idCita, int folio) throws PersistenciaException{
->>>>>>> Stashed changes
+
         String comandoSQL = "SELECT * FROM CITAS_EMERGENCIA WHERE ID_CITA_EMERGENCIA = ? AND FOLIO = ?;";
         try(
                 Connection con = conexion.crearConexion();
