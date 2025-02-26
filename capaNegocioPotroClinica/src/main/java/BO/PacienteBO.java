@@ -13,7 +13,6 @@ import Mapper.CitaMapper;
 import Mapper.ConsultaMapper;
 import Mapper.MedicoMapper;
 import Mapper.PacienteMapper;
-import at.favre.lib.crypto.bcrypt.BCrypt;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.logging.Level;

@@ -1,11 +1,18 @@
 package DAO;
 
+import Conexion.Conexion;
 import Conexion.iConexion;
 import Entidades.Cita;
+import Entidades.Medico;
 import Excepciones.PersistenciaException;
 import java.sql.CallableStatement;
 import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -24,6 +31,44 @@ public class CitaDAO implements iCitaDAO {
      */
     public CitaDAO(iConexion conexion) {
         this.conexion = conexion;
+    }
+    
+    public List<Medico> medicosDisponibles(LocalDateTime fechaHora, String especialidad) throws PersistenciaException{
+        String sentenciaSQL = """
+                              SELECT *
+                              FROM MEDICOS AS M
+                              INNER JOIN USUARIOS AS U
+                              ON M.ID_MEDICO = U.ID
+                              INNER JOIN CITAS AS C
+                              ON C.ID_MEDICO = M.ID_MEDICO
+                              WHERE C.FECHA_HORA != ?
+                              AND ESPECIALIDAD = ?;""";
+        try (
+                Connection con = this.conexion.crearConexion();
+                PreparedStatement ps = con.prepareStatement(sentenciaSQL);
+                )
+        {
+            ps.setObject(1, fechaHora);
+            ps.setString(2, especialidad);
+            List<Medico> medicos = new ArrayList<>();
+            ResultSet rs = ps.executeQuery();
+            while(rs.next()){
+                Medico medico = new Medico(
+                            rs.getInt("ID"),
+                            "",
+                            "",
+                            rs.getString("NOMBRES"),
+                            rs.getString("APELLIDO_PATERNO"),
+                            rs.getString("APELLIDO_MATERNO"),
+                            rs.getString("ESPECIALIDAD"),
+                            rs.getString("ESTADO_MEDICO")
+                    );
+                medicos.add(medico);
+            }
+            return medicos;
+        } catch (SQLException e) {
+            throw new PersistenciaException("Error en la consulta de medicos disponibles");
+        }
     }
     
     /**

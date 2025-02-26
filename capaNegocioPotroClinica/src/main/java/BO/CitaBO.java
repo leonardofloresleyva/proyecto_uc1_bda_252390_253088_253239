@@ -3,12 +3,14 @@ package BO;
 import Conexion.iConexion;
 import DAO.CitaDAO;
 import DTO.CitaDTO;
+import DTO.MedicoViejoDTO;
 import Excepciones.NegocioException;
 import Excepciones.PersistenciaException;
 import Mapper.CitaMapper;
 import Mapper.MedicoMapper;
 import Mapper.PacienteMapper;
 import java.time.LocalDateTime;
+import java.util.List;
 
 /**
  *
@@ -20,6 +22,7 @@ public class CitaBO {
     
     private final CitaDAO citaDAO;
     private final CitaMapper citaMapper;
+    private final MedicoMapper medicoMapper;
 
     /**
      * Constructor de la clase CitaBO.
@@ -28,6 +31,29 @@ public class CitaBO {
     public CitaBO(iConexion conexion) {
         this.citaDAO = new CitaDAO(conexion);
         this.citaMapper = new CitaMapper(new MedicoMapper(), new PacienteMapper());
+        this.medicoMapper = new MedicoMapper();
+    }
+    
+    public List<MedicoViejoDTO> medicosDisponibles(LocalDateTime fechaHora, String especialidad) throws NegocioException{
+        
+        if(fechaHora == null)
+            throw new NegocioException("La fecha y hora de la cita no puede ser nula.");
+        
+        if(fechaHora.isBefore(LocalDateTime.now()))
+            throw new NegocioException("La fecha y hora de la cita no puede ser inferior a la fecha y hora actual.");
+        
+        if((fechaHora.getMinute() != 30 || fechaHora.getMinute() != 0) || fechaHora.getSecond() != 0)
+            throw new NegocioException("Las citas se programan en lapsos de media hora exactas.");
+        
+        if (especialidad == null || especialidad.trim().isEmpty())
+            throw new NegocioException("La cedula no puede estar vacio.");
+        
+        try {
+            return medicoMapper.toListDTO(citaDAO.medicosDisponibles(fechaHora, especialidad));
+        } catch (PersistenciaException ex) {
+            throw new NegocioException(ex.getMessage(), ex);
+        }
+        
     }
     
     /**

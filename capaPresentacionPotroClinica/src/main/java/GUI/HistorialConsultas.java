@@ -227,7 +227,7 @@ public class HistorialConsultas extends javax.swing.JFrame {
         try{
             ArrayList<ConsultaDTO> consultas = (ArrayList<ConsultaDTO>) medicoBO.consultasMedico(perfil.getId());
             if(consultas.isEmpty())
-                JOptionPane.showMessageDialog(this, "", "", JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(this, "No existen consultas registradas a su cuenta.", "Sin consultas.", JOptionPane.ERROR_MESSAGE);
             else{
                 DefaultTableModel tabla = (DefaultTableModel) tablaConsultasDia.getModel();
                 int filas = 0;

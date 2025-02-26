@@ -1,15 +1,14 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
- */
 package GUI;
 
 import BO.PacienteBO;
 import Conexion.Conexion;
-import DTO.PacienteNuevoDTO;
 import DTO.PacienteViejoDTO;
 import Excepciones.NegocioException;
+import Excepciones.PresentacionException;
+import java.awt.HeadlessException;
 import java.time.LocalDate;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 
 /**
@@ -53,7 +52,6 @@ public class ActualizarDatosPaciente extends javax.swing.JFrame {
         ApellidoPaterno = new javax.swing.JTextField();
         ApellidoMaterno = new javax.swing.JTextField();
         jLabel5 = new javax.swing.JLabel();
-        Fecha = new javax.swing.JTextField();
         jLabel6 = new javax.swing.JLabel();
         jLabel7 = new javax.swing.JLabel();
         Telefono = new javax.swing.JTextField();
@@ -66,6 +64,7 @@ public class ActualizarDatosPaciente extends javax.swing.JFrame {
         jLabel13 = new javax.swing.JLabel();
         Numero = new javax.swing.JTextField();
         jSeparator3 = new javax.swing.JSeparator();
+        FechaNacimiento = new com.github.lgooddatepicker.components.DatePicker();
 
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -158,12 +157,6 @@ public class ActualizarDatosPaciente extends javax.swing.JFrame {
         jLabel5.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
         jLabel5.setText("Apellido Materno");
 
-        Fecha.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                FechaActionPerformed(evt);
-            }
-        });
-
         jLabel6.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
         jLabel6.setText("Fecha de Nacimiento (yyyy/mm/dd)");
 
@@ -223,41 +216,40 @@ public class ActualizarDatosPaciente extends javax.swing.JFrame {
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGap(39, 39, 39)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(39, 39, 39)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(jSeparator3)
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jLabel3)
-                                    .addComponent(Nombre, javax.swing.GroupLayout.PREFERRED_SIZE, 190, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(Fecha, javax.swing.GroupLayout.PREFERRED_SIZE, 190, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jLabel4)
-                                    .addComponent(ApellidoPaterno, javax.swing.GroupLayout.PREFERRED_SIZE, 190, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jLabel6)
-                                    .addComponent(jLabel5)
-                                    .addComponent(ApellidoMaterno, javax.swing.GroupLayout.PREFERRED_SIZE, 190, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jLabel2))
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addGroup(jPanel1Layout.createSequentialGroup()
-                                        .addGap(55, 55, 55)
-                                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addComponent(jLabel7)
-                                            .addComponent(Telefono, javax.swing.GroupLayout.PREFERRED_SIZE, 190, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                            .addComponent(jLabel8)
-                                            .addComponent(Colonia, javax.swing.GroupLayout.PREFERRED_SIZE, 190, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                            .addComponent(jLabel10)
-                                            .addComponent(Calle, javax.swing.GroupLayout.PREFERRED_SIZE, 190, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                            .addComponent(jLabel13)
-                                            .addComponent(Numero, javax.swing.GroupLayout.PREFERRED_SIZE, 190, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(jLabel9)
-                                        .addGap(71, 71, 71))))))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(215, 215, 215)
-                        .addComponent(GuardarDatos)))
+                        .addGap(176, 176, 176)
+                        .addComponent(GuardarDatos))
+                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                        .addComponent(jSeparator3)
+                        .addGroup(jPanel1Layout.createSequentialGroup()
+                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addComponent(jLabel3)
+                                .addComponent(Nombre, javax.swing.GroupLayout.PREFERRED_SIZE, 190, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(jLabel4)
+                                .addComponent(ApellidoPaterno, javax.swing.GroupLayout.PREFERRED_SIZE, 190, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(jLabel6)
+                                .addComponent(jLabel5)
+                                .addComponent(ApellidoMaterno, javax.swing.GroupLayout.PREFERRED_SIZE, 190, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(jLabel2)
+                                .addComponent(FechaNacimiento, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addGroup(jPanel1Layout.createSequentialGroup()
+                                    .addGap(55, 55, 55)
+                                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addComponent(jLabel7)
+                                        .addComponent(Telefono, javax.swing.GroupLayout.PREFERRED_SIZE, 190, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(jLabel8)
+                                        .addComponent(Colonia, javax.swing.GroupLayout.PREFERRED_SIZE, 190, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(jLabel10)
+                                        .addComponent(Calle, javax.swing.GroupLayout.PREFERRED_SIZE, 190, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(jLabel13)
+                                        .addComponent(Numero, javax.swing.GroupLayout.PREFERRED_SIZE, 190, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                    .addComponent(jLabel9)
+                                    .addGap(71, 71, 71))))))
                 .addContainerGap(39, Short.MAX_VALUE))
             .addComponent(jPanel3, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
@@ -301,8 +293,8 @@ public class ActualizarDatosPaciente extends javax.swing.JFrame {
                     .addComponent(jLabel13, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(Fecha, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(Numero, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(Numero, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(FechaNacimiento, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(32, 32, 32)
                 .addComponent(GuardarDatos)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 21, Short.MAX_VALUE)
@@ -341,10 +333,6 @@ public class ActualizarDatosPaciente extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_ApellidoMaternoActionPerformed
 
-    private void FechaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_FechaActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_FechaActionPerformed
-
     private void TelefonoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_TelefonoActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_TelefonoActionPerformed
@@ -355,16 +343,35 @@ public class ActualizarDatosPaciente extends javax.swing.JFrame {
 
     private void GuardarDatosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_GuardarDatosActionPerformed
         try {
+            guardarDatos();
+            /*PerfilPaciente nuevaVentana = new PerfilPaciente();
+            nuevaVentana.setVisible(true);
+            this.dispose();*/
+        } catch (PresentacionException ex) {
+            JOptionPane.showMessageDialog(this, ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+        }
+    }//GEN-LAST:event_GuardarDatosActionPerformed
 
-            String nombres = Nombre.getText();
-            String apellidoPaterno = ApellidoPaterno.getText();
-            String apellidoMaterno = ApellidoMaterno.getText();
-            String telefono = Telefono.getText();
-            String colonia = Colonia.getText();
-            String calle = Calle.getText();
-            String numero = Numero.getText();
+    private void CalleActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CalleActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_CalleActionPerformed
 
-            LocalDate fechaNacimiento = LocalDate.parse(Fecha.getText());
+    private void NumeroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_NumeroActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_NumeroActionPerformed
+    
+    private void guardarDatos() throws PresentacionException{
+        try {
+
+            String nombres = Nombre.getText().trim();
+            String apellidoPaterno = ApellidoPaterno.getText().trim();
+            String apellidoMaterno = ApellidoMaterno.getText().trim();
+            String telefono = Telefono.getText().trim();
+            String colonia = Colonia.getText().trim();
+            String calle = Calle.getText().trim();
+            String numero = Numero.getText().trim();
+            
+            LocalDate fechaNacimiento = FechaNacimiento.getDate();
 
             PacienteViejoDTO paciente = new PacienteViejoDTO(
                     pacienteActualizado.getUsuario(), // Asegúrate de tener el usuario
@@ -388,27 +395,12 @@ public class ActualizarDatosPaciente extends javax.swing.JFrame {
                 PerfilPaciente nuevaVentana = new PerfilPaciente(pacienteActualizado);
                 nuevaVentana.setVisible(true);
                 this.dispose();
-            } else {
-                JOptionPane.showMessageDialog(this, "No se pudo actualizar la información.", "Error", JOptionPane.ERROR_MESSAGE);
             }
         } catch (NegocioException e) {
-            JOptionPane.showMessageDialog(this, "Error: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
-        } catch (Exception e) {
-            JOptionPane.showMessageDialog(this, "Error inesperado.", "Error", JOptionPane.ERROR_MESSAGE);
+            throw new PresentacionException(e.getMessage(), e);
         }
-        /*PerfilPaciente nuevaVentana = new PerfilPaciente();
-        nuevaVentana.setVisible(true);
-        this.dispose();*/
-    }//GEN-LAST:event_GuardarDatosActionPerformed
-
-    private void CalleActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CalleActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_CalleActionPerformed
-
-    private void NumeroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_NumeroActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_NumeroActionPerformed
-
+    }
+    
     /**
      * @param args the command line arguments
      */
@@ -418,7 +410,7 @@ public class ActualizarDatosPaciente extends javax.swing.JFrame {
     private javax.swing.JTextField ApellidoPaterno;
     private javax.swing.JTextField Calle;
     private javax.swing.JTextField Colonia;
-    private javax.swing.JTextField Fecha;
+    private com.github.lgooddatepicker.components.DatePicker FechaNacimiento;
     private javax.swing.JButton GuardarDatos;
     private javax.swing.JTextField Nombre;
     private javax.swing.JTextField Numero;

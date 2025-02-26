@@ -1,9 +1,14 @@
 package GUI;
 
+import BO.PacienteBO;
+import Conexion.Conexion;
+import Conexion.iConexion;
+import DTO.ConsultaDTO;
 import DTO.PacienteViejoDTO;
-import javax.swing.ListSelectionModel;
-import javax.swing.event.ListSelectionEvent;
-import javax.swing.event.ListSelectionListener;
+import Excepciones.NegocioException;
+import Excepciones.PresentacionException;
+import java.util.List;
+import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
 /**
@@ -41,7 +46,7 @@ public class HistorialRangoFechas extends javax.swing.JFrame {
         jLabel1 = new javax.swing.JLabel();
         ConsultarHistorial = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
-        tablaConsultasDia = new javax.swing.JTable();
+        tablaConsultasFechas = new javax.swing.JTable();
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
         FechaInicio = new com.github.lgooddatepicker.components.DatePicker();
@@ -55,9 +60,9 @@ public class HistorialRangoFechas extends javax.swing.JFrame {
 
         jPanel3.setBackground(new java.awt.Color(153, 204, 255));
 
+        Volver.setText("Volver");
         Volver.setBackground(new java.awt.Color(0, 0, 0));
         Volver.setForeground(new java.awt.Color(255, 255, 255));
-        Volver.setText("Volver");
         Volver.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 VolverActionPerformed(evt);
@@ -81,20 +86,20 @@ public class HistorialRangoFechas extends javax.swing.JFrame {
                 .addContainerGap(24, Short.MAX_VALUE))
         );
 
-        jLabel2.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
         jLabel2.setText("Historial de citas por rango de fechas");
+        jLabel2.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
 
         jPanel4.setBackground(new java.awt.Color(153, 204, 255));
 
-        jLabel1.setFont(new java.awt.Font("Times New Roman", 0, 36)); // NOI18N
         jLabel1.setText("    Clinica Privada");
+        jLabel1.setFont(new java.awt.Font("Times New Roman", 0, 36)); // NOI18N
 
         javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
         jPanel4.setLayout(jPanel4Layout);
         jPanel4Layout.setHorizontalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel4Layout.createSequentialGroup()
-                .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, 623, Short.MAX_VALUE)
+                .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, 624, Short.MAX_VALUE)
                 .addContainerGap())
         );
         jPanel4Layout.setVerticalGroup(
@@ -102,16 +107,16 @@ public class HistorialRangoFechas extends javax.swing.JFrame {
             .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, 70, Short.MAX_VALUE)
         );
 
+        ConsultarHistorial.setText("Consultar");
         ConsultarHistorial.setBackground(new java.awt.Color(0, 0, 0));
         ConsultarHistorial.setForeground(new java.awt.Color(255, 255, 255));
-        ConsultarHistorial.setText("Consultar");
         ConsultarHistorial.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 ConsultarHistorialActionPerformed(evt);
             }
         });
 
-        tablaConsultasDia.setModel(new javax.swing.table.DefaultTableModel(
+        tablaConsultasFechas.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null, null},
                 {null, null, null, null, null},
@@ -145,7 +150,7 @@ public class HistorialRangoFechas extends javax.swing.JFrame {
                 {null, null, null, null, null}
             },
             new String [] {
-                "Fecha", "Tipo de cita", "Estado", "Medico a cargo", "Especialidad"
+                "Fecha", "Tipo de cita", "Medico a cargo", "Especialidad", "Motivo"
             }
         ) {
             Class[] types = new Class [] {
@@ -163,23 +168,23 @@ public class HistorialRangoFechas extends javax.swing.JFrame {
                 return canEdit [columnIndex];
             }
         });
-        tablaConsultasDia.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
-        tablaConsultasDia.addAncestorListener(new javax.swing.event.AncestorListener() {
+        tablaConsultasFechas.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        tablaConsultasFechas.addAncestorListener(new javax.swing.event.AncestorListener() {
             public void ancestorAdded(javax.swing.event.AncestorEvent evt) {
-                tablaConsultasDiaAncestorAdded(evt);
+                tablaConsultasFechasAncestorAdded(evt);
             }
             public void ancestorMoved(javax.swing.event.AncestorEvent evt) {
             }
             public void ancestorRemoved(javax.swing.event.AncestorEvent evt) {
             }
         });
-        jScrollPane1.setViewportView(tablaConsultasDia);
+        jScrollPane1.setViewportView(tablaConsultasFechas);
 
-        jLabel3.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
         jLabel3.setText("Fecha inicio");
+        jLabel3.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
 
-        jLabel4.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
         jLabel4.setText("Fecha fin");
+        jLabel4.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -189,20 +194,18 @@ public class HistorialRangoFechas extends javax.swing.JFrame {
             .addComponent(jPanel3, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGap(27, 27, 27)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(222, 222, 222)
-                        .addComponent(ConsultarHistorial, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 233, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 575, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(27, Short.MAX_VALUE))
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 575, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(28, Short.MAX_VALUE))
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGap(37, 37, 37)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel3)
                     .addComponent(jLabel2)
-                    .addComponent(FechaInicio, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(FechaInicio, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(70, 70, 70)
+                        .addComponent(ConsultarHistorial, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 74, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel4)
                     .addComponent(FechaFin, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -221,10 +224,9 @@ public class HistorialRangoFechas extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(FechaInicio, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(FechaFin, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 19, Short.MAX_VALUE)
-                .addComponent(ConsultarHistorial)
-                .addGap(18, 18, 18)
+                    .addComponent(FechaFin, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(ConsultarHistorial))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 58, Short.MAX_VALUE)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 215, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -251,15 +253,44 @@ public class HistorialRangoFechas extends javax.swing.JFrame {
     }//GEN-LAST:event_VolverActionPerformed
 
     private void ConsultarHistorialActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ConsultarHistorialActionPerformed
- 
+        try {
+            consultarFechas();
+        } catch (PresentacionException ex) {
+            JOptionPane.showMessageDialog(this, ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+        }
     }//GEN-LAST:event_ConsultarHistorialActionPerformed
 
-    private void tablaConsultasDiaAncestorAdded(javax.swing.event.AncestorEvent evt) {//GEN-FIRST:event_tablaConsultasDiaAncestorAdded
+    private void tablaConsultasFechasAncestorAdded(javax.swing.event.AncestorEvent evt) {//GEN-FIRST:event_tablaConsultasFechasAncestorAdded
         
-    }//GEN-LAST:event_tablaConsultasDiaAncestorAdded
+    }//GEN-LAST:event_tablaConsultasFechasAncestorAdded
     
-    private void historialFechas(){
-        
+    private void consultarFechas() throws PresentacionException{
+        try {
+            iConexion conexion = new Conexion();
+            PacienteBO pacienteBO = new PacienteBO(conexion);
+            List<ConsultaDTO> consultas = pacienteBO.consultaFechas(perfil.getUsuario(), FechaInicio.getDate(), FechaFin.getDate());
+            if(consultas.isEmpty())
+                JOptionPane.showMessageDialog(this, "No existen consultas en el rango de fechas seleccionadas.", "Consultas no encontradas", JOptionPane.INFORMATION_MESSAGE);
+            else{
+                DefaultTableModel tabla = (DefaultTableModel) tablaConsultasFechas.getModel();
+                int filas = 0;
+                for(ConsultaDTO consulta : consultas){
+                    tabla.insertRow(filas, new Object[]{
+                        consulta.getCita().getFechaHora(),
+                        consulta.getCita().getTipoCita(),
+                        String.format("%s %s %s", 
+                                consulta.getCita().getMedico().getNombres(),
+                                consulta.getCita().getMedico().getApellidoPaterno(),
+                                consulta.getCita().getMedico().getApellidoMaterno()),
+                        consulta.getCita().getMedico().getEspecialidad(),
+                        consulta.getMotivo()
+                    });
+                    filas++;
+                }
+            }
+        } catch (NegocioException ex) {
+            throw new PresentacionException(ex.getMessage(), ex);
+        }
     }
     
     /**
@@ -280,6 +311,6 @@ public class HistorialRangoFechas extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel4;
     private javax.swing.JPasswordField jPasswordField1;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable tablaConsultasDia;
+    private javax.swing.JTable tablaConsultasFechas;
     // End of variables declaration//GEN-END:variables
 }

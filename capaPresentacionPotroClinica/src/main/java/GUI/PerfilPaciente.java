@@ -39,7 +39,7 @@ public class PerfilPaciente extends javax.swing.JFrame {
         jLabel7 = new javax.swing.JLabel();
         jLabel8 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
-        jButton1 = new javax.swing.JButton();
+        RegistrarCita = new javax.swing.JButton();
         ActualizarDatos = new javax.swing.JButton();
         HistorialRangoFechas = new javax.swing.JButton();
         CancelarCitas = new javax.swing.JButton();
@@ -112,10 +112,10 @@ public class PerfilPaciente extends javax.swing.JFrame {
         jLabel3.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
         jLabel3.setText("¡Bienvenido, \"Paciente\"!");
 
-        jButton1.setText("Agendar Cita Medica");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        RegistrarCita.setText("Agendar Cita Medica");
+        RegistrarCita.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                RegistrarCitaActionPerformed(evt);
             }
         });
 
@@ -141,8 +141,6 @@ public class PerfilPaciente extends javax.swing.JFrame {
         });
 
         jSeparator1.setForeground(new java.awt.Color(0, 0, 0));
-
-        jLabel5.setIcon(new javax.swing.ImageIcon("C:\\Users\\multaslokas33\\OneDrive\\Documentos\\GitHub\\proyecto_uc1_bda_252390_253088_253239\\capaPresentacionPotroClinica\\src\\foto3.jpg")); // NOI18N
 
         HitorialEspecialidad.setText("Historial de citas por Especialidad");
         HitorialEspecialidad.addActionListener(new java.awt.event.ActionListener() {
@@ -180,7 +178,7 @@ public class PerfilPaciente extends javax.swing.JFrame {
                                     .addComponent(jLabel8)))
                             .addComponent(jLabel3)))
                     .addComponent(jLabel2)
-                    .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(RegistrarCita, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
@@ -206,7 +204,7 @@ public class PerfilPaciente extends javax.swing.JFrame {
                 .addGap(18, 18, 18)
                 .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addComponent(jButton1)
+                .addComponent(RegistrarCita)
                 .addGap(18, 18, 18)
                 .addComponent(ActualizarDatos)
                 .addGap(18, 18, 18)
@@ -257,11 +255,11 @@ public class PerfilPaciente extends javax.swing.JFrame {
         this.dispose();
     }//GEN-LAST:event_CancelarCitasActionPerformed
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+    private void RegistrarCitaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_RegistrarCitaActionPerformed
         RegistrarCita nuevaVentana = new RegistrarCita(perfil);
         nuevaVentana.setVisible(true);
         this.dispose();
-    }//GEN-LAST:event_jButton1ActionPerformed
+    }//GEN-LAST:event_RegistrarCitaActionPerformed
 
     private void HitorialEspecialidadActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_HitorialEspecialidadActionPerformed
         HistorialPorEspecialidad nuevaVentana = new HistorialPorEspecialidad(perfil);
@@ -278,8 +276,8 @@ public class PerfilPaciente extends javax.swing.JFrame {
     private javax.swing.JButton CancelarCitas;
     private javax.swing.JButton HistorialRangoFechas;
     private javax.swing.JButton HitorialEspecialidad;
+    private javax.swing.JButton RegistrarCita;
     private javax.swing.JButton Volver;
-    private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
