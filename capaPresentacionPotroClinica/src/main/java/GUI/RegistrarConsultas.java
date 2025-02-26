@@ -5,11 +5,8 @@ import Conexion.Conexion;
 import Conexion.iConexion;
 import DTO.CitaDTO;
 import DTO.ConsultaDTO;
-import DTO.MedicoViejoDTO;
 import Excepciones.NegocioException;
 import Excepciones.PresentacionException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 
 /**
@@ -226,9 +223,6 @@ public class RegistrarConsultas extends javax.swing.JFrame {
             registrarConsulta();
         } catch (PresentacionException ex) {
             JOptionPane.showMessageDialog(this, ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
-            ConsultaAgendaMedico citasMedico = new ConsultaAgendaMedico(cita.getMedico());
-            citasMedico.setVisible(true);
-            this.dispose();
         }
     }//GEN-LAST:event_RegistrarActionPerformed
 
@@ -242,16 +236,39 @@ public class RegistrarConsultas extends javax.swing.JFrame {
         try {
             iConexion conexion = new Conexion();
             ConsultaBO consultasBO = new ConsultaBO(conexion);
-            if(consultasBO.registrarConsulta(new ConsultaDTO(Motivo.getText().trim(), Diagnostico.getText().trim(), Tratamiento.getText().trim(), cita))){
-                PerfilMedico nuevaVentana = new PerfilMedico(cita.getMedico());
-                nuevaVentana.setVisible(true);
-                this.dispose();
-            } else
-                JOptionPane.showMessageDialog(
-                        this, 
-                        "La consulta no pudo ser registrada. Contacte a su administrador o intentelo de nuevo.", 
-                        "Consulta no registrada.", 
-                        JOptionPane.INFORMATION_MESSAGE);
+            if("Emergencia".equals(cita.getTipoCita())){
+                String folioInput = JOptionPane.showInputDialog(this, "Ingrese el folio de la cita.");
+                try {
+                    int folio = Integer.parseInt(folioInput);
+                    if(consultasBO.registrarConsultaEmergencia(new ConsultaDTO(Motivo.getText().trim(), Diagnostico.getText().trim(), Tratamiento.getText().trim(), cita), folio)){
+                        JOptionPane.showMessageDialog(this, "Consulta registrada.", "Consulta", JOptionPane.INFORMATION_MESSAGE);
+                        PerfilMedico nuevaVentana = new PerfilMedico(cita.getMedico());
+                        nuevaVentana.setVisible(true);
+                        this.dispose();
+                    } else
+                    JOptionPane.showMessageDialog(
+                            this, 
+                            "La consulta no pudo ser registrada. Contacte a su administrador o intentelo de nuevo.", 
+                            "Consulta no registrada.", 
+                            JOptionPane.INFORMATION_MESSAGE);
+                } catch (NegocioException ex) {
+                    JOptionPane.showMessageDialog(this, ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+                } catch (NumberFormatException ex){
+                    JOptionPane.showMessageDialog(this, "Solo se permiten números enteros", "Error", JOptionPane.ERROR_MESSAGE);
+                }
+            } else{
+                if(consultasBO.registrarConsultaPrevia(new ConsultaDTO(Motivo.getText().trim(), Diagnostico.getText().trim(), Tratamiento.getText().trim(), cita))){
+                    JOptionPane.showMessageDialog(this, "Consulta registrada.", "Consulta", JOptionPane.INFORMATION_MESSAGE);
+                    PerfilMedico nuevaVentana = new PerfilMedico(cita.getMedico());
+                    nuevaVentana.setVisible(true);
+                    this.dispose();
+                } else
+                    JOptionPane.showMessageDialog(
+                            this, 
+                            "La consulta no pudo ser registrada. Contacte a su administrador o intentelo de nuevo.", 
+                            "Consulta no registrada.", 
+                            JOptionPane.INFORMATION_MESSAGE);
+            }
         } catch (NegocioException e) {
             throw new PresentacionException(e.getMessage(), e);
         }

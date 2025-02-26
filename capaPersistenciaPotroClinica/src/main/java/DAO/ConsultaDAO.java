@@ -46,9 +46,13 @@ public class ConsultaDAO implements iConsultaDAO {
                 Connection con = conexion.crearConexion();
                 CallableStatement cs = con.prepareCall(comandoSQL)
             ) {
+<<<<<<< Updated upstream
             // Si el tipo de cita es "Previa", se asignan los valores de la consulta
                 if("Previa".equals(consulta.getCita().getTipoCita())){
                     // Agregar valores a la tabla de consultas
+=======
+                // Agregar valores a la tabla de consultas
+>>>>>>> Stashed changes
                     cs.setString(1, consulta.getMotivo());
                     cs.setString(2, consulta.getDiagnostico());
                     cs.setString(3, consulta.getTratamiento());
@@ -56,6 +60,7 @@ public class ConsultaDAO implements iConsultaDAO {
                     // Ejecutar y regresar verdadero.
                     cs.execute();
                     return true;
+<<<<<<< Updated upstream
                 } else{
                 // Si el tipo de cita es "Emergencia", se asignan valores de la consulta
                     CitaEmergencia citaEmergencia = (CitaEmergencia) consulta.getCita();
@@ -74,12 +79,16 @@ public class ConsultaDAO implements iConsultaDAO {
                         throw new PersistenciaException("El folio ingresado no coincide con ninguna cita.");
                 }
         // Lanzar una excepción si no se pudo registrar la consulta.
+=======
+            
+>>>>>>> Stashed changes
         } catch (SQLException ex) {
             logger.log(Level.SEVERE, "Error al registrar la consulta en la base de datos.", ex);
             throw new PersistenciaException("Error al insertar una consulta", ex);
         }
     }
 
+<<<<<<< Updated upstream
     /**
      * Método privado que verifica el folio de la cita de emergencia.
      * @param idCita ID de la cita de emergencia.
@@ -88,6 +97,9 @@ public class ConsultaDAO implements iConsultaDAO {
      * @throws PersistenciaException 
      */
     private boolean verificarFolio(int idCita, int folio) throws PersistenciaException{
+=======
+    public boolean verificarFolio(int idCita, int folio) throws PersistenciaException{
+>>>>>>> Stashed changes
         String comandoSQL = "SELECT * FROM CITAS_EMERGENCIA WHERE ID_CITA_EMERGENCIA = ? AND FOLIO = ?;";
         try(
                 Connection con = conexion.crearConexion();

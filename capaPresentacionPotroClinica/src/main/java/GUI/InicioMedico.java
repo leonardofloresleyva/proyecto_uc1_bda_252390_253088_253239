@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
- */
 package GUI;
 
 import BO.MedicoBO;
@@ -184,7 +180,8 @@ public class InicioMedico extends javax.swing.JFrame {
     private void InicioSecionPacienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_InicioSecionPacienteActionPerformed
         try {
             IniciarSesion();
-        } catch (NegocioException ex) {
+        } catch (PresentacionException ex) {
+            JOptionPane.showMessageDialog(this, ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
         }
     }//GEN-LAST:event_InicioSecionPacienteActionPerformed
 
@@ -198,15 +195,15 @@ public class InicioMedico extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_contraseniaActionPerformed
 
-    private void IniciarSesion () throws NegocioException {
+    private void IniciarSesion () throws PresentacionException {
         Conexion conexion = new Conexion();
         MedicoBO negocio = new MedicoBO(conexion);
         try{
-            PerfilMedico nuevaVentana = new PerfilMedico(negocio.iniciarSesion(Cedula.getText(), contrasenia.getText()));
+            PerfilMedico nuevaVentana = new PerfilMedico(negocio.iniciarSesion(Cedula.getText().trim(), contrasenia.getText().trim()));
             nuevaVentana.setVisible(true);
             this.dispose();
         }catch(NegocioException ex){
-            JOptionPane.showMessageDialog(this, ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+            throw new PresentacionException(ex.getMessage(), ex);
         }
     
     }

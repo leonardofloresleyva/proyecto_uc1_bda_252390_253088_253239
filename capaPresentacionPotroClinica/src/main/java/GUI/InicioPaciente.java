@@ -5,6 +5,7 @@ import Conexion.Conexion;
 import Conexion.iConexion;
 import DAO.PacienteDAO;
 import Excepciones.NegocioException;
+import Excepciones.PresentacionException;
 import java.util.Arrays;
 import javax.swing.JOptionPane;
 
@@ -184,13 +185,9 @@ public class InicioPaciente extends javax.swing.JFrame {
     }//GEN-LAST:event_CorreoActionPerformed
 
     private void InicioSecionPacienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_InicioSecionPacienteActionPerformed
-        Conexion conexion = new Conexion();
-        PacienteBO negocio = new PacienteBO(conexion);
-        try{
-            PerfilPaciente nuevaVentana = new PerfilPaciente(negocio.iniciarSesion(Correo.getText(), contrasenia.getText()));
-            nuevaVentana.setVisible(true);
-            this.dispose();
-        }catch(NegocioException ex){
+        try {
+            iniciarSesion();
+        } catch (PresentacionException ex) {
             JOptionPane.showMessageDialog(this, ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
         }
     }//GEN-LAST:event_InicioSecionPacienteActionPerformed
@@ -206,7 +203,19 @@ public class InicioPaciente extends javax.swing.JFrame {
         nuevaVentana.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_RegistrarActionPerformed
-
+    
+    private void iniciarSesion() throws PresentacionException{
+        Conexion conexion = new Conexion();
+        PacienteBO negocio = new PacienteBO(conexion);
+        try{
+            PerfilPaciente nuevaVentana = new PerfilPaciente(negocio.iniciarSesion(Correo.getText().trim(), contrasenia.getText().trim()));
+            nuevaVentana.setVisible(true);
+            this.dispose();
+        }catch(NegocioException ex){
+            throw new PresentacionException(ex.getMessage(), ex);
+        }
+    }
+    
     /**
      * @param args the command line arguments
      */

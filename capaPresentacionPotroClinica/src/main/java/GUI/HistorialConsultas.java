@@ -24,6 +24,11 @@ public class HistorialConsultas extends javax.swing.JFrame {
     public HistorialConsultas(MedicoViejoDTO perfil) {
         this.perfil = perfil;
         initComponents();
+        try{
+            historialConsultas();
+        } catch(PresentacionException ex){
+            JOptionPane.showMessageDialog(this, ex.getMessage(), "Error", JOptionPane.OK_OPTION);
+        }
     }
 
     /**
@@ -42,7 +47,6 @@ public class HistorialConsultas extends javax.swing.JFrame {
         jLabel2 = new javax.swing.JLabel();
         jPanel4 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
-        ConsultarHistorial = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         tablaConsultasDia = new javax.swing.JTable();
 
@@ -100,15 +104,6 @@ public class HistorialConsultas extends javax.swing.JFrame {
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, 70, Short.MAX_VALUE)
         );
-
-        ConsultarHistorial.setBackground(new java.awt.Color(0, 0, 0));
-        ConsultarHistorial.setForeground(new java.awt.Color(255, 255, 255));
-        ConsultarHistorial.setText("Consultar");
-        ConsultarHistorial.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                ConsultarHistorialActionPerformed(evt);
-            }
-        });
 
         tablaConsultasDia.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -187,12 +182,7 @@ public class HistorialConsultas extends javax.swing.JFrame {
                         .addComponent(jLabel2))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(23, 23, 23)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addGap(222, 222, 222)
-                                .addComponent(ConsultarHistorial, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 233, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 575, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 575, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
@@ -201,9 +191,7 @@ public class HistorialConsultas extends javax.swing.JFrame {
                 .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(ConsultarHistorial)
-                .addGap(18, 18, 18)
+                .addGap(59, 59, 59)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 215, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 59, Short.MAX_VALUE)
                 .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -229,13 +217,6 @@ public class HistorialConsultas extends javax.swing.JFrame {
         this.dispose();
     }//GEN-LAST:event_VolverActionPerformed
 
-    private void ConsultarHistorialActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ConsultarHistorialActionPerformed
-        try{
-            historialConsultas();
-        } catch(PresentacionException ex){
-        }
-    }//GEN-LAST:event_ConsultarHistorialActionPerformed
-
     private void tablaConsultasDiaAncestorAdded(javax.swing.event.AncestorEvent evt) {//GEN-FIRST:event_tablaConsultasDiaAncestorAdded
         
     }//GEN-LAST:event_tablaConsultasDiaAncestorAdded
@@ -249,8 +230,9 @@ public class HistorialConsultas extends javax.swing.JFrame {
                 JOptionPane.showMessageDialog(this, "", "", JOptionPane.ERROR_MESSAGE);
             else{
                 DefaultTableModel tabla = (DefaultTableModel) tablaConsultasDia.getModel();
+                int filas = 0;
                 for(ConsultaDTO consulta : consultas){
-                    tabla.addRow(new Object[]{
+                    tabla.insertRow(filas, new Object[]{
                         consulta.getCita().getFechaHora(),
                         String.format("%s %s %s", 
                                 consulta.getCita().getPaciente().getNombres(),
@@ -260,6 +242,7 @@ public class HistorialConsultas extends javax.swing.JFrame {
                         consulta.getDiagnostico(),
                         consulta.getTratamiento()
                     });
+                    filas++;
                 }
             }
         } catch(NegocioException ex){
@@ -272,7 +255,6 @@ public class HistorialConsultas extends javax.swing.JFrame {
      */
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton ConsultarHistorial;
     private javax.swing.JButton Volver;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;

@@ -27,14 +27,14 @@ public class ConsultaAgendaMedico extends javax.swing.JFrame {
      *
      * @param medico
      */
-    public ConsultaAgendaMedico(MedicoViejoDTO medico) {
+    public ConsultaAgendaMedico(MedicoViejoDTO medico) throws PresentacionException {
         this.perfil = medico;
         try {
             initComponents();
             addSelectionListener();
             citas();
         } catch (PresentacionException ex) {
-            JOptionPane.showMessageDialog(this, ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+            throw new PresentacionException(ex.getMessage(), ex);
         }
          
     }
@@ -289,10 +289,7 @@ public class ConsultaAgendaMedico extends javax.swing.JFrame {
         try {
             citasMedico = (ArrayList<CitaDTO>) medicoBO.agendaMedico(perfil.getId());
             if (citasMedico.isEmpty()) {
-                JOptionPane.showMessageDialog(this, "No hay citas pendientes.", "Libre de citas.", JOptionPane.OK_OPTION);
-                PerfilMedico nuevaVentana = new PerfilMedico(perfil);
-                nuevaVentana.setVisible(true);
-                this.dispose();
+                throw new PresentacionException("No hay citas pendientes.");
             } else {
                 DefaultTableModel tabla = (DefaultTableModel) tablaConsultasDia.getModel();
                 int filas = 0;

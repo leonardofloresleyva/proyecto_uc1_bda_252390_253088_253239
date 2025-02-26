@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
- */
 package GUI;
 
 import BO.MedicoBO;
@@ -154,6 +150,10 @@ public class DarBajaMedico extends javax.swing.JFrame {
         try {
             Baja();
         } catch (PresentacionException ex) {
+            JOptionPane.showMessageDialog(this, ex.getMessage(), "Error", JOptionPane.INFORMATION_MESSAGE);
+            PerfilMedico nuevaVentana = new PerfilMedico(perfil);
+            nuevaVentana.setVisible(true);
+            this.dispose();
         }
     }//GEN-LAST:event_confirmarBajaActionPerformed
 

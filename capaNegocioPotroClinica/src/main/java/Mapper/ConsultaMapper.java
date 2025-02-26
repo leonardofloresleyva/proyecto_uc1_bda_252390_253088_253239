@@ -26,7 +26,7 @@ public class ConsultaMapper {
                 consultaDTO.getMotivo(),
                 consultaDTO.getDiagnostico(),
                 consultaDTO.getTratamiento(),
-                citaMapper.toEntityEmergencia((CitaEmergenciaDTO) consultaDTO.getCita())
+                citaMapper.toEntity(consultaDTO.getCita())
         );
         return consulta;
     }
