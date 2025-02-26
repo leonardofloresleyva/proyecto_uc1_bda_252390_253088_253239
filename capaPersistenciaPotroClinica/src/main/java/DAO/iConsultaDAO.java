@@ -8,11 +8,19 @@ import Entidades.Consulta;
 import Excepciones.PersistenciaException;
 
 /**
- *
- * @author Ximena
+ * Interfaz de la clase ConsultaDAO.
+ * @author Leonardo Flores Leyva (252390)
+ * @author Ximena Rosales Panduro (253088)
+ * @author Luis Eduardo Uribe Vega (253239)
  */
 public interface iConsultaDAO {
     
+    /**
+     * Método que registra una consulta.
+     * @param consulta Objeto de tipo Consulta.
+     * @return True si se registra la consulta, false en caso contrario.
+     * @throws PersistenciaException 
+     */
     public boolean registrarConsulta(Consulta consulta) throws PersistenciaException;
     
 }
