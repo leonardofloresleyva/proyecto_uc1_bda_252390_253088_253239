@@ -1,8 +1,16 @@
 package GUI;
 
+import BO.ConsultaBO;
+import Conexion.Conexion;
+import Conexion.iConexion;
 import DTO.CitaDTO;
 import DTO.ConsultaDTO;
 import DTO.MedicoViejoDTO;
+import Excepciones.NegocioException;
+import Excepciones.PresentacionException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -10,7 +18,7 @@ import DTO.MedicoViejoDTO;
  */
 public class RegistrarConsultas extends javax.swing.JFrame {
 
-    private final CitaDTO perfil;
+    private final CitaDTO cita;
 
     /**
      * Creates new form InicioSecion
@@ -18,7 +26,7 @@ public class RegistrarConsultas extends javax.swing.JFrame {
      * @param cita
      */
     public RegistrarConsultas(CitaDTO cita) {
-        this.perfil = cita;
+        this.cita = cita;
         initComponents();
     }
 
@@ -46,9 +54,9 @@ public class RegistrarConsultas extends javax.swing.JFrame {
         jScrollPane2 = new javax.swing.JScrollPane();
         Tratamiento = new javax.swing.JTextArea();
         jScrollPane3 = new javax.swing.JScrollPane();
-        Motivo2 = new javax.swing.JTextArea();
+        Motivo = new javax.swing.JTextArea();
         jScrollPane4 = new javax.swing.JScrollPane();
-        Diagnostico1 = new javax.swing.JTextArea();
+        Diagnostico = new javax.swing.JTextArea();
 
         jTextArea1.setColumns(20);
         jTextArea1.setRows(5);
@@ -129,13 +137,13 @@ public class RegistrarConsultas extends javax.swing.JFrame {
         Tratamiento.setRows(5);
         jScrollPane2.setViewportView(Tratamiento);
 
-        Motivo2.setColumns(20);
-        Motivo2.setRows(5);
-        jScrollPane3.setViewportView(Motivo2);
+        Motivo.setColumns(20);
+        Motivo.setRows(5);
+        jScrollPane3.setViewportView(Motivo);
 
-        Diagnostico1.setColumns(20);
-        Diagnostico1.setRows(5);
-        jScrollPane4.setViewportView(Diagnostico1);
+        Diagnostico.setColumns(20);
+        Diagnostico.setRows(5);
+        jScrollPane4.setViewportView(Diagnostico);
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -214,9 +222,14 @@ public class RegistrarConsultas extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void RegistrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_RegistrarActionPerformed
-        PerfilMedico nuevaVentana = new PerfilMedico(perfil.getMedico());
-        nuevaVentana.setVisible(true);
-        this.dispose();
+        try {
+            registrarConsulta();
+        } catch (PresentacionException ex) {
+            JOptionPane.showMessageDialog(this, ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+            ConsultaAgendaMedico citasMedico = new ConsultaAgendaMedico(cita.getMedico());
+            citasMedico.setVisible(true);
+            this.dispose();
+        }
     }//GEN-LAST:event_RegistrarActionPerformed
 
     private void VolverActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_VolverActionPerformed
@@ -225,13 +238,28 @@ public class RegistrarConsultas extends javax.swing.JFrame {
         this.dispose();
     }//GEN-LAST:event_VolverActionPerformed
 
-    /**
-     * @param args the command line arguments
-     */
-
+    private void registrarConsulta() throws PresentacionException{
+        try {
+            iConexion conexion = new Conexion();
+            ConsultaBO consultasBO = new ConsultaBO(conexion);
+            if(consultasBO.registrarConsulta(new ConsultaDTO(Motivo.getText().trim(), Diagnostico.getText().trim(), Tratamiento.getText().trim(), cita))){
+                PerfilMedico nuevaVentana = new PerfilMedico(cita.getMedico());
+                nuevaVentana.setVisible(true);
+                this.dispose();
+            } else
+                JOptionPane.showMessageDialog(
+                        this, 
+                        "La consulta no pudo ser registrada. Contacte a su administrador o intentelo de nuevo.", 
+                        "Consulta no registrada.", 
+                        JOptionPane.INFORMATION_MESSAGE);
+        } catch (NegocioException e) {
+            throw new PresentacionException(e.getMessage(), e);
+        }
+    }
+    
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JTextArea Diagnostico1;
-    private javax.swing.JTextArea Motivo2;
+    private javax.swing.JTextArea Diagnostico;
+    private javax.swing.JTextArea Motivo;
     private javax.swing.JButton Registrar;
     private javax.swing.JTextArea Tratamiento;
     private javax.swing.JButton Volver;

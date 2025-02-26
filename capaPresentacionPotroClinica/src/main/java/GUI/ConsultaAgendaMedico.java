@@ -1,19 +1,14 @@
 package GUI;
 
-import BO.CitaBO;
 import BO.MedicoBO;
 import Conexion.Conexion;
 import Conexion.iConexion;
 import DTO.CitaDTO;
-import DTO.ConsultaDTO;
 import DTO.MedicoViejoDTO;
-import DTO.PacienteViejoDTO;
 import Excepciones.NegocioException;
 import Excepciones.PresentacionException;
 import java.util.ArrayList;
-import java.util.Vector;
 import javax.swing.JOptionPane;
-import javax.swing.ListSelectionModel;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import javax.swing.table.DefaultTableModel;
@@ -276,6 +271,7 @@ public class ConsultaAgendaMedico extends javax.swing.JFrame {
         int citaSeleccionada = tablaConsultasDia.getSelectedRow();
         if(citaSeleccionada != -1){
             CitaDTO cita = new CitaDTO(
+                    citasMedico.get(citaSeleccionada).getIdCita(),
                     citasMedico.get(citaSeleccionada).getFechaHora(), 
                     perfil, 
                     citasMedico.get(citaSeleccionada).getPaciente(), 
