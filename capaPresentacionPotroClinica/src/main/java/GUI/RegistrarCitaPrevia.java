@@ -118,9 +118,9 @@ public class RegistrarCitaPrevia extends javax.swing.JFrame {
         jLabel3.setText("Hora");
         jLabel3.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
 
-        Confirmar.setText("Confirmar");
         Confirmar.setBackground(new java.awt.Color(0, 0, 0));
         Confirmar.setForeground(new java.awt.Color(255, 255, 255));
+        Confirmar.setText("Confirmar");
         Confirmar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 ConfirmarActionPerformed(evt);
@@ -136,7 +136,7 @@ public class RegistrarCitaPrevia extends javax.swing.JFrame {
             }
         });
 
-        Hora.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "7:00", "7:30", "8:00", "8:30", "9:00", "9:30", "10:00", "11:30", "12:00", "12:30", "13:00", "13:30", "14:00", "14:30", "15:00", "15:30", "16:00", "16:30", "17:00", "17:30", "18:00", "18:30", "19:00", "19:30", "20:00" }));
+        Hora.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "07:00", "07:30", "08:00", "08:30", "09:00", "09:30", "10:00", "11:30", "12:00", "12:30", "13:00", "13:30", "14:00", "14:30", "15:00", "15:30", "16:00", "16:30", "17:00", "17:30", "18:00", "18:30", "19:00", "19:30", "20:00" }));
         Hora.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 HoraActionPerformed(evt);
