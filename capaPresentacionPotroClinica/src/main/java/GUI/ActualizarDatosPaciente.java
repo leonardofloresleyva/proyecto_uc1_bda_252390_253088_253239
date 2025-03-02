@@ -5,15 +5,14 @@ import Conexion.Conexion;
 import DTO.PacienteViejoDTO;
 import Excepciones.NegocioException;
 import Excepciones.PresentacionException;
-import java.awt.HeadlessException;
 import java.time.LocalDate;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 
 /**
- *
- * @author multaslokas33
+ *  
+ * @author Leonardo Flores Leyva (252390)
+ * @author Ximena Rosales Panduro (253088)
+ * @author Luis Eduardo Uribe Vega (253239)
  */
 public class ActualizarDatosPaciente extends javax.swing.JFrame {
 

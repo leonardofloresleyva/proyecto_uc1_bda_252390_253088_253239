@@ -2,16 +2,15 @@ package GUI;
 
 import BO.PacienteBO;
 import Conexion.Conexion;
-import Conexion.iConexion;
-import DAO.PacienteDAO;
 import Excepciones.NegocioException;
 import Excepciones.PresentacionException;
-import java.util.Arrays;
 import javax.swing.JOptionPane;
 
 /**
  *
- * @author multaslokas33
+ * @author Leonardo Flores Leyva (252390)
+ * @author Ximena Rosales Panduro (253088)
+ * @author Luis Eduardo Uribe Vega (253239)
  */
 
 public class InicioPaciente extends javax.swing.JFrame {

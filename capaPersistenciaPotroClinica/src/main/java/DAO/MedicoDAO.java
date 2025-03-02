@@ -24,6 +24,7 @@ import java.util.logging.Logger;
  * @author Luis Eduardo Uribe Vega (253239)
  */
 public class MedicoDAO implements iMedicoDAO {
+    // Objeto conexion para crear una conexión con la base de datos.
     iConexion conexion;
     // Logger para el registro de información importante.
     private static final Logger logger = Logger.getLogger(PacienteDAO.class.getName());
@@ -32,17 +33,8 @@ public class MedicoDAO implements iMedicoDAO {
      * Constructor para la clase MedicoDAO.
      * @param conexion Objeto de la conexión a MySQL.
      */
-    public MedicoDAO(iConexion conexion) {
-        this.conexion = conexion;
-    }
+    public MedicoDAO(iConexion conexion) {this.conexion = conexion;}
     
-    /**
-     * Método que permite a un médico iniciar sesión en el sistema.
-     * @param cedula Cédula del médico de tipo String.
-     * @param contrasenia Contraseña del médico de tipo String.
-     * @return Objeto médico.
-     * @throws PersistenciaException 
-     */
     @Override
     public Medico iniciarSesionMedico(String cedula, String contrasenia) throws PersistenciaException{
         // Declarar consulta de MySQL para obtener al médico que coincida con los parámetros.

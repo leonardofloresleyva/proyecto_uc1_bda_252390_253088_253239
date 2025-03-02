@@ -1,12 +1,10 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
- */
 package GUI;
 
 /**
  *
- * @author multaslokas33
+ * @author Leonardo Flores Leyva (252390)
+ * @author Ximena Rosales Panduro (253088)
+ * @author Luis Eduardo Uribe Vega (253239)
  */
 public class InicioSecion extends javax.swing.JFrame {
 

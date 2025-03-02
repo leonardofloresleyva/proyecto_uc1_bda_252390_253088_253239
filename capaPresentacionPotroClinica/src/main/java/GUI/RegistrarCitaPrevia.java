@@ -2,7 +2,6 @@ package GUI;
 
 import BO.CitaBO;
 import Conexion.Conexion;
-import Conexion.iConexion;
 import DTO.CitaDTO;
 import DTO.MedicoViejoDTO;
 import DTO.PacienteViejoDTO;
@@ -10,21 +9,23 @@ import Excepciones.NegocioException;
 import Excepciones.PresentacionException;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
-import java.time.Month;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
 /**
  *
- * @author multaslokas33
+ * @author Leonardo Flores Leyva (252390)
+ * @author Ximena Rosales Panduro (253088)
+ * @author Luis Eduardo Uribe Vega (253239)
  */
 public class RegistrarCitaPrevia extends javax.swing.JFrame {
-
+    
+    private final CitaBO citaBO;
     private final PacienteViejoDTO perfil;
+    private List<MedicoViejoDTO> medicosDisponibles;
     private LocalDateTime fechaHora;
     
     /**
@@ -32,7 +33,9 @@ public class RegistrarCitaPrevia extends javax.swing.JFrame {
      * @param paciente
      */
     public RegistrarCitaPrevia(PacienteViejoDTO paciente) {
+        this.citaBO = new CitaBO(new Conexion());
         this.perfil = paciente;
+        this.medicosDisponibles = new ArrayList<>();
         initComponents();
     }
 
@@ -146,52 +149,52 @@ public class RegistrarCitaPrevia extends javax.swing.JFrame {
         jLabel4.setText("Registro");
         jLabel4.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
 
-        Especialidad1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Medicina General", "Pediatria", "Otorrinolaringologia", "Neumonia", "Cirujia Nuerologica", "Cardiologia", "Radiologia", "Psiquiatria" }));
+        Especialidad1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Medicina General", "Pediatría", "Otorrinolaringologia", "Neumología", "Oncología", "Cardiología", "Psicología" }));
 
         jLabel5.setText("Especialidad");
         jLabel5.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
 
         tablaConsultasMedicos.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                { new Boolean(false), null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null}
             },
             new String [] {
-                "Seleccionar", "Nombre", "Apellido Paterno", "Apellido Materno"
+                "Nombre", "Apellido Paterno", "Apellido Materno"
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.Boolean.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
+                java.lang.String.class, java.lang.String.class, java.lang.String.class
             };
             boolean[] canEdit = new boolean [] {
-                true, false, false, false
+                false, false, false
             };
 
             public Class getColumnClass(int columnIndex) {
@@ -313,25 +316,27 @@ public class RegistrarCitaPrevia extends javax.swing.JFrame {
     }//GEN-LAST:event_CancelarActionPerformed
 
     private void tablaConsultasMedicosAncestorAdded(javax.swing.event.AncestorEvent evt) {//GEN-FIRST:event_tablaConsultasMedicosAncestorAdded
-
+        
     }//GEN-LAST:event_tablaConsultasMedicosAncestorAdded
 
     private void HoraActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_HoraActionPerformed
-        // TODO add your handling code here:
+        
     }//GEN-LAST:event_HoraActionPerformed
 
     private void SeleccionarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_SeleccionarActionPerformed
-        
+        try {
+            registrarCita();
+        } catch (PresentacionException ex) {
+            JOptionPane.showMessageDialog(this, ex.getMessage(), "Error en el registro", JOptionPane.ERROR_MESSAGE);
+        }
     }//GEN-LAST:event_SeleccionarActionPerformed
     
     private void obtenerMedicos() throws PresentacionException{
         try {
-            iConexion conexion = new Conexion();
-            CitaBO citaBO = new CitaBO(conexion);
             DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm");
-            LocalTime hora = LocalTime.parse((String) Hora.getSelectedItem(), formatter);
+            LocalTime hora = LocalTime.parse((CharSequence) Hora.getSelectedItem(), formatter);
             fechaHora = LocalDateTime.of(Fecha.getDate(), hora);
-            List<MedicoViejoDTO> medicosDisponibles = citaBO.medicosDisponibles(fechaHora, (String) Especialidad1.getSelectedItem());
+            medicosDisponibles = citaBO.medicosDisponibles(fechaHora, (String) Especialidad1.getSelectedItem());
             if(medicosDisponibles.isEmpty())
                 throw new PresentacionException("No hay médicos disponibles para la fecha y especialidad seleccionadas");
              else{
@@ -339,7 +344,6 @@ public class RegistrarCitaPrevia extends javax.swing.JFrame {
                 int filas = 0;
                 for (MedicoViejoDTO medico : medicosDisponibles) {                    
                     tabla.insertRow(filas, new Object[]{
-                        false,
                         medico.getNombres(),
                         medico.getApellidoPaterno(),
                         medico.getApellidoMaterno()
@@ -354,14 +358,26 @@ public class RegistrarCitaPrevia extends javax.swing.JFrame {
         
     }
     
-    private void registrarCita(){
+    private void registrarCita() throws PresentacionException{
         try {
             int medicoSeleccionado = tablaConsultasMedicos.getSelectedRow();
             if(medicoSeleccionado != - 1){
-                
-            }
-        } catch (Exception e) {
-            
+                MedicoViejoDTO medico = medicosDisponibles.get(medicoSeleccionado);
+                CitaDTO cita = new CitaDTO(
+                    fechaHora, 
+                    medico, 
+                    perfil, 
+                    "Previa");
+                if(citaBO.registrarCita(cita)){
+                    JOptionPane.showMessageDialog(this, "Cita registrada con exito!", "Cita registrada", JOptionPane.OK_OPTION);
+                    RegistrarCitaPrevia nuevaVentana = new RegistrarCitaPrevia(perfil);
+                    nuevaVentana.setVisible(true);
+                    this.dispose();
+                }
+            } else
+                JOptionPane.showMessageDialog(this, "Seleccione un medico para registrar la cita.", "Medico no seleccionado", JOptionPane.ERROR_MESSAGE);
+        } catch (NegocioException ex) {
+            throw new PresentacionException(ex.getMessage(), ex);
         }
     }
     

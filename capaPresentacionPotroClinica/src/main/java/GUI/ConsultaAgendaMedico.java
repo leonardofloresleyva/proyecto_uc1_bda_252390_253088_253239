@@ -9,13 +9,13 @@ import Excepciones.NegocioException;
 import Excepciones.PresentacionException;
 import java.util.ArrayList;
 import javax.swing.JOptionPane;
-import javax.swing.event.ListSelectionEvent;
-import javax.swing.event.ListSelectionListener;
 import javax.swing.table.DefaultTableModel;
 
 /**
  *
- * @author multaslokas33
+ * @author Leonardo Flores Leyva (252390)
+ * @author Ximena Rosales Panduro (253088)
+ * @author Luis Eduardo Uribe Vega (253239)
  */
 public class ConsultaAgendaMedico extends javax.swing.JFrame {
 
@@ -31,31 +31,11 @@ public class ConsultaAgendaMedico extends javax.swing.JFrame {
         this.perfil = medico;
         try {
             initComponents();
-            addSelectionListener();
             citas();
         } catch (PresentacionException ex) {
             throw new PresentacionException(ex.getMessage(), ex);
         }
          
-    }
-
-    private void addSelectionListener() {
-        tablaConsultasDia.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
-            @Override
-            public void valueChanged(ListSelectionEvent e) {
-                if (!e.getValueIsAdjusting()) {
-                    int selectedRow = tablaConsultasDia.getSelectedRow();
-                    if (selectedRow != -1) {
-                        DefaultTableModel model = (DefaultTableModel) tablaConsultasDia.getModel();
-                        for (int i = 0; i < model.getRowCount(); i++) {
-                            if (i != selectedRow) {
-                                model.setValueAt(false, i, 0); // Deseleccionar otras filas
-                            }
-                        }
-                    }
-                }
-            }
-        });
     }
 
     /**
@@ -132,45 +112,45 @@ public class ConsultaAgendaMedico extends javax.swing.JFrame {
 
         tablaConsultasDia.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                { new Boolean(false), null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null}
             },
             new String [] {
-                "Seleccionar", "Hora", "Nombre", "Tipo de Cita"
+                "Hora", "Nombre", "Tipo de Cita"
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.Boolean.class, java.lang.Object.class, java.lang.String.class, java.lang.String.class
+                java.lang.Object.class, java.lang.String.class, java.lang.String.class
             };
             boolean[] canEdit = new boolean [] {
-                true, false, false, false
+                false, false, false
             };
 
             public Class getColumnClass(int columnIndex) {
@@ -295,7 +275,6 @@ public class ConsultaAgendaMedico extends javax.swing.JFrame {
                 int filas = 0;
                 for (CitaDTO cita : citasMedico) {                    
                     tabla.insertRow(filas, new Object[]{
-                        false,
                         cita.getFechaHora(),
                         String.format("%s %s %s", 
                                 cita.getPaciente().getNombres(),

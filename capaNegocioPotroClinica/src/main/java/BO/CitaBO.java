@@ -42,7 +42,7 @@ public class CitaBO {
         if(fechaHora.isBefore(LocalDateTime.now()))
             throw new NegocioException("La fecha y hora de la cita no puede ser inferior a la fecha y hora actual.");
         
-        if((fechaHora.getMinute() != 30 || fechaHora.getMinute() != 0) || fechaHora.getSecond() != 0)
+        if((fechaHora.getMinute() != 30 && fechaHora.getMinute() != 0) || fechaHora.getSecond() != 0)
             throw new NegocioException("Las citas se programan en lapsos de media hora exactas.");
         
         if (especialidad == null || especialidad.trim().isEmpty())
@@ -73,7 +73,7 @@ public class CitaBO {
         if(cita.getPaciente() == null)
             throw new NegocioException("El paciente no puede ser nulo.");
         
-        validarID(cita.getIdCita());
+        
         validarID(cita.getMedico().getId());
         validarID(cita.getPaciente().getId());
         
@@ -92,7 +92,7 @@ public class CitaBO {
         if(fechaCita.isBefore(LocalDateTime.now()))
             throw new NegocioException("La fecha y hora de la cita no puede ser inferior a la fecha y hora actual.");
         
-        if((fechaCita.getMinute() != 30 || fechaCita.getMinute() != 0) || fechaCita.getSecond() != 0)
+        if((fechaCita.getMinute() != 30 && fechaCita.getMinute() != 0) || fechaCita.getSecond() != 0)
             throw new NegocioException("Las citas se programan en lapsos de media hora exactas.");
         
         try{

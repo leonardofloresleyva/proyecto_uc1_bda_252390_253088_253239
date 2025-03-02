@@ -13,7 +13,9 @@ import javax.swing.table.DefaultTableModel;
 
 /**
  *
- * @author multaslokas33
+ * @author Leonardo Flores Leyva (252390)
+ * @author Ximena Rosales Panduro (253088)
+ * @author Luis Eduardo Uribe Vega (253239)
  */
 public class HistorialConsultas extends javax.swing.JFrame {
     private final MedicoViejoDTO perfil;

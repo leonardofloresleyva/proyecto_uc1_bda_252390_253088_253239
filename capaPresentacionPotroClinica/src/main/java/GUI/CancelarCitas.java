@@ -1,18 +1,12 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
- */
 package GUI;
 
 import DTO.PacienteViejoDTO;
-import javax.swing.ListSelectionModel;
-import javax.swing.event.ListSelectionEvent;
-import javax.swing.event.ListSelectionListener;
-import javax.swing.table.DefaultTableModel;
 
 /**
  *
- * @author multaslokas33
+ * @author Leonardo Flores Leyva (252390)
+ * @author Ximena Rosales Panduro (253088)
+ * @author Luis Eduardo Uribe Vega (253239)
  */
 public class CancelarCitas extends javax.swing.JFrame {
 
@@ -25,26 +19,6 @@ public class CancelarCitas extends javax.swing.JFrame {
     public CancelarCitas(PacienteViejoDTO paciente) {
         this.perfil = paciente;
         initComponents();
-        addSelectionListener();
-    }
-    
-    private void addSelectionListener() {
-        tablaConsultasDia.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
-            @Override
-            public void valueChanged(ListSelectionEvent e) {
-                if (!e.getValueIsAdjusting()) {
-                    int selectedRow = tablaConsultasDia.getSelectedRow();
-                    if (selectedRow != -1) {
-                        DefaultTableModel model = (DefaultTableModel) tablaConsultasDia.getModel();
-                        for (int i = 0; i < model.getRowCount(); i++) {
-                            if (i != selectedRow) {
-                                model.setValueAt(false, i, 0); // Deseleccionar otras filas
-                            }
-                        }
-                    }
-                }
-            }
-        });
     }
 
     /**
@@ -146,30 +120,23 @@ public class CancelarCitas extends javax.swing.JFrame {
 
         tablaConsultasDia.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                { new Boolean(false), null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null}
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
             },
             new String [] {
-                "Seleccionar", "Fecha y Hora", "Tipo de Cita", "Especialidad", "Medico a cargo"
+                "Fecha y Hora", "Tipo de Cita", "Especialidad", "Medico a cargo"
             }
         ) {
-            Class[] types = new Class [] {
-                java.lang.Boolean.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class
-            };
             boolean[] canEdit = new boolean [] {
-                true, false, false, false, true
+                false, false, false, true
             };
-
-            public Class getColumnClass(int columnIndex) {
-                return types [columnIndex];
-            }
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
                 return canEdit [columnIndex];

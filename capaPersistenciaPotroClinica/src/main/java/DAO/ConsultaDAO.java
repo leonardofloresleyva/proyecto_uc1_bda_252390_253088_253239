@@ -18,23 +18,22 @@ import java.util.logging.Logger;
  * @author Luis Eduardo Uribe Vega (253239)
  */
 public class ConsultaDAO implements iConsultaDAO {
+    // Objeto conexion para crear una conexión con la base de datos.
     iConexion conexion;
     // Logger para el registro de información importante.
-    private static final Logger logger = Logger.getLogger(PacienteDAO.class.getName());
+    private static final Logger logger = Logger.getLogger(ConsultaDAO.class.getName());
 
     /**
      * Constructor para la clase ConsultaDAO.
      * @param conexion Objeto conexión a MySQL.
      */
-    public ConsultaDAO(iConexion conexion) {
-        this.conexion = conexion;
-    }
+    public ConsultaDAO(iConexion conexion) {this.conexion = conexion;}
     
     /**
      * Método que registra una consulta.
      * @param consulta Objeto de tipo Consulta.
      * @return True si se registra la consulta, false en caso contrario.
-     * @throws PersistenciaException 
+     * @throws PersistenciaException Excepción por si surge un error inesperado. 
      */
     @Override
     public boolean registrarConsulta(Consulta consulta) throws PersistenciaException {
@@ -45,7 +44,7 @@ public class ConsultaDAO implements iConsultaDAO {
                 Connection con = conexion.crearConexion();
                 CallableStatement cs = con.prepareCall(comandoSQL)
             ) {
-
+                // Se inserta cada argumento al Callable Statement.
                 cs.setString(1, consulta.getMotivo());
                 cs.setString(2, consulta.getDiagnostico());
                 cs.setString(3, consulta.getTratamiento());
@@ -55,21 +54,21 @@ public class ConsultaDAO implements iConsultaDAO {
                 return true;
 
         } catch (SQLException ex) {
-            logger.log(Level.SEVERE, "Error al registrar la consulta en la base de datos.", ex);
-            throw new PersistenciaException("Error al insertar una consulta", ex);
+            logger.log(Level.SEVERE, "Error al registrar la consulta en la base de datos. Causa: " + ex.getMessage(), ex);
+            throw new PersistenciaException(ex.getMessage(), ex);
         }
     }
-
 
     /**
      * Método privado que verifica el folio de la cita de emergencia.
      * @param idCita ID de la cita de emergencia.
      * @param folio Folio de la cita.
      * @return True si el folio coincide, false en caso contrario.
-     * @throws PersistenciaException 
+     * @throws PersistenciaException Excepción por si surge un error inesperado. 
      */
+    @Override
     public boolean verificarFolio(int idCita, int folio) throws PersistenciaException{
-
+        // Consulta SQL.
         String comandoSQL = "SELECT * FROM CITAS_EMERGENCIA WHERE ID_CITA_EMERGENCIA = ? AND FOLIO = ?;";
         try(
                 Connection con = conexion.crearConexion();
@@ -83,9 +82,8 @@ public class ConsultaDAO implements iConsultaDAO {
                 return resultado.next();
         // Lanzar excepción si no se pudo verificar el folio de la cita.
         } catch(SQLException ex){
-            logger.log(Level.SEVERE, "Error al verificar el folio de la cita en la base de datos.", ex);
-            throw new PersistenciaException("Error al verificar el folio de la cita. Intentelo de nuevo mas tarde.", ex);
+            logger.log(Level.SEVERE, "Error al verificar el folio de la cita en la base de datos. Causa: " + ex.getMessage(), ex);
+            throw new PersistenciaException(ex.getMessage(), ex);
         }
     }
-
 }
